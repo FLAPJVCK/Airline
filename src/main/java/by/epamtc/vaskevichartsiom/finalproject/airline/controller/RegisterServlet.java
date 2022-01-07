@@ -1,7 +1,7 @@
 package by.epamtc.vaskevichartsiom.finalproject.airline.controller;
 
 import by.epamtc.vaskevichartsiom.finalproject.airline.dao.FactoryDao;
-import by.epamtc.vaskevichartsiom.finalproject.airline.model.User;
+import by.epamtc.vaskevichartsiom.finalproject.airline.dao.model.User;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -24,10 +24,15 @@ public class RegisterServlet extends HttpServlet {
         String password = request.getParameter("password");
         String email = request.getParameter("email");
 
-        User currentUser = new User(name,surname,username,password,email);
+        User currentUser = new User();
+        currentUser.setName(name);
+        currentUser.setSurname(surname);
+        currentUser.setUsername(username);
+        currentUser.setPassword(password);
+        currentUser.setEmail(email);
 
         try {
-            FactoryDao.getInstance().getUserDaoImpl().saveUser(currentUser);
+            FactoryDao.getInstance().getUserDaoImpl().register(currentUser);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

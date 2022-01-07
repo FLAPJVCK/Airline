@@ -1,11 +1,12 @@
 package by.epamtc.vaskevichartsiom.finalproject.airline.dao;
 
-import by.epamtc.vaskevichartsiom.finalproject.airline.dao.impl.UserDaoImpl;
+import by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.impl.UserRepositorySQL;
+import by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.UserRepository;
 
 public class FactoryDao {
     private static final FactoryDao instance = new FactoryDao();
 
-    private UserDao UserDaoImpl = new UserDaoImpl();
+    private UserRepository UserDaoImpl = new UserRepositorySQL();
 
     public FactoryDao() {
     }
@@ -14,11 +15,11 @@ public class FactoryDao {
         return instance;
     }
 
-    public UserDao getUserDaoImpl() {
+    public UserRepository getUserDaoImpl() {
         return UserDaoImpl;
     }
 
-    public void setUserDaoImpl(UserDao userDaoImpl) {
+    public void setUserDaoImpl(UserRepository userDaoImpl) {
         UserDaoImpl = userDaoImpl;
     }
 }

@@ -1,17 +1,17 @@
-package by.epamtc.vaskevichartsiom.finalproject.airline.dao.impl;
+package by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.impl;
 
 import by.epamtc.vaskevichartsiom.finalproject.airline.dao.ConnectionPool;
-import by.epamtc.vaskevichartsiom.finalproject.airline.dao.UserDao;
-import by.epamtc.vaskevichartsiom.finalproject.airline.model.User;
+import by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.UserRepository;
+import by.epamtc.vaskevichartsiom.finalproject.airline.dao.model.User;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class UserDaoImpl implements UserDao {
+public class UserRepositorySQL implements UserRepository {
     private final static String INSERT_USER = "insert into airline.users(name,surname,username,password,email,role_id,rank_id) values (?,?,?,?,?,?,?)";
 
     @Override
-    public boolean saveUser(User user) {
+    public boolean register(User user) {
         boolean result = false;
         PreparedStatement preparedStatement;
         try {
@@ -31,7 +31,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean readUser() {
+    public boolean login() {
         return false;
     }
 }
