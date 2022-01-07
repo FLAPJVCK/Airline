@@ -12,7 +12,8 @@ public class AirplaneModel extends BaseEntity<Integer>{
     private Integer flightRange;
     private Integer cruisingSpeed;
     private Integer maximumFlightHeight;
-    private Set<Manufacture> manufactures = new HashSet<Manufacture>();
+    private Integer manufacturerId;
+    private Set<Airplane> airplanes = new HashSet<Airplane>();
 
     public AirplaneModel() {
     }
@@ -73,12 +74,20 @@ public class AirplaneModel extends BaseEntity<Integer>{
         this.maximumFlightHeight = maximumFlightHeight;
     }
 
-    public Set<Manufacture> getManufactures() {
-        return manufactures;
+    public Integer getManufacturerId() {
+        return manufacturerId;
     }
 
-    public void setManufactures(Set<Manufacture> manufactures) {
-        this.manufactures = manufactures;
+    public void setManufacturerId(Integer manufacturerId) {
+        this.manufacturerId = manufacturerId;
+    }
+
+    public Set<Airplane> getAirplanes() {
+        return airplanes;
+    }
+
+    public void setAirplanes(Set<Airplane> airplanes) {
+        this.airplanes = airplanes;
     }
 
     @Override
@@ -86,11 +95,11 @@ public class AirplaneModel extends BaseEntity<Integer>{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AirplaneModel that = (AirplaneModel) o;
-        return Objects.equals(model, that.model) && Objects.equals(businessSeat, that.businessSeat) && Objects.equals(economySeat, that.economySeat) && Objects.equals(maximumTakeoffWeight, that.maximumTakeoffWeight) && Objects.equals(flightRange, that.flightRange) && Objects.equals(cruisingSpeed, that.cruisingSpeed) && Objects.equals(maximumFlightHeight, that.maximumFlightHeight) && Objects.equals(manufactures, that.manufactures);
+        return Objects.equals(model, that.model) && Objects.equals(businessSeat, that.businessSeat) && Objects.equals(economySeat, that.economySeat) && Objects.equals(maximumTakeoffWeight, that.maximumTakeoffWeight) && Objects.equals(flightRange, that.flightRange) && Objects.equals(cruisingSpeed, that.cruisingSpeed) && Objects.equals(maximumFlightHeight, that.maximumFlightHeight) && Objects.equals(manufacturerId, that.manufacturerId) && Objects.equals(airplanes, that.airplanes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(model, businessSeat, economySeat, maximumTakeoffWeight, flightRange, cruisingSpeed, maximumFlightHeight, manufactures);
+        return Objects.hash(model, businessSeat, economySeat, maximumTakeoffWeight, flightRange, cruisingSpeed, maximumFlightHeight, manufacturerId, airplanes);
     }
 }

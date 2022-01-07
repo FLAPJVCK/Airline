@@ -1,19 +1,30 @@
 package by.epamtc.vaskevichartsiom.finalproject.airline.dao.model;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Manufacture extends BaseEntity<Integer>{
-    private String name;
+    private String manufacturerName;
+    private Set<AirplaneModel> airplaneModels = new HashSet<AirplaneModel>();
 
     public Manufacture() {
     }
 
-    public String getName() {
-        return name;
+    public String getManufacturerName() {
+        return manufacturerName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setManufacturerName(String manufacturerName) {
+        this.manufacturerName = manufacturerName;
+    }
+
+    public Set<AirplaneModel> getAirplaneModels() {
+        return airplaneModels;
+    }
+
+    public void setAirplaneModels(Set<AirplaneModel> airplaneModels) {
+        this.airplaneModels = airplaneModels;
     }
 
     @Override
@@ -21,11 +32,11 @@ public class Manufacture extends BaseEntity<Integer>{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Manufacture that = (Manufacture) o;
-        return Objects.equals(name, that.name);
+        return Objects.equals(manufacturerName, that.manufacturerName) && Objects.equals(airplaneModels, that.airplaneModels);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(manufacturerName, airplaneModels);
     }
 }

@@ -10,8 +10,9 @@ public class User extends BaseEntity<Integer>{
     private String username;
     private String password;
     private String email;
-    private Set<Role> roles = new HashSet<Role>();
-    private Set<Rank> ranks = new HashSet<Rank>();
+    private Integer roleId;
+    private Integer rankId;
+    private Set<Flight> flights = new HashSet<Flight>();
 
     public User() {
     }
@@ -56,20 +57,28 @@ public class User extends BaseEntity<Integer>{
         this.email = email;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public Integer getRoleId() {
+        return roleId;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 
-    public Set<Rank> getRanks() {
-        return ranks;
+    public Integer getRankId() {
+        return rankId;
     }
 
-    public void setRanks(Set<Rank> ranks) {
-        this.ranks = ranks;
+    public void setRankId(Integer rankId) {
+        this.rankId = rankId;
+    }
+
+    public Set<Flight> getFlights() {
+        return flights;
+    }
+
+    public void setFlights(Set<Flight> flights) {
+        this.flights = flights;
     }
 
     @Override
@@ -77,11 +86,11 @@ public class User extends BaseEntity<Integer>{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(name, user.name) && Objects.equals(surname, user.surname) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(roles, user.roles) && Objects.equals(ranks, user.ranks);
+        return Objects.equals(name, user.name) && Objects.equals(surname, user.surname) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(roleId, user.roleId) && Objects.equals(rankId, user.rankId) && Objects.equals(flights, user.flights);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, surname, username, password, email, roles, ranks);
+        return Objects.hash(name, surname, username, password, email, roleId, rankId, flights);
     }
 }

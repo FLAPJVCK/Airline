@@ -10,8 +10,9 @@ public class Flight extends BaseEntity<Integer>{
     private String flightNumber;
     private Date departureDate;
     private Time departureTime;
-    private Set<Airplane> airplanes = new HashSet<Airplane>();
-    private Set<Destination> destinations = new HashSet<Destination>();
+    private Integer airplaneId;
+    private Integer destinationId;
+    private Set<User> users = new HashSet<User>();
 
     public Flight() {
     }
@@ -40,20 +41,28 @@ public class Flight extends BaseEntity<Integer>{
         this.departureTime = departureTime;
     }
 
-    public Set<Airplane> getAirplanes() {
-        return airplanes;
+    public Integer getAirplaneId() {
+        return airplaneId;
     }
 
-    public void setAirplanes(Set<Airplane> airplanes) {
-        this.airplanes = airplanes;
+    public void setAirplaneId(Integer airplaneId) {
+        this.airplaneId = airplaneId;
     }
 
-    public Set<Destination> getDestinations() {
-        return destinations;
+    public Integer getDestinationId() {
+        return destinationId;
     }
 
-    public void setDestinations(Set<Destination> destinations) {
-        this.destinations = destinations;
+    public void setDestinationId(Integer destinationId) {
+        this.destinationId = destinationId;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
     @Override
@@ -61,11 +70,11 @@ public class Flight extends BaseEntity<Integer>{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Flight flight = (Flight) o;
-        return Objects.equals(flightNumber, flight.flightNumber) && Objects.equals(departureDate, flight.departureDate) && Objects.equals(departureTime, flight.departureTime) && Objects.equals(airplanes, flight.airplanes) && Objects.equals(destinations, flight.destinations);
+        return Objects.equals(flightNumber, flight.flightNumber) && Objects.equals(departureDate, flight.departureDate) && Objects.equals(departureTime, flight.departureTime) && Objects.equals(airplaneId, flight.airplaneId) && Objects.equals(destinationId, flight.destinationId) && Objects.equals(users, flight.users);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(flightNumber, departureDate, departureTime, airplanes, destinations);
+        return Objects.hash(flightNumber, departureDate, departureTime, airplaneId, destinationId, users);
     }
 }

@@ -6,8 +6,8 @@ import java.util.Set;
 
 public class AirplaneHasRank extends BaseEntity<Integer>{
     private Integer rankCount;
-    private Set<Airplane> airplanes = new HashSet<Airplane>();
-    private Set<Rank> ranks = new HashSet<Rank>();
+    private Integer airplaneId;
+    private Integer rankId;
 
     public AirplaneHasRank() {
     }
@@ -20,20 +20,20 @@ public class AirplaneHasRank extends BaseEntity<Integer>{
         this.rankCount = rankCount;
     }
 
-    public Set<Airplane> getAirplanes() {
-        return airplanes;
+    public Integer getAirplaneId() {
+        return airplaneId;
     }
 
-    public void setAirplanes(Set<Airplane> airplanes) {
-        this.airplanes = airplanes;
+    public void setAirplaneId(Integer airplaneId) {
+        this.airplaneId = airplaneId;
     }
 
-    public Set<Rank> getRanks() {
-        return ranks;
+    public Integer getRankId() {
+        return rankId;
     }
 
-    public void setRanks(Set<Rank> ranks) {
-        this.ranks = ranks;
+    public void setRankId(Integer rankId) {
+        this.rankId = rankId;
     }
 
     @Override
@@ -41,11 +41,11 @@ public class AirplaneHasRank extends BaseEntity<Integer>{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AirplaneHasRank that = (AirplaneHasRank) o;
-        return Objects.equals(rankCount, that.rankCount) && Objects.equals(airplanes, that.airplanes) && Objects.equals(ranks, that.ranks);
+        return Objects.equals(rankCount, that.rankCount) && Objects.equals(airplaneId, that.airplaneId) && Objects.equals(rankId, that.rankId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rankCount, airplanes, ranks);
+        return Objects.hash(rankCount, airplaneId, rankId);
     }
 }
