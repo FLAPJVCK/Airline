@@ -1,13 +1,11 @@
-package by.epamtc.vaskevichartsiom.finalproject.airline.dao.model;
+package by.epamtc.vaskevichartsiom.finalproject.airline.domain.model;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
-public class AirplaneHasRank extends BaseEntity<Integer>{
+public class AirplaneHasRank extends BaseEntity<Long>{
     private Integer rankCount;
-    private Integer airplaneId;
-    private Integer rankId;
+    private Long airplaneId;
+    private Long rankId;
 
     public AirplaneHasRank() {
     }
@@ -20,19 +18,19 @@ public class AirplaneHasRank extends BaseEntity<Integer>{
         this.rankCount = rankCount;
     }
 
-    public Integer getAirplaneId() {
+    public Long getAirplaneId() {
         return airplaneId;
     }
 
-    public void setAirplaneId(Integer airplaneId) {
+    public void setAirplaneId(Long airplaneId) {
         this.airplaneId = airplaneId;
     }
 
-    public Integer getRankId() {
+    public Long getRankId() {
         return rankId;
     }
 
-    public void setRankId(Integer rankId) {
+    public void setRankId(Long rankId) {
         this.rankId = rankId;
     }
 

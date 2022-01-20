@@ -1,8 +1,9 @@
 package by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository;
 
-import by.epamtc.vaskevichartsiom.finalproject.airline.dao.model.User;
+import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.User;
 
-public interface UserRepository {
-    boolean register(User user) throws ClassNotFoundException;
-    boolean login();
+import java.util.Optional;
+
+public interface UserRepository extends GenericDAO<User>{
+    Optional<User> findUserByEmail(String email);
 }

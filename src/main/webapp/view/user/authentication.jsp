@@ -1,22 +1,16 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: vaske
-  Date: 21.12.2021
-  Time: 16:05
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Authentication</title>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
 </head>
 <body>
 <h1>Authentication</h1>
-<form action="authentication" method="post">
+<form action="${pageContext.request.contextPath}/Controller?command=logIn" method="post">
     <table>
         <tr>
-            <td>Username</td>
-            <td><input type="text" name="username"></td>
+            <td>Email</td>
+            <td><input type="text" name="email"></td>
         </tr>
         <tr>
             <td>Password</td>

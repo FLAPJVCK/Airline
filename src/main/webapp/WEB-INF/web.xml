@@ -11,12 +11,4 @@
         <res-auth>Container</res-auth>
     </resource-ref>
 
-    <servlet>
-        <servlet-name>RegisterServlet</servlet-name>
-        <servlet-class>by.epamtc.vaskevichartsiom.finalproject.airline.controller.RegisterServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>RegisterServlet</servlet-name>
-        <url-pattern>/registration</url-pattern>
-    </servlet-mapping>
 </web-app>

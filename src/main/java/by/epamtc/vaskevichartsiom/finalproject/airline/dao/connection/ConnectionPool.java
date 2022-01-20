@@ -1,4 +1,4 @@
-package by.epamtc.vaskevichartsiom.finalproject.airline.dao;
+package by.epamtc.vaskevichartsiom.finalproject.airline.dao.connection;
 
 import java.sql.Connection;
 import java.sql.SQLException;

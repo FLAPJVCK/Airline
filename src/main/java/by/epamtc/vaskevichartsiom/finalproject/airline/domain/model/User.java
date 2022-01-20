@@ -1,20 +1,30 @@
-package by.epamtc.vaskevichartsiom.finalproject.airline.dao.model;
+package by.epamtc.vaskevichartsiom.finalproject.airline.domain.model;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class User extends BaseEntity<Integer>{
+public class User extends BaseEntity<Long>{
     private String name;
     private String surname;
     private String username;
     private String password;
     private String email;
-    private Integer roleId;
-    private Integer rankId;
+    private Long roleId;
+    private Long rankId;
     private Set<Flight> flights = new HashSet<Flight>();
 
     public User() {
+    }
+
+    public User(String name, String surname, String username, String password, String email, Long roleId, Long rankId) {
+        this.name = name;
+        this.surname = surname;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.roleId = roleId;
+        this.rankId = rankId;
     }
 
     public String getName() {
@@ -57,19 +67,19 @@ public class User extends BaseEntity<Integer>{
         this.email = email;
     }
 
-    public Integer getRoleId() {
+    public Long getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Integer roleId) {
+    public void setRoleId(Long roleId) {
         this.roleId = roleId;
     }
 
-    public Integer getRankId() {
+    public Long getRankId() {
         return rankId;
     }
 
-    public void setRankId(Integer rankId) {
+    public void setRankId(Long rankId) {
         this.rankId = rankId;
     }
 

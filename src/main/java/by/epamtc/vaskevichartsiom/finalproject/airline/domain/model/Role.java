@@ -1,10 +1,10 @@
-package by.epamtc.vaskevichartsiom.finalproject.airline.dao.model;
+package by.epamtc.vaskevichartsiom.finalproject.airline.domain.model;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class Role extends BaseEntity<Integer>{
+public class Role extends BaseEntity<Long>{
     private String roleName;
     private Set<User> users = new HashSet<User>();
 

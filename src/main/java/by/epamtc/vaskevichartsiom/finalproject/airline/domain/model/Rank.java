@@ -1,8 +1,8 @@
-package by.epamtc.vaskevichartsiom.finalproject.airline.dao.model;
+package by.epamtc.vaskevichartsiom.finalproject.airline.domain.model;
 
 import java.util.*;
 
-public class Rank extends BaseEntity<Integer>{
+public class Rank extends BaseEntity<Long>{
     private String rankName;
     private Set<User> users = new HashSet<User>();
     private Set<AirplaneHasRank> airplaneHasRanks= new HashSet<AirplaneHasRank>();

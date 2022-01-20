@@ -1,4 +1,4 @@
-package by.epamtc.vaskevichartsiom.finalproject.airline.dao.model;
+package by.epamtc.vaskevichartsiom.finalproject.airline.domain.model;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -6,12 +6,12 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class Flight extends BaseEntity<Integer>{
+public class Flight extends BaseEntity<Long>{
     private String flightNumber;
     private Date departureDate;
     private Time departureTime;
-    private Integer airplaneId;
-    private Integer destinationId;
+    private Long airplaneId;
+    private Long destinationId;
     private Set<User> users = new HashSet<User>();
 
     public Flight() {
@@ -41,19 +41,19 @@ public class Flight extends BaseEntity<Integer>{
         this.departureTime = departureTime;
     }
 
-    public Integer getAirplaneId() {
+    public Long getAirplaneId() {
         return airplaneId;
     }
 
-    public void setAirplaneId(Integer airplaneId) {
+    public void setAirplaneId(Long airplaneId) {
         this.airplaneId = airplaneId;
     }
 
-    public Integer getDestinationId() {
+    public Long getDestinationId() {
         return destinationId;
     }
 
-    public void setDestinationId(Integer destinationId) {
+    public void setDestinationId(Long destinationId) {
         this.destinationId = destinationId;
     }
 

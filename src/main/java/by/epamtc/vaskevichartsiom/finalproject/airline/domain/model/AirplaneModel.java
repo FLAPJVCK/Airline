@@ -1,10 +1,10 @@
-package by.epamtc.vaskevichartsiom.finalproject.airline.dao.model;
+package by.epamtc.vaskevichartsiom.finalproject.airline.domain.model;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class AirplaneModel extends BaseEntity<Integer>{
+public class AirplaneModel extends BaseEntity<Long>{
     private String model;
     private Integer businessSeat;
     private Integer economySeat;
@@ -12,7 +12,7 @@ public class AirplaneModel extends BaseEntity<Integer>{
     private Integer flightRange;
     private Integer cruisingSpeed;
     private Integer maximumFlightHeight;
-    private Integer manufacturerId;
+    private Long manufacturerId;
     private Set<Airplane> airplanes = new HashSet<Airplane>();
 
     public AirplaneModel() {
@@ -74,11 +74,11 @@ public class AirplaneModel extends BaseEntity<Integer>{
         this.maximumFlightHeight = maximumFlightHeight;
     }
 
-    public Integer getManufacturerId() {
+    public Long getManufacturerId() {
         return manufacturerId;
     }
 
-    public void setManufacturerId(Integer manufacturerId) {
+    public void setManufacturerId(Long manufacturerId) {
         this.manufacturerId = manufacturerId;
     }
 

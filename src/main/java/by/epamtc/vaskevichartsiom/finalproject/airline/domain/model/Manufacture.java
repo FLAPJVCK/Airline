@@ -1,10 +1,10 @@
-package by.epamtc.vaskevichartsiom.finalproject.airline.dao.model;
+package by.epamtc.vaskevichartsiom.finalproject.airline.domain.model;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class Manufacture extends BaseEntity<Integer>{
+public class Manufacture extends BaseEntity<Long>{
     private String manufacturerName;
     private Set<AirplaneModel> airplaneModels = new HashSet<AirplaneModel>();
 

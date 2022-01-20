@@ -1,9 +1,9 @@
-package by.epamtc.vaskevichartsiom.finalproject.airline.dao.model;
+package by.epamtc.vaskevichartsiom.finalproject.airline.domain.model;
 
 import java.io.Serializable;
 
 public abstract class BaseEntity <ID extends Serializable> {
-private ID id;
+    private ID id;
 
     public BaseEntity() {
     }
