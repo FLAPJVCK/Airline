@@ -1,11 +1,12 @@
 package by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.impl;
 
-import by.epamtc.vaskevichartsiom.finalproject.airline.dao.connection.ConnectionPool;
+import by.epamtc.vaskevichartsiom.finalproject.airline.dao.exception.DAOException;
 import by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.UserRepository;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,75 +21,92 @@ public class UserRepositoryMySQL implements UserRepository {
     private static final String FIND_USER_BY_EMAIL_AND_PASSWORD = "SELECT * FROM users WHERE email = ?";
 
     @Override
-    public void create(User user) {
-        PreparedStatement preparedStatement;
+    public void create(User user) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = ConnectionPool.getInstance().getConnection().prepareStatement(INSERT_USER);
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(INSERT_USER);
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getSurname());
             preparedStatement.setString(3, user.getUsername());
             preparedStatement.setString(4, user.getPassword());
             preparedStatement.setString(5, user.getEmail());
-            if (user.getRoleId() != null){
+            if (user.getRoleId() != null) {
                 preparedStatement.setLong(6, user.getRoleId());
             } else {
                 preparedStatement.setLong(6, 3);
             }
-            if (user.getRankId() != null){
+            if (user.getRankId() != null) {
                 preparedStatement.setLong(7, user.getRankId());
             } else {
                 preparedStatement.setLong(7, 5);
             }
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.error("UserRepositoryMySQL create error" + user.toString(), e);
+            LOGGER.error("Create error", e);
+            throw new DAOException("Create error", e);
+        } finally {
+            closeResources(connection, preparedStatement);
         }
     }
 
     @Override
-    public void update(User user) {
-        PreparedStatement preparedStatement;
+    public void update(User user) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = ConnectionPool.getInstance().getConnection().prepareStatement(UPDATE_USER);
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_USER);
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getSurname());
             preparedStatement.setString(3, user.getUsername());
             preparedStatement.setString(4, user.getPassword());
             preparedStatement.setString(5, user.getEmail());
-            if (user.getRoleId() != null){
+            if (user.getRoleId() != null) {
                 preparedStatement.setLong(6, user.getRoleId());
             } else {
                 preparedStatement.setLong(6, 3);
             }
-            if (user.getRankId() != null){
+            if (user.getRankId() != null) {
                 preparedStatement.setLong(7, user.getRankId());
             } else {
                 preparedStatement.setLong(7, 5);
             }
-            preparedStatement.setLong(8,user.getId());
+            preparedStatement.setLong(8, user.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.error("UserRepositoryMySQL update error" + user.toString(), e);
+            LOGGER.error("Update error" + user.toString(), e);
+            throw new DAOException("Update error", e);
+        } finally {
+            closeResources(connection, preparedStatement);
         }
     }
 
     @Override
-    public void delete(Long id) {
-        PreparedStatement preparedStatement;
+    public void delete(Long id) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = ConnectionPool.getInstance().getConnection().prepareStatement(DELETE_USER);
-            preparedStatement.setLong(1,id);
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(DELETE_USER);
+            preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.error("UserRepositoryMySQL delete error", e);
+            LOGGER.error("Delete error", e);
+            throw new DAOException("Delete error", e);
+        } finally {
+            closeResources(connection, preparedStatement);
         }
     }
 
     @Override
-    public Optional<User> findUserByEmail(String email) {
-        PreparedStatement preparedStatement;
-        try {
-            preparedStatement = ConnectionPool.getInstance().getConnection().prepareStatement(FIND_USER_BY_EMAIL_AND_PASSWORD);
+    public Optional<User> findUserByEmail(String email) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try  {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(FIND_USER_BY_EMAIL_AND_PASSWORD);
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -96,7 +114,10 @@ public class UserRepositoryMySQL implements UserRepository {
                 return Optional.of(user);
             }
         } catch (SQLException e) {
-            LOGGER.error("UserRepositoryMySQL find by email error", e);
+            LOGGER.error("Find by email error", e);
+            throw new DAOException("Find by email error", e);
+        } finally {
+            closeResources(connection, preparedStatement);
         }
         return Optional.empty();
     }

@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class LogInPageCommand implements Command {
 
-    private static final String LOGIN_PAGE = "/view/user/authentication.jsp";
+    private static final String LOGIN_PAGE = "/view/access/authentication.jsp";
 
     @Override
     public String execute(HttpServletRequest request) {

@@ -4,6 +4,7 @@ import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.Comman
 import by.epamtc.vaskevichartsiom.finalproject.airline.dao.FactoryDao;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.User;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.FactoryService;
+import by.epamtc.vaskevichartsiom.finalproject.airline.service.exception.ServiceException;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.impl.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +14,7 @@ public class RegisterCommand implements Command {
     private static final String MAIN_PAGE = "/index.jsp";
 
     @Override
-    public String execute(HttpServletRequest request) {
+    public String execute(HttpServletRequest request) throws ServiceException {
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
         String username = request.getParameter("username");

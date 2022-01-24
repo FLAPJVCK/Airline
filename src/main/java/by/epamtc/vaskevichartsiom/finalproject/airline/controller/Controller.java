@@ -2,6 +2,7 @@ package by.epamtc.vaskevichartsiom.finalproject.airline.controller;
 
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.Command;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.CommandManager;
+import by.epamtc.vaskevichartsiom.finalproject.airline.service.exception.ServiceException;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -13,6 +14,11 @@ public class Controller extends HttpServlet {
 
     private static final String COMMAND_QUERY_PARAMETER = "command";
     private static final String APPLICATION_ENCODING = "utf-8";
+
+//    @Override
+//    public void init() throws ServletException {
+//
+//    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -31,7 +37,12 @@ public class Controller extends HttpServlet {
         String commandName = request.getParameter(COMMAND_QUERY_PARAMETER);
         Command command = CommandManager.getInstance().getCommand(commandName);
 
-        String page = command.execute(request);
+        String page = null;
+        try {
+            page = command.execute(request);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
 
         response.sendRedirect(request.getContextPath() + page);
 

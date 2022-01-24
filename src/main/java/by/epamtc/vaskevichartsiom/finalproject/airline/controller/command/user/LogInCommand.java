@@ -3,6 +3,7 @@ package by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.user;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.Command;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.User;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.FactoryService;
+import by.epamtc.vaskevichartsiom.finalproject.airline.service.exception.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,7 +15,7 @@ public class LogInCommand implements Command {
     public static final String AUTHORIZATION = "authorization";
 
     @Override
-    public String execute(HttpServletRequest request) {
+    public String execute(HttpServletRequest request) throws ServiceException {
         String password = request.getParameter("password");
         String email = request.getParameter("email");
 

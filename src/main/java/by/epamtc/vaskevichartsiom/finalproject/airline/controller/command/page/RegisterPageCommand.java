@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class RegisterPageCommand implements Command {
 
-    private static final String REGISTER_PAGE = "/view/user/registration.jsp";
+    private static final String REGISTER_PAGE = "/view/access/registration.jsp";
 
     @Override
     public String execute(HttpServletRequest request) {
