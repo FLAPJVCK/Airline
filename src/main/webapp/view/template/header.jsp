@@ -1,5 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="localization" />
+
+<fmt:message key="header.language" var="language"/>
+<fmt:message key="header.employees" var="employees"/>
+<fmt:message key="header.logIn" var="logIn"/>
+<fmt:message key="header.signUp" var="signUp"/>
+<fmt:message key="header.logOut" var="logOut"/>
+
 <html>
 <head>
     <meta charset="utf-8"/>
@@ -11,33 +22,44 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
 </head>
 <body class="container">
 <div>
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-        <a href="${pageContext.request.contextPath}/index.jsp"
+        <a href="${pageContext.request.contextPath}/Controller?command=mainPage"
            class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
             <h1 class="main_text">Airline</h1>
         </a>
 
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
-            <li><a href="#" class="nav-link px-2 link-dark">Features</a></li>
-            <li><a href="#" class="nav-link px-2 link-dark">Pricing</a></li>
-            <li><a href="#" class="nav-link px-2 link-dark">FAQs</a></li>
-            <li><a href="#" class="nav-link px-2 link-dark">About</a></li>
+            <li><a href="#" class="nav-link px-2 link-secondary">1</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark">2</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark">3</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark">4</a></li>
+            <li><a href="${pageContext.request.contextPath}/Controller?command=employeePage" class="nav-link px-2 link-dark">${employees}</a></li>
         </ul>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                ${language}
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="${pageContext.request.contextPath}/Controller?command=change_locale&amp;locale=ru">Русский</a></li>
+                <li><a class="dropdown-item" href="${pageContext.request.contextPath}/Controller?command=change_locale&amp;locale=en">English</a></li>
+            </ul>
+        </div>
         <div class="col-md-3 text-end">
             <c:choose>
                 <c:when test="${sessionScope.authorization}">
-                    <a href="${pageContext.request.contextPath}/Controller?command=logOut"><button type="button" class="btn btn-outline-primary me-2">Log out</button></a>
+                    <a href="${pageContext.request.contextPath}/Controller?command=logOut"><button type="button" class="btn btn-outline-primary me-2">${logOut}</button></a>
                 </c:when>
                 <c:otherwise>
-                    <a href="${pageContext.request.contextPath}/Controller?command=logInPage"><button type="button" class="btn btn-outline-primary me-2">Log in</button></a>
-                    <a href="${pageContext.request.contextPath}/Controller?command=registerPage"><button type="button" class="btn btn-primary">Sign up</button></a>
+                    <a href="${pageContext.request.contextPath}/Controller?command=logInPage"><button type="button" class="btn btn-outline-primary me-2">${logIn}</button></a>
+                    <a href="${pageContext.request.contextPath}/Controller?command=registerPage"><button type="button" class="btn btn-primary">${signUp}</button></a>
                 </c:otherwise>
             </c:choose>
         </div>
     </header>
 </div>
-<h2>Добро пожаловать ${sessionScope.email}</h2>
+

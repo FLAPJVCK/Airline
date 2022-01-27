@@ -8,6 +8,8 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 @WebServlet(name = "Controller", value = "/Controller")
 public class Controller extends HttpServlet {
@@ -36,13 +38,14 @@ public class Controller extends HttpServlet {
 
         String commandName = request.getParameter(COMMAND_QUERY_PARAMETER);
         Command command = CommandManager.getInstance().getCommand(commandName);
-
         String page = null;
         try {
             page = command.execute(request);
         } catch (ServiceException e) {
             e.printStackTrace();
         }
+
+
 
         response.sendRedirect(request.getContextPath() + page);
 

@@ -1,4 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="localization" />
+
+<fmt:message key="signUp.page" var="pageName"/>
+<fmt:message key="signUp.page.name" var="name"/>
+<fmt:message key="signUp.page.surname" var="surname"/>
+<fmt:message key="signUp.page.username" var="username"/>
+<fmt:message key="signUp.page.email" var="email"/>
+<fmt:message key="signUp.page.password" var="password"/>
+<fmt:message key="signUp.page.button" var="button"/>
 <html>
 <head>
     <title>Registration</title>
@@ -12,33 +24,33 @@
 <main class="form-signin">
     <form action="${pageContext.request.contextPath}/Controller?command=register" method="post">
 
-        <a href="${pageContext.request.contextPath}/index.jsp">
+        <a href="${pageContext.request.contextPath}/Controller?command=mainPage">
             <img class="mb-4" src="../../img/favicon.ico" alt="" width="100" height="100">
         </a>
-        <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
+        <h1 class="h3 mb-3 fw-normal">${pageName}</h1>
 
         <div class="form-floating">
             <input type="text" name="name" class="form-control" id="floatingName" placeholder="name@example.com">
-            <label for="floatingName">Name</label>
+            <label for="floatingName">${name}</label>
         </div>
         <div class="form-floating">
             <input type="text" name="surname" class="form-control" id="floatingSurname" placeholder="Password">
-            <label for="floatingSurname">Surname</label>
+            <label for="floatingSurname">${surname}</label>
         </div>
         <div class="form-floating">
             <input type="text" name="username" class="form-control" id="floatingUsername" placeholder="Password">
-            <label for="floatingUsername">Username</label>
+            <label for="floatingUsername">${username}</label>
         </div>
         <div class="form-floating">
             <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-            <label for="floatingInput">Email address</label>
+            <label for="floatingInput">${email}</label>
         </div>
         <div class="form-floating">
             <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
-            <label for="floatingPassword">Password</label>
+            <label for="floatingPassword">${password}</label>
         </div>
 
-        <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">${button}</button>
         <p class="mt-5 mb-3 text-muted">&copy; FLAPJVCK</p>
     </form>
 </main>

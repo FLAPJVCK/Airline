@@ -10,15 +10,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class UserRepositoryMySQL implements UserRepository {
-    private static final Logger LOGGER = LogManager.getLogger(UserRepositoryMySQL.class);
-
-    private final static String INSERT_USER = "insert into airline.users(name,surname,username,password,email,role_id,rank_id) values (?,?,?,?,?,?,?)";
-    private final static String UPDATE_USER = "UPDATE users SET name = ?,surname = ?,username = ?,password = ?,email = ?,role_id = ?,rank_id = ? WHERE id = ?";
-    private final static String DELETE_USER = "DELETE FROM users WHERE users_id = ?";
+    private final static String INSERT_USER = "INSERT into airline.users(name,surname,username,password,email,role_id,rank_id) values (?,?,?,?,?,?,?)";
+    private final static String UPDATE_USER = "UPDATE airline.users SET name = ?,surname = ?,username = ?,password = ?,email = ?,role_id = ?,rank_id = ? WHERE id = ?";
+    private final static String DELETE_USER = "DELETE FROM airline.users WHERE id = ?";
     private static final String FIND_USER_BY_EMAIL_AND_PASSWORD = "SELECT * FROM users WHERE email = ?";
+    private static final String GET_All_USERS = "SELECT * FROM users";
 
     @Override
     public void create(User user) throws DAOException {
@@ -44,8 +45,8 @@ public class UserRepositoryMySQL implements UserRepository {
             }
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.error("Create error", e);
-            throw new DAOException("Create error", e);
+            LOGGER.error("Create user error", e);
+            throw new DAOException("Create user error", e);
         } finally {
             closeResources(connection, preparedStatement);
         }
@@ -76,8 +77,8 @@ public class UserRepositoryMySQL implements UserRepository {
             preparedStatement.setLong(8, user.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.error("Update error" + user.toString(), e);
-            throw new DAOException("Update error", e);
+            LOGGER.error("Update user error" + user.toString(), e);
+            throw new DAOException("Update user error", e);
         } finally {
             closeResources(connection, preparedStatement);
         }
@@ -93,8 +94,8 @@ public class UserRepositoryMySQL implements UserRepository {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.error("Delete error", e);
-            throw new DAOException("Delete error", e);
+            LOGGER.error("Delete user error", e);
+            throw new DAOException("Delete user error", e);
         } finally {
             closeResources(connection, preparedStatement);
         }
@@ -114,12 +115,38 @@ public class UserRepositoryMySQL implements UserRepository {
                 return Optional.of(user);
             }
         } catch (SQLException e) {
-            LOGGER.error("Find by email error", e);
-            throw new DAOException("Find by email error", e);
+            LOGGER.error("Find user by email error", e);
+            throw new DAOException("Find user by email error", e);
         } finally {
             closeResources(connection, preparedStatement);
         }
         return Optional.empty();
+    }
+
+    @Override
+    public List<User> getAllUsers() throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        List<User> users = new ArrayList<>();
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(GET_All_USERS);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    User user = readUser(resultSet);
+                    users.add(user);
+                }
+            } catch (SQLException e) {
+                LOGGER.error("getAllUsers error", e);
+                throw new DAOException("getAllUsers error", e);
+            }
+        } catch (SQLException e) {
+            LOGGER.error("getAllUsers error", e);
+            throw new DAOException("getAllUsers error", e);
+        } finally {
+            closeResources(connection, preparedStatement);
+        }
+        return users;
     }
 
     private User readUser(ResultSet resultSet) throws SQLException {

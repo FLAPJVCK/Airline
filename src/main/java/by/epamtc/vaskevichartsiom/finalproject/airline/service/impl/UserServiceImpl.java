@@ -9,6 +9,7 @@ import by.epamtc.vaskevichartsiom.finalproject.airline.service.exception.Service
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
@@ -27,8 +28,8 @@ public class UserServiceImpl implements UserService {
                 return Optional.empty();
             }
         } catch (DAOException e) {
-            LOGGER.error("Find by email error", e);
-            throw new ServiceException("Find by email error", e);
+            LOGGER.error("Find user by email error", e);
+            throw new ServiceException("Find user by email error", e);
         }
     }
 
@@ -43,10 +44,9 @@ public class UserServiceImpl implements UserService {
                 return Optional.of(user);
             }
         } catch (DAOException e) {
-            LOGGER.error("register error", e);
-            throw new ServiceException("register error", e);
+            LOGGER.error("register user error", e);
+            throw new ServiceException("register user error", e);
         }
-
     }
 
     @Override
@@ -55,12 +55,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> deleteUser(Long id) throws ServiceException {
-        return Optional.empty();
+    public void deleteUser(Long id) throws ServiceException {
+        try {
+            userRepository.delete(id);
+        } catch (DAOException e) {
+            LOGGER.error("delete user error", e);
+            throw new ServiceException("delete user error", e);
+        }
     }
 
     @Override
     public Optional<User> findById(Long id) throws ServiceException {
         return Optional.empty();
+    }
+
+    @Override
+    public List<User> getAllUsers() throws ServiceException {
+        try {
+            final List<User> users = userRepository.getAllUsers();
+            return users;
+        } catch (DAOException e) {
+            LOGGER.error("getAllUsers error", e);
+            throw new ServiceException("getAllUsers error", e);
+        }
     }
 }
