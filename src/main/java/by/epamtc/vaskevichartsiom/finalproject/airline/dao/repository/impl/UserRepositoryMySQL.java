@@ -3,8 +3,6 @@ package by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.impl;
 import by.epamtc.vaskevichartsiom.finalproject.airline.dao.exception.DAOException;
 import by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.UserRepository;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.User;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,7 +16,8 @@ public class UserRepositoryMySQL implements UserRepository {
     private final static String INSERT_USER = "INSERT into airline.users(name,surname,username,password,email,role_id,rank_id) values (?,?,?,?,?,?,?)";
     private final static String UPDATE_USER = "UPDATE airline.users SET name = ?,surname = ?,username = ?,password = ?,email = ?,role_id = ?,rank_id = ? WHERE id = ?";
     private final static String DELETE_USER = "DELETE FROM airline.users WHERE id = ?";
-    private static final String FIND_USER_BY_EMAIL_AND_PASSWORD = "SELECT * FROM users WHERE email = ?";
+    private static final String FIND_USER_BY_ID = "SELECT * FROM users WHERE id = ?";
+    private static final String FIND_USER_BY_EMAIL = "SELECT * FROM users WHERE email = ?";
     private static final String GET_All_USERS = "SELECT * FROM users";
 
     @Override
@@ -102,12 +101,34 @@ public class UserRepositoryMySQL implements UserRepository {
     }
 
     @Override
+    public Optional<User> findUserById(Long id) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try  {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(FIND_USER_BY_ID);
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                User user = readUser(resultSet);
+                return Optional.of(user);
+            }
+        } catch (SQLException e) {
+            LOGGER.error("Find user by id error", e);
+            throw new DAOException("Find user by id error", e);
+        } finally {
+            closeResources(connection, preparedStatement);
+        }
+        return Optional.empty();
+    }
+
+    @Override
     public Optional<User> findUserByEmail(String email) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try  {
             connection = getConnection();
-            preparedStatement = connection.prepareStatement(FIND_USER_BY_EMAIL_AND_PASSWORD);
+            preparedStatement = connection.prepareStatement(FIND_USER_BY_EMAIL);
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {

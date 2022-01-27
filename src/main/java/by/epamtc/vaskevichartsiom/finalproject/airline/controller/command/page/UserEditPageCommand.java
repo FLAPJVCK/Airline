@@ -8,17 +8,18 @@ import by.epamtc.vaskevichartsiom.finalproject.airline.service.exception.Service
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Optional;
 
-public class EmployeePageCommand implements Command {
-
+public class UserEditPageCommand implements Command {
     private static final String CURRENT_PAGE = "current_page";
-    private static final String EMPLOYEE_PAGE = "/view/employee.jsp";
+    private static final String EMPLOYEE_PAGE = "/view/editEmployee.jsp";
 
     @Override
     public CommandResponse execute(HttpServletRequest request) throws ServiceException {
         request.getSession().setAttribute(CURRENT_PAGE, EMPLOYEE_PAGE);
-        List<User> users = FactoryService.getInstance().getUserServiceImpl().getAllUsers();
-        request.getSession().setAttribute("employeeList", users);
+        Long id = Long.valueOf(request.getParameter("id"));
+        Optional<User> user = FactoryService.getInstance().getUserServiceImpl().findById(id);
+        request.getSession().setAttribute("employee", user.get());
         return new CommandResponse(EMPLOYEE_PAGE, CommandResponse.CommandResponseType.FORWARD);
     }
 }

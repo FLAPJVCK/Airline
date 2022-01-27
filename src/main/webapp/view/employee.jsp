@@ -44,7 +44,7 @@
                 <td>${employee.password}</td>
                 <td>${employee.rankId}</td>
                 <td>${employee.roleId}</td>
-                <td><a href="${pageContext.request.contextPath}/Controller?command=editUser&id=${employee.id}"><button type="button" class="btn btn-warning">${edit}</button></a></td>
+                <td><a href="${pageContext.request.contextPath}/Controller?command=editUserPage&id=${employee.id}"><button type="button" class="btn btn-warning">${edit}</button></a></td>
                 <td><a href="${pageContext.request.contextPath}/Controller?command=deleteUser&id=${employee.id}"><button type="button" class="btn btn-danger">${delete}</button></a></td>
             </tr>
         </c:forEach>

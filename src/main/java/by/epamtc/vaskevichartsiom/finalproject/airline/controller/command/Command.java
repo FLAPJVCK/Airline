@@ -5,5 +5,5 @@ import by.epamtc.vaskevichartsiom.finalproject.airline.service.exception.Service
 import javax.servlet.http.HttpServletRequest;
 
 public interface Command {
-    String execute(HttpServletRequest request) throws ServiceException;
+    CommandResponse execute(HttpServletRequest request) throws ServiceException;
 }

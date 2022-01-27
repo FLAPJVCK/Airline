@@ -1,15 +1,14 @@
 package by.epamtc.vaskevichartsiom.finalproject.airline.controller.command;
 
-import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.page.EmployeePageCommand;
-import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.page.LogInPageCommand;
-import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.page.MainPageCommand;
-import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.page.RegisterPageCommand;
+import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.page.*;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.user.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class CommandManager {
+
+    private static final String MAIN_PAGE = "/index.jsp";
 
     private static volatile CommandManager instance;
 
@@ -25,6 +24,7 @@ public class CommandManager {
         commands.put("logOut", new LogOutCommand());
         commands.put("employeePage", new EmployeePageCommand());
         commands.put("employee", new EmployeeCommand());
+        commands.put("editUserPage", new UserEditPageCommand());
         commands.put("editUser", new EditUserCommand());
         commands.put("deleteUser", new DeleteUserCommand());
     }
@@ -41,7 +41,7 @@ public class CommandManager {
     }
 
     public Command getCommand(String path) {
-        return commands.getOrDefault(path, (r) -> "mainPage");
+        return commands.getOrDefault(path, (r) -> new CommandResponse(MAIN_PAGE, CommandResponse.CommandResponseType.REDIRECT));
     }
 
 //    public Command getCommand(String path) {

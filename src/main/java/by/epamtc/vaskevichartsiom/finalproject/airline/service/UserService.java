@@ -11,7 +11,7 @@ public interface UserService {
 
     Optional<User> register(User user) throws ServiceException;
 
-    Optional<User> updateUser(User user) throws ServiceException;
+    void updateUser(User user) throws ServiceException;
 
     void deleteUser(Long id) throws ServiceException;
 

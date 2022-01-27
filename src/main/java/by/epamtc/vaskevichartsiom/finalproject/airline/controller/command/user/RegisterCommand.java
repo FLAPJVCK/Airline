@@ -1,6 +1,7 @@
 package by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.user;
 
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.Command;
+import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.CommandResponse;
 import by.epamtc.vaskevichartsiom.finalproject.airline.dao.FactoryDao;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.User;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.FactoryService;
@@ -14,7 +15,7 @@ public class RegisterCommand implements Command {
     private static final String MAIN_PAGE = "/index.jsp";
 
     @Override
-    public String execute(HttpServletRequest request) throws ServiceException {
+    public CommandResponse execute(HttpServletRequest request) throws ServiceException {
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
         String username = request.getParameter("username");
@@ -29,6 +30,6 @@ public class RegisterCommand implements Command {
         currentUser.setEmail(email);
 
         FactoryService.getInstance().getUserServiceImpl().register(currentUser);
-        return MAIN_PAGE;
+        return new CommandResponse(MAIN_PAGE, CommandResponse.CommandResponseType.FORWARD);
     }
 }

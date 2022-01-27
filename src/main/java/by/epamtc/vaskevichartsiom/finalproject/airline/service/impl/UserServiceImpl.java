@@ -50,8 +50,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> updateUser(User user) throws ServiceException {
-        return Optional.empty();
+    public void updateUser(User user) throws ServiceException {
+        try {
+            userRepository.update(user);
+        } catch (DAOException e) {
+            LOGGER.error("update user error", e);
+            throw new ServiceException("update user error", e);
+        }
     }
 
     @Override
@@ -66,7 +71,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findById(Long id) throws ServiceException {
-        return Optional.empty();
+        try {
+            final Optional<User> user = userRepository.findUserById(id);
+            return user;
+        } catch (DAOException e) {
+            LOGGER.error("Find user by id error", e);
+            throw new ServiceException("Find user by id error", e);
+        }
     }
 
     @Override

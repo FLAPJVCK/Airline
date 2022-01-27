@@ -41,12 +41,5 @@ public interface GenericDAO<T> {
                 LOGGER.error("PreparedStatement close error", e);
             }
         }
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Connection close error", e);
-            }
-        }
     }
 }
