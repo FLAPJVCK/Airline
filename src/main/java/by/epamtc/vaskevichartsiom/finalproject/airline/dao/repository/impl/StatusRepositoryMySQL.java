@@ -19,17 +19,54 @@ public class StatusRepositoryMySQL implements StatusRepository {
 
     @Override
     public void create(Status entity) throws DAOException {
-
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(INSERT_STATUS);
+            preparedStatement.setString(1, entity.getStatusName());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error("Create status error", e);
+            throw new DAOException("Create status error", e);
+        } finally {
+            closeResources(connection, preparedStatement);
+        }
     }
 
     @Override
     public void update(Status entity) throws DAOException {
-
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_STATUS);
+            preparedStatement.setString(1, entity.getStatusName());
+            preparedStatement.setLong(2, entity.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error("Update status error", e);
+            throw new DAOException("Update status error", e);
+        } finally {
+            closeResources(connection, preparedStatement);
+        }
     }
 
     @Override
     public void delete(Long id) throws DAOException {
-
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(DELETE_STATUS);
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error("Delete status error", e);
+            throw new DAOException("Delete status error", e);
+        } finally {
+            closeResources(connection, preparedStatement);
+        }
     }
 
     @Override

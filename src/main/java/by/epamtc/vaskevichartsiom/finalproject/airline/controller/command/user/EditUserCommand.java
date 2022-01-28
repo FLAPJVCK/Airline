@@ -2,6 +2,8 @@ package by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.user;
 
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.Command;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.CommandResponse;
+import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.UserRank;
+import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.UserRole;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.User;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.FactoryService;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.exception.ServiceException;
@@ -23,8 +25,8 @@ public class EditUserCommand implements Command {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String email = request.getParameter("email");
-        Long rankId = Long.valueOf(request.getParameter("rankId"));
-        Long roleId = Long.valueOf(request.getParameter("roleId"));
+        String rankName = request.getParameter("rankName").toUpperCase();
+        String roleName = request.getParameter("roleName").toUpperCase();
 
         User currentUser = new User();
         currentUser.setId(id);
@@ -33,8 +35,8 @@ public class EditUserCommand implements Command {
         currentUser.setUsername(username);
         currentUser.setPassword(password);
         currentUser.setEmail(email);
-        currentUser.setRankId(rankId);
-        currentUser.setRoleId(roleId);
+        currentUser.setUserRank(UserRank.valueOf(rankName));
+        currentUser.setUserRole(UserRole.valueOf(roleName));
 
         FactoryService.getInstance().getUserServiceImpl().updateUser(currentUser);
         return new CommandResponse(EMPLOYEE_PAGE, CommandResponse.CommandResponseType.REDIRECT);

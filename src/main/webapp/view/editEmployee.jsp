@@ -6,6 +6,8 @@
 <fmt:setBundle basename="localization" />
 
 <c:set var="employee" value='${sessionScope["employee"]}' />
+<c:set var="allRanks" value='${sessionScope["allRanks"]}' />
+<c:set var="allRoles" value='${sessionScope["allRoles"]}' />
 
 <fmt:message key="employee.page.name" var="name"/>
 <fmt:message key="employee.page.surname" var="surname"/>
@@ -18,6 +20,25 @@
 <fmt:message key="employeeEdit.page" var="pageName"/>
 
 <jsp:include page="template/header.jsp"/>
+<style>
+    .change_form_right select{
+        width: 75%;
+        float: right;
+    }
+    .change_form_left {
+        width: 25%;
+        float: left;
+    }
+    .height{
+        height: 58px;
+    }
+    .form-signin {
+        width: 100%;
+        max-width: 330px;
+        padding: 15px;
+        margin: auto;
+    }
+</style>
 
 <div class="text-center">
 <div class="form-signin">
@@ -44,13 +65,35 @@
             <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" value="${employee.password}">
             <label for="floatingPassword">${password}</label>
         </div>
-        <div class="form-floating">
-            <input type="text" name="rankId" class="form-control" id="floatingPassword" placeholder="Password" value="${employee.rankId}">
-            <label for="floatingPassword">${rank}</label>
+        <div class="form-floating form-control change_form_right height">
+                <label class="change_form_left">${rank}</label>
+                <select name="rankName">
+                    <c:forEach var="Rank" items="${allRanks}" >
+                        <c:choose>
+                            <c:when test="${Rank == employee.userRank}">
+                                <option value="${Rank}" selected="selected">${Rank}</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="${Rank}">${Rank}</option>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </select>
         </div>
-        <div class="form-floating">
-            <input type="text" name="roleId" class="form-control" id="floatingPassword" placeholder="Password" value="${employee.roleId}">
-            <label for="floatingPassword">${role}</label>
+        <div class="form-floating form-control change_form_right height">
+            <label class="change_form_left">${role}</label>
+            <select name="roleName">
+                <c:forEach var="Role" items="${allRoles}" >
+                    <c:choose>
+                        <c:when test="${Role == employee.userRole}">
+                            <option value="${Role}" selected="selected">${Role}</option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value="${Role}">${Role}</option>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+            </select>
         </div>
 
         <button class="w-100 btn btn-lg btn-primary" type="submit">${edit}</button>
@@ -58,6 +101,8 @@
     </form>
 </div>
 </div>
+
+
 
 
 <jsp:include page="template/footer.jsp"/>

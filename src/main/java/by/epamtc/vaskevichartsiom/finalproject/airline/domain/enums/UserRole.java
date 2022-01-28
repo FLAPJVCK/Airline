@@ -5,18 +5,13 @@ public enum UserRole {
     MANAGER(2),
     WORKER(3);
 
-    private final int role;
+    private final int id;
 
-    UserRole(int role) {
-        this.role = role;
+    UserRole(int id) {
+        this.id = id;
     }
 
-    public static UserRole of(String role) {
-        for (UserRole value : UserRole.values()) {
-            if (value.role == Integer.parseInt(role)) {
-                return value;
-            }
-        }
-        return WORKER;
+    public int getId() {
+        return id;
     }
 }

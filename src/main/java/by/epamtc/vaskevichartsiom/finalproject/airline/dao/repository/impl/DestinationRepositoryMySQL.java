@@ -19,17 +19,54 @@ public class DestinationRepositoryMySQL implements DestinationRepository {
 
     @Override
     public void create(Destination entity) throws DAOException {
-
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(INSERT_DESTINATION);
+            preparedStatement.setString(1, entity.getAirport());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error("Create destination error", e);
+            throw new DAOException("Create destination error", e);
+        } finally {
+            closeResources(connection, preparedStatement);
+        }
     }
 
     @Override
     public void update(Destination entity) throws DAOException {
-
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_DESTINATION);
+            preparedStatement.setString(1, entity.getAirport());
+            preparedStatement.setLong(2, entity.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error("Update destination error", e);
+            throw new DAOException("Update destination error", e);
+        } finally {
+            closeResources(connection, preparedStatement);
+        }
     }
 
     @Override
     public void delete(Long id) throws DAOException {
-
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(DELETE_DESTINATION);
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error("Delete destination error", e);
+            throw new DAOException("Delete destination error", e);
+        } finally {
+            closeResources(connection, preparedStatement);
+        }
     }
 
     @Override

@@ -5,18 +5,13 @@ public enum FlightStatus {
     READY(2),
     COMPLETED(3);
 
-    private final int status;
+    private final int id;
 
-    FlightStatus(int status) {
-        this.status = status;
+    FlightStatus(int id) {
+        this.id = id;
     }
 
-    public static FlightStatus of(String status) {
-        for (FlightStatus value : FlightStatus.values()) {
-            if (value.status == Integer.parseInt(status)) {
-                return value;
-            }
-        }
-        return NOT_READY;
+    public int getId() {
+        return id;
     }
 }

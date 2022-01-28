@@ -7,18 +7,13 @@ public enum UserRank {
     STEWARDESS(4),
     WORKER(5);
 
-    private final int rank;
+    private final int id;
 
-    UserRank(int rank) {
-        this.rank = rank;
+    UserRank(int id) {
+        this.id = id;
     }
 
-    public static UserRank of(String rank) {
-        for (UserRank value : UserRank.values()) {
-            if (value.rank == Integer.parseInt(rank)) {
-                return value;
-            }
-        }
-        return WORKER;
+    public int getId() {
+        return id;
     }
 }

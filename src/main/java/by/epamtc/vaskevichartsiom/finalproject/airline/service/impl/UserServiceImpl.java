@@ -1,8 +1,16 @@
 package by.epamtc.vaskevichartsiom.finalproject.airline.service.impl;
 
 import by.epamtc.vaskevichartsiom.finalproject.airline.dao.exception.DAOException;
+import by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.RankRepository;
+import by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.RoleRepository;
 import by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.UserRepository;
+import by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.impl.RankRepositoryMySQL;
+import by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.impl.RoleRepositoryMySQL;
 import by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.impl.UserRepositoryMySQL;
+import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.UserRank;
+import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.UserRole;
+import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Rank;
+import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Role;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.User;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.UserService;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.exception.ServiceException;
@@ -15,6 +23,8 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private static final UserRepository userRepository = new UserRepositoryMySQL();
+    private static final RankRepository rankRepository = new RankRepositoryMySQL();
+    private static final RoleRepository roleRepository = new RoleRepositoryMySQL();
     private static final Logger LOGGER = LogManager.getLogger(UserServiceImpl.class);
 
     @Override
@@ -81,13 +91,35 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers() throws ServiceException {
+    public List<User> findAllUsers() throws ServiceException {
         try {
-            final List<User> users = userRepository.getAllUsers();
+            final List<User> users = userRepository.findAllUsers();
             return users;
         } catch (DAOException e) {
             LOGGER.error("getAllUsers error", e);
             throw new ServiceException("getAllUsers error", e);
+        }
+    }
+
+    @Override
+    public List<UserRank> findAllRanks() throws ServiceException {
+        try {
+            final List<UserRank> ranks = rankRepository.findAllRanks();
+            return ranks;
+        } catch (DAOException e) {
+            LOGGER.error("findAllRanks error", e);
+            throw new ServiceException("findAllRanks error", e);
+        }
+    }
+
+    @Override
+    public List<UserRole> findAllRoles() throws ServiceException {
+        try {
+            final List<UserRole> roles = roleRepository.findAllRoles();
+            return roles;
+        } catch (DAOException e) {
+            LOGGER.error("findAllRoles error", e);
+            throw new ServiceException("findAllRoles error", e);
         }
     }
 }

@@ -11,7 +11,6 @@
 <fmt:message key="employee.page.surname" var="surname"/>
 <fmt:message key="employee.page.username" var="username"/>
 <fmt:message key="employee.page.email" var="email"/>
-<fmt:message key="employee.page.password" var="password"/>
 <fmt:message key="employee.page.rank" var="rank"/>
 <fmt:message key="employee.page.role" var="role"/>
 <fmt:message key="employee.page.edit" var="edit"/>
@@ -26,7 +25,6 @@
         <th scope="col">${surname}</th>
         <th scope="col">${username}</th>
         <th scope="col">${email}</th>
-        <th scope="col">${password}</th>
         <th scope="col">${rank}</th>
         <th scope="col">${role}</th>
         <th scope="col"></th>
@@ -41,9 +39,8 @@
                 <td>${employee.surname}</td>
                 <td>${employee.username}</td>
                 <td>${employee.email}</td>
-                <td>${employee.password}</td>
-                <td>${employee.rankId}</td>
-                <td>${employee.roleId}</td>
+                <td>${employee.userRank}</td>
+                <td>${employee.userRole}</td>
                 <td><a href="${pageContext.request.contextPath}/Controller?command=editUserPage&id=${employee.id}"><button type="button" class="btn btn-warning">${edit}</button></a></td>
                 <td><a href="${pageContext.request.contextPath}/Controller?command=deleteUser&id=${employee.id}"><button type="button" class="btn btn-danger">${delete}</button></a></td>
             </tr>

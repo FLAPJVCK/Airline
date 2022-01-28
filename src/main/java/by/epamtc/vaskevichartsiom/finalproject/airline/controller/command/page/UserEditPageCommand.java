@@ -2,6 +2,8 @@ package by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.page;
 
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.Command;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.CommandResponse;
+import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.UserRank;
+import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.UserRole;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.User;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.FactoryService;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.exception.ServiceException;
@@ -20,6 +22,10 @@ public class UserEditPageCommand implements Command {
         Long id = Long.valueOf(request.getParameter("id"));
         Optional<User> user = FactoryService.getInstance().getUserServiceImpl().findById(id);
         request.getSession().setAttribute("employee", user.get());
+        List<UserRank> allRanks = FactoryService.getInstance().getUserServiceImpl().findAllRanks();
+        List<UserRole> allRoles = FactoryService.getInstance().getUserServiceImpl().findAllRoles();
+        request.getSession().setAttribute("allRanks", allRanks);
+        request.getSession().setAttribute("allRoles", allRoles);
         return new CommandResponse(EMPLOYEE_PAGE, CommandResponse.CommandResponseType.FORWARD);
     }
 }

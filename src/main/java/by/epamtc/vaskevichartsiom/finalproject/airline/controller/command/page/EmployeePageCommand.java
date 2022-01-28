@@ -17,7 +17,7 @@ public class EmployeePageCommand implements Command {
     @Override
     public CommandResponse execute(HttpServletRequest request) throws ServiceException {
         request.getSession().setAttribute(CURRENT_PAGE, EMPLOYEE_PAGE);
-        List<User> users = FactoryService.getInstance().getUserServiceImpl().getAllUsers();
+        List<User> users = FactoryService.getInstance().getUserServiceImpl().findAllUsers();
         request.getSession().setAttribute("employeeList", users);
         return new CommandResponse(EMPLOYEE_PAGE, CommandResponse.CommandResponseType.FORWARD);
     }

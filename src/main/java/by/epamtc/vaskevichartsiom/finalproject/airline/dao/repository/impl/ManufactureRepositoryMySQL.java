@@ -20,17 +20,54 @@ public class ManufactureRepositoryMySQL implements ManufactureRepository {
 
     @Override
     public void create(Manufacture entity) throws DAOException {
-
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(INSERT_MANUFACTURER);
+            preparedStatement.setString(1, entity.getManufacturerName());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error("Create manufacture error", e);
+            throw new DAOException("Create manufacture error", e);
+        } finally {
+            closeResources(connection, preparedStatement);
+        }
     }
 
     @Override
     public void update(Manufacture entity) throws DAOException {
-
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_MANUFACTURER);
+            preparedStatement.setString(1, entity.getManufacturerName());
+            preparedStatement.setLong(2, entity.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error("Update manufacture error", e);
+            throw new DAOException("Update manufacture error", e);
+        } finally {
+            closeResources(connection, preparedStatement);
+        }
     }
 
     @Override
     public void delete(Long id) throws DAOException {
-
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(DELETE_MANUFACTURER);
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error("Delete manufacture error", e);
+            throw new DAOException("Delete manufacture error", e);
+        } finally {
+            closeResources(connection, preparedStatement);
+        }
     }
 
     @Override
