@@ -171,12 +171,12 @@ public class UserRepositoryMySQL implements UserRepository {
                     users.add(user);
                 }
             } catch (SQLException e) {
-                LOGGER.error("getAllUsers error", e);
-                throw new DAOException("getAllUsers error", e);
+                LOGGER.error("findAllUsers error", e);
+                throw new DAOException("findAllUsers error", e);
             }
         } catch (SQLException e) {
-            LOGGER.error("getAllUsers error", e);
-            throw new DAOException("getAllUsers error", e);
+            LOGGER.error("findAllUsers error", e);
+            throw new DAOException("findAllUsers error", e);
         } finally {
             closeResources(connection, preparedStatement);
         }

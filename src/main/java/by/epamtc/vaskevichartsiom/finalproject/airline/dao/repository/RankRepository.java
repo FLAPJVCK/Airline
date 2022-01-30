@@ -2,7 +2,6 @@ package by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository;
 
 import by.epamtc.vaskevichartsiom.finalproject.airline.dao.exception.DAOException;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.UserRank;
-import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Rank;
 
 import java.util.List;
 import java.util.Optional;

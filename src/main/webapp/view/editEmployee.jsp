@@ -17,7 +17,7 @@
 <fmt:message key="employee.page.rank" var="rank"/>
 <fmt:message key="employee.page.role" var="role"/>
 <fmt:message key="employee.page.edit" var="edit"/>
-<fmt:message key="employeeEdit.page" var="pageName"/>
+<fmt:message key="employee.edit.page" var="pageName"/>
 
 <jsp:include page="template/header.jsp"/>
 <style>

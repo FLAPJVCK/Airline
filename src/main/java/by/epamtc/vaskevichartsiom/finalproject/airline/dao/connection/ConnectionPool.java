@@ -9,11 +9,12 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPool {
     private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
-    private static final ConnectionPool INSTANCE = new ConnectionPool();
+    private static ConnectionPool INSTANCE;
 
     private static final String DB_FILE_NAME = "db";
     private static final String DB_DRIVER_NAME = "db.driver";
@@ -22,6 +23,7 @@ public class ConnectionPool {
     private static final String DB_PASSWORD = "db.password";
     private static final String DB_CONNECTION_NUMBER = "db.maxActive";
     private static final int DEFAULT_CONNECTION_NUMBER = 8;
+    private static final AtomicBoolean isInitialized = new AtomicBoolean(false);
 
     private final BlockingQueue<Connection> freeConnections;
     private final BlockingQueue<Connection> busyConnections;
@@ -58,6 +60,11 @@ public class ConnectionPool {
     }
 
     public static ConnectionPool getConnectionPool() {
+        while (INSTANCE == null) {
+            if (isInitialized.compareAndSet(false, true)) {
+                INSTANCE = new ConnectionPool();
+            }
+        }
         return INSTANCE;
     }
 
@@ -81,5 +88,27 @@ public class ConnectionPool {
             lock.unlock();
         }
         freeConnections.add(connection);
+    }
+
+    public void destroyConnectionPool(){
+        int countOfBusyConnections = busyConnections.size();
+        for(int i = 0; i < countOfBusyConnections; i++){
+            try {
+                Connection connection = busyConnections.take();
+                freeConnections.put(connection);
+            } catch (InterruptedException e) {
+                LOGGER.error("Cannot take connection", e);
+                Thread.currentThread().interrupt();
+            }
+        }
+        int countOfFreeConnections = freeConnections.size();
+        for (int i = 0; i < countOfFreeConnections; i++) {
+            try {
+                freeConnections.take().close();
+            } catch (InterruptedException | SQLException e) {
+                LOGGER.error("Cannot take or close connection", e);
+                Thread.currentThread().interrupt();
+            }
+        }
     }
 }

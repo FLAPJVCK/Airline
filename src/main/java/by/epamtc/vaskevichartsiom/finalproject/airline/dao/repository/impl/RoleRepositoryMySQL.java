@@ -3,8 +3,6 @@ package by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.impl;
 import by.epamtc.vaskevichartsiom.finalproject.airline.dao.exception.DAOException;
 import by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.RoleRepository;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.UserRole;
-import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Role;
-import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -2,8 +2,6 @@ package by.epamtc.vaskevichartsiom.finalproject.airline.service;
 
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.UserRank;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.UserRole;
-import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Rank;
-import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Role;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.User;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.exception.ServiceException;
 

@@ -1,5 +1,6 @@
 package by.epamtc.vaskevichartsiom.finalproject.airline.service;
 
+import by.epamtc.vaskevichartsiom.finalproject.airline.service.impl.FlightServiceImpl;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.impl.UserServiceImpl;
 
 public class FactoryService {
@@ -7,6 +8,8 @@ public class FactoryService {
     private static final FactoryService instance = new FactoryService();
 
     private UserService userServiceImpl = new UserServiceImpl();
+
+    private FlightService flightServiceImpl = new FlightServiceImpl();
 
     public FactoryService() {
     }
@@ -21,5 +24,13 @@ public class FactoryService {
 
     public void setUserServiceImpl(UserService userServiceImpl) {
         this.userServiceImpl = userServiceImpl;
+    }
+
+    public FlightService getFlightServiceImpl() {
+        return flightServiceImpl;
+    }
+
+    public void setFlightServiceImpl(FlightService flightServiceImpl) {
+        this.flightServiceImpl = flightServiceImpl;
     }
 }

@@ -27,6 +27,7 @@ public class CommandManager {
         commands.put("editUserPage", new UserEditPageCommand());
         commands.put("editUser", new EditUserCommand());
         commands.put("deleteUser", new DeleteUserCommand());
+        commands.put("flightPage", new FlightPageCommand());
     }
 
     public static CommandManager getInstance() {

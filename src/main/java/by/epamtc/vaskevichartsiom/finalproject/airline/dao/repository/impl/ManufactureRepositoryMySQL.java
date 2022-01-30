@@ -2,9 +2,7 @@ package by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.impl;
 
 import by.epamtc.vaskevichartsiom.finalproject.airline.dao.exception.DAOException;
 import by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.ManufactureRepository;
-import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Destination;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Manufacture;
-import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Rank;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

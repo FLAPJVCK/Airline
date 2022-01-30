@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class Manufacture extends BaseEntity<Long>{
     private String manufacturerName;
-    private Set<AirplaneModel> airplaneModels = new HashSet<AirplaneModel>();
+    private Set<Airplane> airplaneModels = new HashSet<Airplane>();
 
     public Manufacture() {
     }
@@ -19,11 +19,11 @@ public class Manufacture extends BaseEntity<Long>{
         this.manufacturerName = manufacturerName;
     }
 
-    public Set<AirplaneModel> getAirplaneModels() {
+    public Set<Airplane> getAirplaneModels() {
         return airplaneModels;
     }
 
-    public void setAirplaneModels(Set<AirplaneModel> airplaneModels) {
+    public void setAirplaneModels(Set<Airplane> airplaneModels) {
         this.airplaneModels = airplaneModels;
     }
 

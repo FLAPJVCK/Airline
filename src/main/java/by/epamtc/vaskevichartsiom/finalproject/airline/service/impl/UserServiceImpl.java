@@ -9,8 +9,6 @@ import by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.impl.RoleR
 import by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.impl.UserRepositoryMySQL;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.UserRank;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.UserRole;
-import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Rank;
-import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Role;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.User;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.UserService;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.exception.ServiceException;
@@ -96,8 +94,8 @@ public class UserServiceImpl implements UserService {
             final List<User> users = userRepository.findAllUsers();
             return users;
         } catch (DAOException e) {
-            LOGGER.error("getAllUsers error", e);
-            throw new ServiceException("getAllUsers error", e);
+            LOGGER.error("findAllUsers error", e);
+            throw new ServiceException("findAllUsers error", e);
         }
     }
 

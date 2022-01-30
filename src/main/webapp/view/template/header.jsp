@@ -6,6 +6,7 @@
 <fmt:setBundle basename="localization" />
 
 <fmt:message key="header.language" var="language"/>
+<fmt:message key="header.flights" var="flights"/>
 <fmt:message key="header.employees" var="employees"/>
 <fmt:message key="header.logIn" var="logIn"/>
 <fmt:message key="header.signUp" var="signUp"/>
@@ -37,7 +38,7 @@
             <li><a href="#" class="nav-link px-2 link-secondary">1</a></li>
             <li><a href="#" class="nav-link px-2 link-dark">2</a></li>
             <li><a href="#" class="nav-link px-2 link-dark">3</a></li>
-            <li><a href="#" class="nav-link px-2 link-dark">4</a></li>
+            <li><a href="${pageContext.request.contextPath}/Controller?command=flightPage" class="nav-link px-2 link-dark">${flights}</a></li>
             <li><a href="${pageContext.request.contextPath}/Controller?command=employeePage" class="nav-link px-2 link-dark">${employees}</a></li>
         </ul>
         <div class="dropdown">
