@@ -18,7 +18,9 @@ public class UserRepositoryMySQL implements UserRepository {
     private final static String INSERT_USER = "INSERT into airline.users(name,surname,username,password,email," +
             "role_id,rank_id) values (?,?,?,?,?,?,?)";
     private final static String UPDATE_USER = "UPDATE airline.users SET name = ?,surname = ?,username = ?," +
-            "password = ?,email = ?,role_id = ?,rank_id = ? WHERE id = ?";
+            "email = ?,role_id = ?,rank_id = ?, password = ? WHERE id = ?";
+    private final static String UPDATE_USER_WITHOUT_PASSWORD = "UPDATE airline.users SET name = ?,surname = ?," +
+            "username = ?,email = ?,role_id = ?,rank_id = ? WHERE id = ?";
     private final static String DELETE_USER = "DELETE FROM airline.users WHERE id = ?";
     private static final String FIND_USER_BY_ID = "SELECT users.id, name, surname, username, password, email," +
             " roles.role_name AS role_name, ranks.rank_name AS rank_name FROM airline.users JOIN airline.roles" +
@@ -70,23 +72,35 @@ public class UserRepositoryMySQL implements UserRepository {
         PreparedStatement preparedStatement = null;
         try {
             connection = getConnection();
-            preparedStatement = connection.prepareStatement(UPDATE_USER);
+            if (!user.getPassword().equals("")){
+                preparedStatement = connection.prepareStatement(UPDATE_USER);
+            } else {
+                preparedStatement = connection.prepareStatement(UPDATE_USER_WITHOUT_PASSWORD);
+            }
+
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getSurname());
             preparedStatement.setString(3, user.getUsername());
-            preparedStatement.setString(4, user.getPassword());
-            preparedStatement.setString(5, user.getEmail());
+
+            preparedStatement.setString(4, user.getEmail());
             if (user.getUserRole() != null) {
-                preparedStatement.setLong(6, user.getUserRole().getId());
+                preparedStatement.setLong(5, user.getUserRole().getId());
             } else {
-                preparedStatement.setLong(6, 3);
+                preparedStatement.setLong(5, 3);
             }
             if (user.getUserRank() != null) {
-                preparedStatement.setLong(7, user.getUserRank().getId());
+                preparedStatement.setLong(6, user.getUserRank().getId());
             } else {
-                preparedStatement.setLong(7, 5);
+                preparedStatement.setLong(6, 5);
             }
-            preparedStatement.setLong(8, user.getId());
+            if (!user.getPassword().equals("")){
+                preparedStatement.setString(7, user.getPassword());
+                preparedStatement.setLong(8, user.getId());
+            } else {
+                preparedStatement.setLong(7, user.getId());
+            }
+
+
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.error("Update user error" + user.toString(), e);

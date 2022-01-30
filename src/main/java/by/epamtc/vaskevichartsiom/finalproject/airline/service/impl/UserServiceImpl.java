@@ -12,6 +12,7 @@ import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.UserRole;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.User;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.UserService;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.exception.ServiceException;
+import by.epamtc.vaskevichartsiom.finalproject.airline.util.cryptography.PasswordEncryptorBCrypt;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,14 +28,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> logIn(String email, String password) throws ServiceException {
+        Optional<User> user;
         try {
-            final Optional<User> user = userRepository.findUserByEmail(email);
-            final String passwordFromRepository = user.get().getPassword();
-            if (password.equals(passwordFromRepository)) {
-                return user;
-            } else {
-                return Optional.empty();
+            user = userRepository.findUserByEmail(email);
+            if (user.isPresent()){
+                String passwordFromRepository = user.get().getPassword();
+                if (PasswordEncryptorBCrypt.getInstance().checkPassword(password, passwordFromRepository)) {
+                    return user;
+                }
             }
+            return Optional.empty();
         } catch (DAOException e) {
             LOGGER.error("Find user by email error", e);
             throw new ServiceException("Find user by email error", e);
@@ -44,10 +47,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> register(User user) throws ServiceException {
         try {
-            final Optional<User> alreadyExists = userRepository.findUserByEmail(user.getEmail());
+            Optional<User> alreadyExists = userRepository.findUserByEmail(user.getEmail());
             if (alreadyExists.isPresent()) {
                 return Optional.empty();
             } else {
+                user.setPassword(PasswordEncryptorBCrypt.getInstance().encryptPassword(user.getPassword()));
                 userRepository.create(user);
                 return Optional.of(user);
             }
@@ -60,6 +64,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUser(User user) throws ServiceException {
         try {
+            if (!user.getPassword().equals("")){
+                user.setPassword(PasswordEncryptorBCrypt.getInstance().encryptPassword(user.getPassword()));
+            }
             userRepository.update(user);
         } catch (DAOException e) {
             LOGGER.error("update user error", e);
@@ -80,7 +87,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findById(Long id) throws ServiceException {
         try {
-            final Optional<User> user = userRepository.findUserById(id);
+            Optional<User> user = userRepository.findUserById(id);
             return user;
         } catch (DAOException e) {
             LOGGER.error("Find user by id error", e);

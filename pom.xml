@@ -61,6 +61,12 @@
             <artifactId>log4j-web</artifactId>
             <version>${log4j.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.mindrot/jbcrypt -->
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
+        </dependency>
         <!--https://search.maven.org/remotecontent?filepath=javax/servlet/jstl/1.2/jstl-1.2.jar-->
         <dependency>
             <groupId>javax.servlet</groupId>

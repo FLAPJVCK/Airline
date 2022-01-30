@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 
 public class EditUserCommand implements Command {
     private static final String CURRENT_PAGE = "current_page";
-    private static final String CURRENT_EMPLOYEE_PAGE = "/view/employee.jsp";
     private static final String EMPLOYEE_PAGE = "/Controller?command=employeePage";
 
 

@@ -62,7 +62,7 @@
             <label for="floatingInput">${email}</label>
         </div>
         <div class="form-floating">
-            <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" value="${employee.password}">
+            <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" value="">
             <label for="floatingPassword">${password}</label>
         </div>
         <div class="form-floating form-control change_form_right height">
