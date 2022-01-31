@@ -2,11 +2,9 @@ package by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.user;
 
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.Command;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.CommandResponse;
-import by.epamtc.vaskevichartsiom.finalproject.airline.dao.FactoryDao;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.User;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.FactoryService;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.exception.ServiceException;
-import by.epamtc.vaskevichartsiom.finalproject.airline.service.impl.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,6 +28,6 @@ public class RegisterCommand implements Command {
         currentUser.setEmail(email);
 
         FactoryService.getInstance().getUserServiceImpl().register(currentUser);
-        return new CommandResponse(MAIN_PAGE, CommandResponse.CommandResponseType.FORWARD);
+        return new CommandResponse(MAIN_PAGE, CommandResponse.CommandResponseType.REDIRECT);
     }
 }

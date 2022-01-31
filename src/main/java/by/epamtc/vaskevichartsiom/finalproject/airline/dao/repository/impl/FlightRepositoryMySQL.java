@@ -3,7 +3,10 @@ package by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.impl;
 import by.epamtc.vaskevichartsiom.finalproject.airline.dao.exception.DAOException;
 import by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.FlightRepository;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.FlightStatus;
+import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Airplane;
+import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Destination;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Flight;
+import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Manufacture;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,20 +20,103 @@ public class FlightRepositoryMySQL implements FlightRepository{
     private final static String INSERT_FLIGHT = "INSERT into airline.flights(flight_number,departure_date," +
             "departure_time,destinations_id,statuses_id, airplanes_id) values (?,?,?,?,?,?)";
     private final static String UPDATE_FLIGHT = "UPDATE airline.flights SET flight_number = ?,departure_date = ?," +
-            "departure_time = ?,destinations_id = ?,statuses_id = ?,airplanes_id = ? WHERE id = ?";
+            "departure_time = ?,destinations_id = ?,statuses_id = ? WHERE id = ?";
     private final static String DELETE_FLIGHT = "DELETE FROM airline.flights WHERE id = ?";
-    private static final String FIND_FLIGHT_BY_ID = "SELECT flights.id, flight_number, departure_date, departure_time, " +
-            "destinations.airport AS airport_name, statuses.status_name AS status_name, airplanes.model AS model_name " +
-            "FROM airline.flights JOIN airline.destinations ON airline.flights.destinations_id = " +
-            "airline.destinations.id JOIN airline.statuses ON airline.flights.statuses_id = airline.statuses.id JOIN " +
-            "airline.airplanes ON airline.flights.airplanes_id = airline.airplanes.id  WHERE flights.id = ?";
-    private static final String FIND_All_FLIGHTS = "SELECT flights.id, flight_number, departure_date, departure_time, " +
-            "destinations_id, statuses.status_name AS status_name, airplanes_id FROM airline.flights JOIN airline.statuses ON airline.flights.statuses_id = airline.statuses.id";
+//    private static final String FIND_FLIGHT_BY_ID = "SELECT flights.id, flight_number, departure_date, departure_time, " +
+//            "destinations.airport AS airport_name, statuses.status_name AS status_name, airplanes.model AS model_name " +
+//            "FROM airline.flights JOIN airline.destinations ON airline.flights.destinations_id = " +
+//            "airline.destinations.id JOIN airline.statuses ON airline.flights.statuses_id = airline.statuses.id JOIN " +
+//            "airline.airplanes ON airline.flights.airplanes_id = airline.airplanes.id  WHERE flights.id = ?";
+private static final String FIND_FLIGHT_BY_ID = "SELECT flights.id, flight_number, departure_date, departure_time," +
+        "destinations.id AS destination_id, destinations.airport AS airport_name, statuses.status_name AS status_name, manufacturers.manufacturer_name" +
+        " AS manufacturer_name, airplanes.model AS model_name FROM airline.flights JOIN airline.destinations" +
+        " ON airline.flights.destinations_id = airline.destinations.id JOIN airline.statuses ON" +
+        " airline.flights.statuses_id = airline.statuses.id JOIN airline.airplanes ON" +
+        " airline.flights.airplanes_id = airline.airplanes.id JOIN airline.manufacturers" +
+        " ON airline.airplanes.manufacturers_id = airline.manufacturers.id WHERE flights.id = ?";
+    private static final String FIND_All_FLIGHTS = "SELECT flights.id, flight_number, departure_date, departure_time," +
+            "destinations.id AS destination_id, destinations.airport AS airport_name,statuses.status_name AS status_name, manufacturers.manufacturer_name" +
+            " AS manufacturer_name, airplanes.model AS model_name FROM airline.flights JOIN airline.destinations" +
+            " ON airline.flights.destinations_id = airline.destinations.id JOIN airline.statuses ON" +
+            " airline.flights.statuses_id = airline.statuses.id JOIN airline.airplanes ON" +
+            " airline.flights.airplanes_id = airline.airplanes.id JOIN airline.manufacturers" +
+            " ON airline.airplanes.manufacturers_id = airline.manufacturers.id ORDER BY flights.id DESC";
+//    private static final String FIND_All_FLIGHTS = "SELECT flights.id, flight_number, departure_date, departure_time, " +
+//            "destinations_id, statuses.status_name AS status_name, airplanes_id FROM airline.flights JOIN airline.statuses ON airline.flights.statuses_id = airline.statuses.id";
 //    private static final String FIND_All_FLIGHTS = "SELECT flights.id, flight_number, departure_date, departure_time, " +
 //            "destinations.airport AS airport_name, statuses.status_name AS status_name, airplanes.model AS model_name " +
 //            "FROM airline.flights JOIN airline.destinations ON airline.flights.destinations_id = " +
 //            "airline.destinations.id JOIN airline.statuses ON airline.flights.statuses_id = airline.statuses.id JOIN " +
 //            "airline.airplanes ON airline.flights.airplanes_id = airline.airplanes.id ORDER BY flights.id DESC";
+
+    @Override
+    public void create(Flight entity) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(INSERT_FLIGHT);
+            preparedStatement.setString(1, entity.getFlightNumber());
+            preparedStatement.setDate(2, entity.getDepartureDate());
+            preparedStatement.setTime(3, entity.getDepartureTime());
+            preparedStatement.setLong(4, entity.getDestination().getId());
+            if (entity.getFlightStatus() != null) {
+                preparedStatement.setLong(5, entity.getFlightStatus().getId());
+            } else {
+                preparedStatement.setLong(5, 1);
+            }
+            preparedStatement.setLong(6, entity.getAirplane().getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error("Create flight error", e);
+            throw new DAOException("Create flight error", e);
+        } finally {
+            closeResources(connection, preparedStatement);
+        }
+    }
+
+    @Override
+    public void update(Flight entity) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_FLIGHT);
+            preparedStatement.setString(1, entity.getFlightNumber());
+            preparedStatement.setDate(2, entity.getDepartureDate());
+            preparedStatement.setTime(3, entity.getDepartureTime());
+            preparedStatement.setLong(4, entity.getDestination().getId());
+            if (entity.getFlightStatus() != null) {
+                preparedStatement.setLong(5, entity.getFlightStatus().getId());
+            } else {
+                preparedStatement.setLong(5, 1);
+            }
+            preparedStatement.setLong(6, entity.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error("Create flight error", e);
+            throw new DAOException("Create flight error", e);
+        } finally {
+            closeResources(connection, preparedStatement);
+        }
+    }
+
+    @Override
+    public void delete(Long id) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(DELETE_FLIGHT);
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error("Delete flight error", e);
+            throw new DAOException("Delete flight error", e);
+        } finally {
+            closeResources(connection, preparedStatement);
+        }
+    }
 
     @Override
     public Optional<Flight> findFlightById(Long id) throws DAOException {
@@ -80,84 +166,23 @@ public class FlightRepositoryMySQL implements FlightRepository{
         return flights;
     }
 
-    @Override
-    public void create(Flight entity) throws DAOException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        try {
-            connection = getConnection();
-            preparedStatement = connection.prepareStatement(INSERT_FLIGHT);
-            preparedStatement.setString(1, entity.getFlightNumber());
-            preparedStatement.setDate(2, entity.getDepartureDate());
-            preparedStatement.setTime(3, entity.getDepartureTime());
-            preparedStatement.setLong(4, entity.getDestinationId());
-            if (entity.getFlightStatus() != null) {
-                preparedStatement.setLong(5, entity.getFlightStatus().getId());
-            } else {
-                preparedStatement.setLong(5, 1);
-            }
-            preparedStatement.setLong(6, entity.getAirplaneId());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            LOGGER.error("Create flight error", e);
-            throw new DAOException("Create flight error", e);
-        } finally {
-            closeResources(connection, preparedStatement);
-        }
-    }
-
-    @Override
-    public void update(Flight entity) throws DAOException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        try {
-            connection = getConnection();
-            preparedStatement = connection.prepareStatement(UPDATE_FLIGHT);
-            preparedStatement.setString(1, entity.getFlightNumber());
-            preparedStatement.setDate(2, entity.getDepartureDate());
-            preparedStatement.setTime(3, entity.getDepartureTime());
-            preparedStatement.setLong(4, entity.getDestinationId());
-            if (entity.getFlightStatus() != null) {
-                preparedStatement.setLong(5, entity.getFlightStatus().getId());
-            } else {
-                preparedStatement.setLong(5, 1);
-            }
-            preparedStatement.setLong(6, entity.getAirplaneId());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            LOGGER.error("Update flight error", e);
-            throw new DAOException("Update flight error", e);
-        } finally {
-            closeResources(connection, preparedStatement);
-        }
-    }
-
-    @Override
-    public void delete(Long id) throws DAOException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        try {
-            connection = getConnection();
-            preparedStatement = connection.prepareStatement(DELETE_FLIGHT);
-            preparedStatement.setLong(1, id);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            LOGGER.error("Delete flight error", e);
-            throw new DAOException("Delete flight error", e);
-        } finally {
-            closeResources(connection, preparedStatement);
-        }
-    }
-
     private Flight readFlight(ResultSet resultSet) throws SQLException {
         Flight currentFlight = new Flight();
+        Destination currentDestination = new Destination();
+        Airplane currentAirplane = new Airplane();
+        Manufacture currenManufacture = new Manufacture();
         currentFlight.setId(resultSet.getLong(1));
         currentFlight.setFlightNumber(resultSet.getString(2));
         currentFlight.setDepartureDate(resultSet.getDate(3));
         currentFlight.setDepartureTime(resultSet.getTime(4));
-        currentFlight.setDestinationId(resultSet.getLong(5));
-        currentFlight.setFlightStatus(FlightStatus.valueOf(resultSet.getString(6).toUpperCase()));
-        currentFlight.setAirplaneId(resultSet.getLong(7));
+        currentDestination.setId(resultSet.getLong(5));
+        currentDestination.setAirport(resultSet.getString(6));
+        currentFlight.setFlightStatus(FlightStatus.valueOf(resultSet.getString(7).toUpperCase()));
+        currenManufacture.setManufacturerName(resultSet.getString(8));
+        currentAirplane.setModel(resultSet.getString(9));
+        currentAirplane.setManufacturer(currenManufacture);
+        currentFlight.setDestination(currentDestination);
+        currentFlight.setAirplane(currentAirplane);
         return currentFlight;
     }
 }

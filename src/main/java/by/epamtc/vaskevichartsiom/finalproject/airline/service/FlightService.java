@@ -10,13 +10,19 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FlightService {
+    Optional<Flight> createFlight(Flight flight) throws ServiceException;
+
+    void updateFlight(Flight flight) throws ServiceException;
+
+    void deleteFlight(Long id) throws ServiceException;
+
     Optional<Flight> findById(Long id) throws ServiceException;
 
     List<Flight> findAllFlights() throws ServiceException;
 
     List<Destination> findAllDestinations() throws ServiceException;
 
-    List<FlightStatus> findAllRoles() throws ServiceException;
+    List<FlightStatus> findAllFlightStatuses() throws ServiceException;
 
     List<Airplane> findAirplanes() throws ServiceException;
 }

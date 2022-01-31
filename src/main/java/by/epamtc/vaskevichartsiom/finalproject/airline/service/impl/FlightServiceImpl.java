@@ -30,15 +30,51 @@ public class FlightServiceImpl implements FlightService {
     private static final Logger LOGGER = LogManager.getLogger(UserServiceImpl.class);
 
     @Override
+    public Optional<Flight> createFlight(Flight flight) throws ServiceException {
+        try {
+            flightRepository.create(flight);
+            return Optional.of(flight);
+        } catch (DAOException e) {
+            LOGGER.error("createFlight error", e);
+            throw new ServiceException("createFlight error", e);
+        }
+    }
+
+    @Override
+    public void updateFlight(Flight flight) throws ServiceException {
+        try {
+            flightRepository.update(flight);
+        } catch (DAOException e) {
+            LOGGER.error("update flight error", e);
+            throw new ServiceException("update flight error", e);
+        }
+    }
+
+    @Override
+    public void deleteFlight(Long id) throws ServiceException {
+        try {
+            flightRepository.delete(id);
+        } catch (DAOException e) {
+            LOGGER.error("delete flight error", e);
+            throw new ServiceException("delete flight error", e);
+        }
+    }
+
+    @Override
     public Optional<Flight> findById(Long id) throws ServiceException {
-        return Optional.empty();
+        try {
+            Optional<Flight> flight = flightRepository.findFlightById(id);
+            return flight;
+        } catch (DAOException e) {
+            LOGGER.error("Find flight by id error", e);
+            throw new ServiceException("Find flight by id error", e);
+        }
     }
 
     @Override
     public List<Flight> findAllFlights() throws ServiceException {
         try {
-            final List<Flight> flights = flightRepository.findAllFlights();
-            return flights;
+            return flightRepository.findAllFlights();
         } catch (DAOException e) {
             LOGGER.error("findAllFlights error", e);
             throw new ServiceException("findAllFlights error", e);
@@ -51,8 +87,13 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public List<FlightStatus> findAllRoles() throws ServiceException {
-        return null;
+    public List<FlightStatus> findAllFlightStatuses() throws ServiceException {
+        try {
+            return statusRepository.findAllFlightStatuses();
+        } catch (DAOException e) {
+            LOGGER.error("findAllFlightStatuses error", e);
+            throw new ServiceException("findAllFlightStatuses error", e);
+        }
     }
 
     @Override

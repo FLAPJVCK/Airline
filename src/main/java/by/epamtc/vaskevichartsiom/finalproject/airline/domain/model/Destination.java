@@ -1,12 +1,9 @@
 package by.epamtc.vaskevichartsiom.finalproject.airline.domain.model;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 public class Destination extends BaseEntity<Long>{
     private String airport;
-    private Set<Flight> flights = new HashSet<Flight>();
 
     public Destination() {
     }
@@ -19,24 +16,16 @@ public class Destination extends BaseEntity<Long>{
         this.airport = airport;
     }
 
-    public Set<Flight> getFlights() {
-        return flights;
-    }
-
-    public void setFlights(Set<Flight> flights) {
-        this.flights = flights;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Destination that = (Destination) o;
-        return Objects.equals(airport, that.airport) && Objects.equals(flights, that.flights);
+        return Objects.equals(airport, that.airport);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(airport, flights);
+        return Objects.hash(airport);
     }
 }

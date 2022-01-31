@@ -28,6 +28,11 @@ public class CommandManager {
         commands.put("editUser", new EditUserCommand());
         commands.put("deleteUser", new DeleteUserCommand());
         commands.put("flightPage", new FlightPageCommand());
+        commands.put("createFlightPage", new CreateFlightPageCommand());
+        commands.put("createFlight", new CreateFlightCommand());
+        commands.put("editFlightPage", new EditFlightPageCommand());
+        commands.put("editFlight", new EditFlightCommand());
+        commands.put("deleteFlight", new DeleteFlightCommand());
     }
 
     public static CommandManager getInstance() {

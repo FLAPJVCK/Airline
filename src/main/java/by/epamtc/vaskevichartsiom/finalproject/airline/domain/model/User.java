@@ -3,9 +3,7 @@ package by.epamtc.vaskevichartsiom.finalproject.airline.domain.model;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.UserRank;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.UserRole;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 public class User extends BaseEntity<Long>{
     private String name;
@@ -15,7 +13,6 @@ public class User extends BaseEntity<Long>{
     private String email;
     private UserRole userRole;
     private UserRank userRank;
-    private Set<Flight> flights = new HashSet<Flight>();
 
     public User() {
     }
@@ -76,25 +73,16 @@ public class User extends BaseEntity<Long>{
         this.userRank = userRank;
     }
 
-    public Set<Flight> getFlights() {
-        return flights;
-    }
-
-    public void setFlights(Set<Flight> flights) {
-        this.flights = flights;
-    }
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(name, user.name) && Objects.equals(surname, user.surname) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && userRole == user.userRole && userRank == user.userRank && Objects.equals(flights, user.flights);
+        return Objects.equals(name, user.name) && Objects.equals(surname, user.surname) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && userRole == user.userRole && userRank == user.userRank;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, surname, username, password, email, userRole, userRank, flights);
+        return Objects.hash(name, surname, username, password, email, userRole, userRank);
     }
 }

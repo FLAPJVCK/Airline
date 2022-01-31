@@ -13,6 +13,6 @@ public class LogOutCommand implements Command {
     public CommandResponse execute(HttpServletRequest request) {
         request.getSession().invalidate();
 
-        return new CommandResponse(MAIN_PAGE, CommandResponse.CommandResponseType.FORWARD);
+        return new CommandResponse(MAIN_PAGE, CommandResponse.CommandResponseType.REDIRECT);
     }
 }

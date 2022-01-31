@@ -29,6 +29,6 @@ public class LogInCommand implements Command {
             session.setAttribute("email",  "unregistered");
             session.setAttribute(AUTHORIZATION, false);
         }
-        return new CommandResponse(MAIN_PAGE, CommandResponse.CommandResponseType.FORWARD);
+        return new CommandResponse(MAIN_PAGE, CommandResponse.CommandResponseType.REDIRECT);
     }
 }

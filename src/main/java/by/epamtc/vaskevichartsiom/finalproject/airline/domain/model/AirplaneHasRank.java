@@ -1,11 +1,13 @@
 package by.epamtc.vaskevichartsiom.finalproject.airline.domain.model;
 
+import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.UserRank;
+
 import java.util.Objects;
 
 public class AirplaneHasRank extends BaseEntity<Long>{
     private Integer rankCount;
-    private Long airplaneId;
-    private Long rankId;
+    private Airplane airplane;
+    private UserRank userRank;
 
     public AirplaneHasRank() {
     }
@@ -18,20 +20,20 @@ public class AirplaneHasRank extends BaseEntity<Long>{
         this.rankCount = rankCount;
     }
 
-    public Long getAirplaneId() {
-        return airplaneId;
+    public Airplane getAirplane() {
+        return airplane;
     }
 
-    public void setAirplaneId(Long airplaneId) {
-        this.airplaneId = airplaneId;
+    public void setAirplane(Airplane airplane) {
+        this.airplane = airplane;
     }
 
-    public Long getRankId() {
-        return rankId;
+    public UserRank getUserRank() {
+        return userRank;
     }
 
-    public void setRankId(Long rankId) {
-        this.rankId = rankId;
+    public void setUserRank(UserRank userRank) {
+        this.userRank = userRank;
     }
 
     @Override
@@ -39,11 +41,11 @@ public class AirplaneHasRank extends BaseEntity<Long>{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AirplaneHasRank that = (AirplaneHasRank) o;
-        return Objects.equals(rankCount, that.rankCount) && Objects.equals(airplaneId, that.airplaneId) && Objects.equals(rankId, that.rankId);
+        return Objects.equals(rankCount, that.rankCount) && Objects.equals(airplane, that.airplane) && userRank == that.userRank;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rankCount, airplaneId, rankId);
+        return Objects.hash(rankCount, airplane, userRank);
     }
 }
