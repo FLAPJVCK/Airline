@@ -20,7 +20,6 @@
 <table class="table table-hover">
     <thead>
     <tr>
-        <th scope="col">id</th>
         <th scope="col">${name}</th>
         <th scope="col">${surname}</th>
         <th scope="col">${username}</th>
@@ -34,7 +33,6 @@
     <tbody>
         <c:forEach var="employee" items="${employeeList}" >
             <tr>
-                <th scope="row">${employee.id}</th>
                 <td>${employee.name}</td>
                 <td>${employee.surname}</td>
                 <td>${employee.username}</td>

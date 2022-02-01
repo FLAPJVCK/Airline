@@ -34,6 +34,7 @@ public class UserRepositoryMySQL implements UserRepository {
             " roles.role_name AS role_name, ranks.rank_name AS rank_name FROM airline.users JOIN airline.roles" +
             " ON airline.users.role_id = airline.roles.id JOIN airline.ranks ON" +
             " airline.users.rank_id = airline.ranks.id ORDER BY users.id DESC";
+    private static final String FIND_ALL_USERS_BY_RANK = "SELECT id, name, surname FROM airline.users WHERE rank_id = ?";
 
     @Override
     public void create(User user) throws DAOException {
@@ -197,6 +198,33 @@ public class UserRepositoryMySQL implements UserRepository {
         return users;
     }
 
+    @Override
+    public List<User> findAllUsersByRank(Long id) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        List<User> users = new ArrayList<>();
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(FIND_ALL_USERS_BY_RANK);
+            preparedStatement.setLong(1, id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    User user = readUserByRank(resultSet);
+                    users.add(user);
+                }
+            } catch (SQLException e) {
+                LOGGER.error("findAllUsersByRank error", e);
+                throw new DAOException("findAllUsersByRank error", e);
+            }
+        } catch (SQLException e) {
+            LOGGER.error("findAllUsersByRank error", e);
+            throw new DAOException("findAllUsersByRank error", e);
+        } finally {
+            closeResources(connection, preparedStatement);
+        }
+        return users;
+    }
+
     private User readUser(ResultSet resultSet) throws SQLException {
         User currentUser = new User();
         currentUser.setId(resultSet.getLong(1));
@@ -207,6 +235,14 @@ public class UserRepositoryMySQL implements UserRepository {
         currentUser.setEmail(resultSet.getString(6));
         currentUser.setUserRole(UserRole.valueOf(resultSet.getString(7).toUpperCase()));
         currentUser.setUserRank(UserRank.valueOf(resultSet.getString(8).toUpperCase()));
+        return currentUser;
+    }
+
+    private User readUserByRank(ResultSet resultSet) throws SQLException {
+        User currentUser = new User();
+        currentUser.setId(resultSet.getLong(1));
+        currentUser.setName(resultSet.getString(2));
+        currentUser.setSurname(resultSet.getString(3));
         return currentUser;
     }
 }

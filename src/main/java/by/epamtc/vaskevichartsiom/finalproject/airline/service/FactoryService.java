@@ -1,9 +1,6 @@
 package by.epamtc.vaskevichartsiom.finalproject.airline.service;
 
-import by.epamtc.vaskevichartsiom.finalproject.airline.service.impl.AirplaneServiceImpl;
-import by.epamtc.vaskevichartsiom.finalproject.airline.service.impl.DestinationServiceImpl;
-import by.epamtc.vaskevichartsiom.finalproject.airline.service.impl.FlightServiceImpl;
-import by.epamtc.vaskevichartsiom.finalproject.airline.service.impl.UserServiceImpl;
+import by.epamtc.vaskevichartsiom.finalproject.airline.service.impl.*;
 
 public class FactoryService {
 
@@ -16,6 +13,8 @@ public class FactoryService {
     private DestinationService destinationServiceImpl = new DestinationServiceImpl();
 
     private AirplaneService airplaneServiceImpl = new AirplaneServiceImpl();
+
+    private AirplaneHasRanksService airplaneHasRanksServiceImpl = new AirplaneHasRanksServiceImpl();
 
     public FactoryService() {
     }
@@ -54,5 +53,13 @@ public class FactoryService {
 
     public void setAirplaneServiceImpl(AirplaneService airplaneServiceImpl) {
         this.airplaneServiceImpl = airplaneServiceImpl;
+    }
+
+    public AirplaneHasRanksService getAirplaneHasRanksServiceImpl() {
+        return airplaneHasRanksServiceImpl;
+    }
+
+    public void setAirplaneHasRanksServiceImpl(AirplaneHasRanksService airplaneHasRanksServiceImpl) {
+        this.airplaneHasRanksServiceImpl = airplaneHasRanksServiceImpl;
     }
 }

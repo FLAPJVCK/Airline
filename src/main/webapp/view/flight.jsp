@@ -13,6 +13,8 @@
 <fmt:message key="flight.page.destination" var="destination"/>
 <fmt:message key="flight.page.status" var="status"/>
 <fmt:message key="flight.page.airplane.model" var="airplaneModel"/>
+<fmt:message key="flight.page.create.brigade" var="createBrigade"/>
+<fmt:message key="flight.page.сomplete.flight" var="сompleteFlight"/>
 <fmt:message key="flight.page.create" var="createFlight"/>
 <fmt:message key="flight.page.edit" var="edit"/>
 <fmt:message key="flight.page.delete" var="delete"/>
@@ -20,12 +22,11 @@
 
 <jsp:include page="template/header.jsp"/>
 <a style="text-decoration: none" class="d-grid gap-2 col-6 mx-auto" href="${pageContext.request.contextPath}/Controller?command=createFlightPage">
-    <button class="btn btn-success" type="button">${createFlight}</button>
+    <button class="btn btn-primary" type="button">${createFlight}</button>
 </a>
 <table class="table table-hover">
     <thead>
     <tr>
-        <th scope="col">id</th>
         <th scope="col">${number}</th>
         <th scope="col">${departureDate}</th>
         <th scope="col">${departureTime}</th>
@@ -34,18 +35,30 @@
         <th scope="col">${airplaneModel}</th>
         <th scope="col"></th>
         <th scope="col"></th>
+        <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
     <c:forEach var="flight" items="${flightList}" >
         <tr>
-            <th scope="row">${flight.id}</th>
             <td>${flight.flightNumber}</td>
             <td>${flight.departureDate}</td>
             <td>${flight.departureTime}</td>
             <td>${flight.destination.airport}</td>
             <td>${flight.flightStatus}</td>
             <td>${flight.airplane.manufacturer.manufacturerName} ${flight.airplane.model}</td>
+
+            <c:choose>
+                <c:when test="${flight.flightStatus == 'NOT_READY'}">
+                    <td><a href="${pageContext.request.contextPath}/Controller?command=createBrigadePage&flightId=${flight.id}&modelId=${flight.airplane.id}"><button type="button" class="btn btn-info">${createBrigade}</button></a></td>
+                </c:when>
+                <c:when test="${flight.flightStatus == 'READY'}">
+                    <td><a href="${pageContext.request.contextPath}/Controller?command=updateFlightStatus&flightId=${flight.id}"><button type="button" class="btn btn-success">${сompleteFlight}</button></a></td>
+                </c:when>
+                <c:otherwise>
+                    <td></td>
+                </c:otherwise>
+            </c:choose>
             <td><a href="${pageContext.request.contextPath}/Controller?command=editFlightPage&id=${flight.id}"><button type="button" class="btn btn-warning">${edit}</button></a></td>
             <td><a href="${pageContext.request.contextPath}/Controller?command=deleteFlight&id=${flight.id}"><button type="button" class="btn btn-danger">${delete}</button></a></td>
         </tr>

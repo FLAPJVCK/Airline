@@ -51,6 +51,16 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
+    public void updateStatus(Long id, FlightStatus status) throws ServiceException {
+        try {
+            flightRepository.updateStatus(id, status);
+        } catch (DAOException e) {
+            LOGGER.error("update status error", e);
+            throw new ServiceException("update status error", e);
+        }
+    }
+
+    @Override
     public void deleteFlight(Long id) throws ServiceException {
         try {
             flightRepository.delete(id);
@@ -78,6 +88,16 @@ public class FlightServiceImpl implements FlightService {
         } catch (DAOException e) {
             LOGGER.error("findAllFlights error", e);
             throw new ServiceException("findAllFlights error", e);
+        }
+    }
+
+    @Override
+    public void createBrigade(Long flightId, Long userId) throws ServiceException {
+        try {
+            flightRepository.createBrigade(flightId, userId);
+        } catch (DAOException e) {
+            LOGGER.error("createFlight error", e);
+            throw new ServiceException("createFlight error", e);
         }
     }
 

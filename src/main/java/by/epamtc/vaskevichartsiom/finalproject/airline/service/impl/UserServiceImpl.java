@@ -107,6 +107,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> findAllUsersByRank(Long id) throws ServiceException {
+        try {
+            return userRepository.findAllUsersByRank(id);
+        } catch (DAOException e) {
+            LOGGER.error("findAllUsersByRank error", e);
+            throw new ServiceException("findAllUsersByRank error", e);
+        }
+    }
+
+    @Override
     public List<UserRank> findAllRanks() throws ServiceException {
         try {
             return rankRepository.findAllRanks();

@@ -14,11 +14,15 @@ public interface FlightService {
 
     void updateFlight(Flight flight) throws ServiceException;
 
+    void updateStatus(Long id, FlightStatus status) throws ServiceException;
+
     void deleteFlight(Long id) throws ServiceException;
 
     Optional<Flight> findById(Long id) throws ServiceException;
 
     List<Flight> findAllFlights() throws ServiceException;
+
+    void createBrigade(Long flightId, Long userId) throws ServiceException;
 
     List<Destination> findAllDestinations() throws ServiceException;
 

@@ -21,6 +21,8 @@ public interface UserService {
 
     List<User> findAllUsers() throws ServiceException;
 
+    List<User> findAllUsersByRank(Long id) throws ServiceException;
+
     List<UserRank> findAllRanks() throws ServiceException;
 
     List<UserRole> findAllRoles() throws ServiceException;
