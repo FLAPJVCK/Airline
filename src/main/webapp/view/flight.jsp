@@ -14,6 +14,7 @@
 <fmt:message key="flight.page.status" var="status"/>
 <fmt:message key="flight.page.airplane.model" var="airplaneModel"/>
 <fmt:message key="flight.page.create.brigade" var="createBrigade"/>
+<fmt:message key="flight.page.see.brigade" var="seeBrigade"/>
 <fmt:message key="flight.page.сomplete.flight" var="сompleteFlight"/>
 <fmt:message key="flight.page.create" var="createFlight"/>
 <fmt:message key="flight.page.edit" var="edit"/>
@@ -56,7 +57,7 @@
                     <td><a href="${pageContext.request.contextPath}/Controller?command=updateFlightStatus&flightId=${flight.id}"><button type="button" class="btn btn-success">${сompleteFlight}</button></a></td>
                 </c:when>
                 <c:otherwise>
-                    <td></td>
+                    <td><a href="${pageContext.request.contextPath}/Controller?command=BrigadePage&flightId=${flight.id}"><button type="button" class="btn btn-secondary">${seeBrigade}</button></a></td>
                 </c:otherwise>
             </c:choose>
             <td><a href="${pageContext.request.contextPath}/Controller?command=editFlightPage&id=${flight.id}"><button type="button" class="btn btn-warning">${edit}</button></a></td>

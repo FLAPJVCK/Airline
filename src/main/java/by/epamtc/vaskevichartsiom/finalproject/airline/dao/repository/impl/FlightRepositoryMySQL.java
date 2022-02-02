@@ -3,10 +3,8 @@ package by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.impl;
 import by.epamtc.vaskevichartsiom.finalproject.airline.dao.exception.DAOException;
 import by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.FlightRepository;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.FlightStatus;
-import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Airplane;
-import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Destination;
-import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Flight;
-import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Manufacture;
+import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.UserRank;
+import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,33 +21,34 @@ public class FlightRepositoryMySQL implements FlightRepository{
             "departure_time = ?,destinations_id = ? WHERE id = ?";
     private final static String UPDATE_STATUS = "UPDATE airline.flights SET statuses_id = ? WHERE id = ?";
     private final static String DELETE_FLIGHT = "DELETE FROM airline.flights WHERE id = ?";
-//    private static final String FIND_FLIGHT_BY_ID = "SELECT flights.id, flight_number, departure_date, departure_time, " +
-//            "destinations.airport AS airport_name, statuses.status_name AS status_name, airplanes.model AS model_name " +
-//            "FROM airline.flights JOIN airline.destinations ON airline.flights.destinations_id = " +
-//            "airline.destinations.id JOIN airline.statuses ON airline.flights.statuses_id = airline.statuses.id JOIN " +
-//            "airline.airplanes ON airline.flights.airplanes_id = airline.airplanes.id  WHERE flights.id = ?";
     private static final String FIND_FLIGHT_BY_ID = "SELECT flights.id, flight_number, departure_date, departure_time," +
-        "destinations.id AS destination_id, destinations.airport AS airport_name, statuses.status_name AS status_name, manufacturers.manufacturer_name" +
-        " AS manufacturer_name, airplanes.id AS airplane_id, airplanes.model AS model_name FROM airline.flights JOIN airline.destinations" +
+        "destinations.id AS destination_id, destinations.airport AS airport_name, statuses.status_name AS " +
+        "status_name, manufacturers.manufacturer_name AS manufacturer_name, airplanes.id AS airplane_id, " +
+        "airplanes.model AS model_name FROM airline.flights JOIN airline.destinations" +
         " ON airline.flights.destinations_id = airline.destinations.id JOIN airline.statuses ON" +
         " airline.flights.statuses_id = airline.statuses.id JOIN airline.airplanes ON" +
         " airline.flights.airplanes_id = airline.airplanes.id JOIN airline.manufacturers" +
         " ON airline.airplanes.manufacturers_id = airline.manufacturers.id WHERE flights.id = ?";
     private static final String FIND_All_FLIGHTS = "SELECT flights.id, flight_number, departure_date, departure_time," +
-            "destinations.id AS destination_id, destinations.airport AS airport_name,statuses.status_name AS status_name, manufacturers.manufacturer_name" +
-            " AS manufacturer_name, airplanes.id AS airplane_id, airplanes.model AS model_name FROM airline.flights JOIN airline.destinations" +
-            " ON airline.flights.destinations_id = airline.destinations.id JOIN airline.statuses ON" +
-            " airline.flights.statuses_id = airline.statuses.id JOIN airline.airplanes ON" +
-            " airline.flights.airplanes_id = airline.airplanes.id JOIN airline.manufacturers" +
-            " ON airline.airplanes.manufacturers_id = airline.manufacturers.id ORDER BY flights.id DESC";
-//    private static final String FIND_All_FLIGHTS = "SELECT flights.id, flight_number, departure_date, departure_time, " +
-//            "destinations_id, statuses.status_name AS status_name, airplanes_id FROM airline.flights JOIN airline.statuses ON airline.flights.statuses_id = airline.statuses.id";
-//    private static final String FIND_All_FLIGHTS = "SELECT flights.id, flight_number, departure_date, departure_time, " +
-//            "destinations.airport AS airport_name, statuses.status_name AS status_name, airplanes.model AS model_name " +
-//            "FROM airline.flights JOIN airline.destinations ON airline.flights.destinations_id = " +
-//            "airline.destinations.id JOIN airline.statuses ON airline.flights.statuses_id = airline.statuses.id JOIN " +
-//            "airline.airplanes ON airline.flights.airplanes_id = airline.airplanes.id ORDER BY flights.id DESC";
+            "destinations.id AS destination_id, destinations.airport AS airport_name,statuses.status_name AS " +
+            "status_name, manufacturers.manufacturer_name AS manufacturer_name, airplanes.id AS airplane_id, " +
+            "airplanes.model AS model_name FROM airline.flights JOIN airline.destinations " +
+            "ON airline.flights.destinations_id = airline.destinations.id JOIN airline.statuses ON " +
+            "airline.flights.statuses_id = airline.statuses.id JOIN airline.airplanes ON " +
+            "airline.flights.airplanes_id = airline.airplanes.id JOIN airline.manufacturers " +
+            "ON airline.airplanes.manufacturers_id = airline.manufacturers.id ORDER BY flights.id DESC";
+    private static final String FIND_All_CURRENT_FLIGHTS = "SELECT flights.id, flight_number, departure_date, departure_time," +
+            "destinations.id AS destination_id, destinations.airport AS airport_name,statuses.status_name AS " +
+            "status_name, manufacturers.manufacturer_name AS manufacturer_name, airplanes.id AS airplane_id, " +
+            "airplanes.model AS model_name FROM airline.flights JOIN airline.destinations " +
+            "ON airline.flights.destinations_id = airline.destinations.id JOIN airline.statuses ON " +
+            "airline.flights.statuses_id = airline.statuses.id JOIN airline.airplanes ON " +
+            "airline.flights.airplanes_id = airline.airplanes.id JOIN airline.manufacturers " +
+            "ON airline.airplanes.manufacturers_id = airline.manufacturers.id WHERE departure_date >= current_date() " +
+            "ORDER BY departure_date, departure_time";
     private final static String INSERT_BRIGADE = "INSERT into airline.brigades (flights_id, users_id) values (?,?)";
+    private final static String FIND_BRIGADE = "SELECT name, surname, rank_name FROM airline.brigades JOIN " +
+            "airline.users ON users_id = users.id JOIN airline.ranks ON rank_id = ranks.id WHERE flights_id = ?";
 
     @Override
     public void create(Flight entity) throws DAOException {
@@ -187,6 +186,32 @@ public class FlightRepositoryMySQL implements FlightRepository{
     }
 
     @Override
+    public List<Flight> findAllCurrentFlights() throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        List<Flight> flights = new ArrayList<>();
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(FIND_All_CURRENT_FLIGHTS);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Flight flight = readFlight(resultSet);
+                    flights.add(flight);
+                }
+            } catch (SQLException e) {
+                LOGGER.error("findAllCurrentFlights error", e);
+                throw new DAOException("findAllCurrentFlights error", e);
+            }
+        } catch (SQLException e) {
+            LOGGER.error("findAllCurrentFlights error", e);
+            throw new DAOException("findAllCurrentFlights error", e);
+        } finally {
+            closeResources(connection, preparedStatement);
+        }
+        return flights;
+    }
+
+    @Override
     public void createBrigade(Long flightId, Long userId) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -202,6 +227,33 @@ public class FlightRepositoryMySQL implements FlightRepository{
         } finally {
             closeResources(connection, preparedStatement);
         }
+    }
+
+    @Override
+    public List<User> findBrigade(Long id) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        List<User> users = new ArrayList<>();
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(FIND_BRIGADE);
+            preparedStatement.setLong(1, id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    User user = readBrigade(resultSet);
+                    users.add(user);
+                }
+            } catch (SQLException e) {
+                LOGGER.error("findBrigade error", e);
+                throw new DAOException("findBrigade error", e);
+            }
+        } catch (SQLException e) {
+            LOGGER.error("findBrigade error", e);
+            throw new DAOException("findBrigade error", e);
+        } finally {
+            closeResources(connection, preparedStatement);
+        }
+        return users;
     }
 
     private Flight readFlight(ResultSet resultSet) throws SQLException {
@@ -223,5 +275,13 @@ public class FlightRepositoryMySQL implements FlightRepository{
         currentFlight.setDestination(currentDestination);
         currentFlight.setAirplane(currentAirplane);
         return currentFlight;
+    }
+
+    private User readBrigade(ResultSet resultSet) throws SQLException {
+        User currentUser = new User();
+        currentUser.setName(resultSet.getString(1));
+        currentUser.setSurname(resultSet.getString(2));
+        currentUser.setUserRank(UserRank.valueOf(resultSet.getString(3).toUpperCase()));
+        return currentUser;
     }
 }

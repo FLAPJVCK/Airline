@@ -35,6 +35,7 @@ public class CommandManager {
         commands.put("deleteFlight", new DeleteFlightCommand());
         commands.put("createBrigadePage", new CreateBrigadePageCommand());
         commands.put("createBrigade", new CreateBrigadeCommand());
+        commands.put("BrigadePage", new BrigadePageCommand());
         commands.put("updateFlightStatus", new UpdateFlightStatus());
     }
 

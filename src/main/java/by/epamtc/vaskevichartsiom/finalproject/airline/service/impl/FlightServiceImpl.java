@@ -13,6 +13,7 @@ import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.FlightStatus
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Airplane;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Destination;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Flight;
+import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.User;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.FlightService;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
@@ -92,12 +93,32 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
+    public List<Flight> findAllCurrentFlights() throws ServiceException {
+        try {
+            return flightRepository.findAllCurrentFlights();
+        } catch (DAOException e) {
+            LOGGER.error("findAllCurrentFlights error", e);
+            throw new ServiceException("findAllCurrentFlights error", e);
+        }
+    }
+
+    @Override
     public void createBrigade(Long flightId, Long userId) throws ServiceException {
         try {
             flightRepository.createBrigade(flightId, userId);
         } catch (DAOException e) {
             LOGGER.error("createFlight error", e);
             throw new ServiceException("createFlight error", e);
+        }
+    }
+
+    @Override
+    public List<User> findBrigade(Long id) throws ServiceException {
+        try {
+            return flightRepository.findBrigade(id);
+        } catch (DAOException e) {
+            LOGGER.error("findBrigade by flight id error", e);
+            throw new ServiceException("findBrigade by flight id error", e);
         }
     }
 

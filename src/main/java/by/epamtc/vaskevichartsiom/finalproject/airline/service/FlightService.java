@@ -4,6 +4,7 @@ import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.FlightStatus
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Airplane;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Destination;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Flight;
+import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.User;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.exception.ServiceException;
 
 import java.util.List;
@@ -22,7 +23,11 @@ public interface FlightService {
 
     List<Flight> findAllFlights() throws ServiceException;
 
+    List<Flight> findAllCurrentFlights() throws ServiceException;
+
     void createBrigade(Long flightId, Long userId) throws ServiceException;
+
+    List<User> findBrigade(Long id) throws ServiceException;
 
     List<Destination> findAllDestinations() throws ServiceException;
 
