@@ -16,8 +16,14 @@ public class RankRepositoryMySQL implements RankRepository {
     private final static String INSERT_RANK = "INSERT into airline.ranks(rank_name) values (?)";
     private final static String UPDATE_RANK = "UPDATE airline.ranks SET rank_name = ? WHERE id = ?";
     private final static String DELETE_RANK = "DELETE FROM airline.ranks WHERE id = ?";
-    private static final String FIND_RANK_BY_NAME = "SELECT * FROM airline.ranks WHERE rank_name = ?";
-    private static final String FIND_ALL_RANKS = "SELECT rank_name FROM airline.ranks";
+    private static final String FIND_RANK_BY_NAME = """
+            SELECT * FROM airline.ranks 
+            WHERE rank_name = ?
+            """;
+    private static final String FIND_ALL_RANKS = """
+            SELECT rank_name 
+            FROM airline.ranks
+            """;
 
     @Override
     public void create(UserRank entity) throws DAOException {

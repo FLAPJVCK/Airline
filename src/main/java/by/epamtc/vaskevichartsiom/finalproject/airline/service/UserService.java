@@ -5,6 +5,7 @@ import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.UserRole;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.User;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.exception.ServiceException;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +22,7 @@ public interface UserService {
 
     List<User> findAllUsers() throws ServiceException;
 
-    List<User> findAllUsersByRank(Long id) throws ServiceException;
+    List<User> findAllUsersByRank(Long id, Date date) throws ServiceException;
 
     List<UserRank> findAllRanks() throws ServiceException;
 

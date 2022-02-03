@@ -16,6 +16,7 @@ import by.epamtc.vaskevichartsiom.finalproject.airline.util.cryptography.Passwor
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -107,9 +108,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllUsersByRank(Long id) throws ServiceException {
+    public List<User> findAllUsersByRank(Long id, Date date) throws ServiceException {
         try {
-            return userRepository.findAllUsersByRank(id);
+            return userRepository.findAllUsersByRank(id, date);
         } catch (DAOException e) {
             LOGGER.error("findAllUsersByRank error", e);
             throw new ServiceException("findAllUsersByRank error", e);

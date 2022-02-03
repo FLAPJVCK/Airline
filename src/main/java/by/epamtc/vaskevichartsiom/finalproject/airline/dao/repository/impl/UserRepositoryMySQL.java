@@ -6,35 +6,70 @@ import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.UserRank;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.UserRole;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class UserRepositoryMySQL implements UserRepository {
-    private final static String INSERT_USER = "INSERT into airline.users(name,surname,username,password,email," +
-            "role_id,rank_id) values (?,?,?,?,?,?,?)";
-    private final static String UPDATE_USER = "UPDATE airline.users SET name = ?,surname = ?,username = ?," +
-            "email = ?,role_id = ?,rank_id = ?, password = ? WHERE id = ?";
-    private final static String UPDATE_USER_WITHOUT_PASSWORD = "UPDATE airline.users SET name = ?,surname = ?," +
-            "username = ?,email = ?,role_id = ?,rank_id = ? WHERE id = ?";
-    private final static String DELETE_USER = "DELETE FROM airline.users WHERE id = ?";
-    private static final String FIND_USER_BY_ID = "SELECT users.id, name, surname, username, password, email," +
-            " roles.role_name AS role_name, ranks.rank_name AS rank_name FROM airline.users JOIN airline.roles" +
-            " ON airline.users.role_id = airline.roles.id JOIN airline.ranks ON " +
-            "airline.users.rank_id = airline.ranks.id WHERE users.id = ?";
-    private static final String FIND_USER_BY_EMAIL = "SELECT users.id, name, surname, username, password, email," +
-            " roles.role_name AS role_name, ranks.rank_name AS rank_name FROM airline.users JOIN airline.roles" +
-            " ON airline.users.role_id = airline.roles.id JOIN airline.ranks ON" +
-            " airline.users.rank_id = airline.ranks.id WHERE users.email = ?";
-    private static final String FIND_All_USERS = "SELECT users.id, name, surname, username, password, email," +
-            " roles.role_name AS role_name, ranks.rank_name AS rank_name FROM airline.users JOIN airline.roles" +
-            " ON airline.users.role_id = airline.roles.id JOIN airline.ranks ON" +
-            " airline.users.rank_id = airline.ranks.id ORDER BY users.id DESC";
-    private static final String FIND_ALL_USERS_BY_RANK = "SELECT id, name, surname FROM airline.users WHERE rank_id = ?";
+    private final static String INSERT_USER = """
+            INSERT into airline.users 
+            (name,surname,username,password,email,role_id,rank_id) 
+            values (?,?,?,?,?,?,?)
+            """;
+    private final static String UPDATE_USER = """
+            UPDATE airline.users 
+            SET name = ?,surname = ?,username = ?,email = ?,role_id = ?,rank_id = ?, password = ? 
+            WHERE id = ?
+            """;
+    private final static String UPDATE_USER_WITHOUT_PASSWORD = """
+            UPDATE airline.users 
+            SET name = ?,surname = ?,username = ?,email = ?,role_id = ?,rank_id = ? 
+            WHERE id = ?
+            """;
+    private final static String DELETE_USER = """
+            DELETE FROM airline.users 
+            WHERE id = ?
+            """;
+    private static final String FIND_USER_BY_ID = """
+            SELECT users.id, name, surname, username, password, email, roles.role_name AS role_name, 
+            ranks.rank_name AS rank_name 
+            FROM airline.users 
+            JOIN airline.roles ON airline.users.role_id = airline.roles.id 
+            JOIN airline.ranks ON airline.users.rank_id = airline.ranks.id 
+            WHERE users.id = ?
+            """;
+    private static final String FIND_USER_BY_EMAIL = """
+            SELECT users.id, name, surname, username, password, email, roles.role_name AS role_name, 
+            ranks.rank_name AS rank_name 
+            FROM airline.users 
+            JOIN airline.roles ON airline.users.role_id = airline.roles.id 
+            JOIN airline.ranks ON airline.users.rank_id = airline.ranks.id 
+            WHERE users.email = ?
+            """;
+    private static final String FIND_All_USERS = """
+            SELECT users.id, name, surname, username, password, email, roles.role_name AS role_name, 
+            ranks.rank_name AS rank_name 
+            FROM airline.users 
+            JOIN airline.roles ON airline.users.role_id = airline.roles.id 
+            JOIN airline.ranks ON airline.users.rank_id = airline.ranks.id 
+            ORDER BY users.id DESC
+            """;
+    private static final String FIND_ALL_USERS_BY_RANK = """
+            SELECT DISTINCT users.id, name, surname 
+            FROM airline.users 
+            LEFT JOIN airline.brigades ON airline.users.id = airline.brigades.users_id 
+            LEFT JOIN airline.flights ON airline.brigades.flights_id = airline.flights.id 
+            WHERE users.rank_id = ? AND (airline.flights.statuses_id != 2 OR airline.brigades.users_id IS NULL) AND 
+            users.id NOT IN 
+            (
+            SELECT DISTINCT users.id 
+            FROM airline.users 
+            JOIN airline.brigades ON airline.users.id = airline.brigades.users_id 
+            JOIN airline.flights ON airline.brigades.flights_id = airline.flights.id 
+            WHERE users.rank_id = ? AND airline.flights.statuses_id = 2 AND airline.flights.departure_date = ?
+            )
+            """;
 
     @Override
     public void create(User user) throws DAOException {
@@ -199,7 +234,7 @@ public class UserRepositoryMySQL implements UserRepository {
     }
 
     @Override
-    public List<User> findAllUsersByRank(Long id) throws DAOException {
+    public List<User> findAllUsersByRank(Long id, Date date) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         List<User> users = new ArrayList<>();
@@ -207,6 +242,8 @@ public class UserRepositoryMySQL implements UserRepository {
             connection = getConnection();
             preparedStatement = connection.prepareStatement(FIND_ALL_USERS_BY_RANK);
             preparedStatement.setLong(1, id);
+            preparedStatement.setLong(2, id);
+            preparedStatement.setDate(3, date);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     User user = readUserByRank(resultSet);

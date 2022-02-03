@@ -51,7 +51,7 @@
 
             <c:choose>
                 <c:when test="${flight.flightStatus == 'NOT_READY'}">
-                    <td><a href="${pageContext.request.contextPath}/Controller?command=createBrigadePage&flightId=${flight.id}&modelId=${flight.airplane.id}"><button type="button" class="btn btn-info">${createBrigade}</button></a></td>
+                    <td><a href="${pageContext.request.contextPath}/Controller?command=createBrigadePage&flightId=${flight.id}&flightDate=${flight.departureDate}&modelId=${flight.airplane.id}"><button type="button" class="btn btn-info">${createBrigade}</button></a></td>
                 </c:when>
                 <c:when test="${flight.flightStatus == 'READY'}">
                     <td><a href="${pageContext.request.contextPath}/Controller?command=updateFlightStatus&flightId=${flight.id}"><button type="button" class="btn btn-success">${сompleteFlight}</button></a></td>

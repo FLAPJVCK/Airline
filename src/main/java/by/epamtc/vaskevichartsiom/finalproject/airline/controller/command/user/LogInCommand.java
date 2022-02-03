@@ -23,10 +23,9 @@ public class LogInCommand implements Command {
         Optional<User> optionalUser = FactoryService.getInstance().getUserServiceImpl().logIn(email,password);
         HttpSession session = request.getSession();
         if (optionalUser.isPresent()){
-            session.setAttribute("email",  optionalUser.get().getEmail());
+            session.setAttribute("userId", optionalUser.get().getId());
             session.setAttribute(AUTHORIZATION, true);
         } else {
-            session.setAttribute("email",  "unregistered");
             session.setAttribute(AUTHORIZATION, false);
         }
         return new CommandResponse(MAIN_PAGE, CommandResponse.CommandResponseType.REDIRECT);

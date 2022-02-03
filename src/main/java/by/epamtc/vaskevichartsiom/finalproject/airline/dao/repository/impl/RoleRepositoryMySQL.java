@@ -16,8 +16,14 @@ public class RoleRepositoryMySQL implements RoleRepository {
     private final static String INSERT_ROLE = "INSERT into airline.roles(role_name) values (?)";
     private final static String UPDATE_ROLE = "UPDATE airline.roles SET role_name = ? WHERE id = ?";
     private final static String DELETE_ROLE = "DELETE FROM airline.roles WHERE id = ?";
-    private static final String FIND_ROLE_BY_NAME = "SELECT * FROM airline.roles WHERE role_name = ?";
-    private static final String FIND_ALL_ROLES = "SELECT role_name FROM airline.roles";
+    private static final String FIND_ROLE_BY_NAME = """
+            SELECT * FROM airline.roles 
+            WHERE role_name = ?
+            """;
+    private static final String FIND_ALL_ROLES = """
+            SELECT role_name 
+            FROM airline.roles
+            """;
 
     @Override
     public void create(UserRole entity) throws DAOException {

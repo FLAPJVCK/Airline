@@ -13,10 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AirplaneRepositoryMySQL implements AirplaneRepository {
-    private static final String FIND_All_AIRPLANES = "SELECT airplanes.id, model, business_seat, economy_seat," +
-            " maximum_takeoff_weight, flight_range, cruising_speed, maximum_flight_height," +
-            " manufacturers.manufacturer_name AS manufacturer_name FROM airline.airplanes JOIN airline.manufacturers" +
-            " ON airline.airplanes.manufacturers_id = airline.manufacturers.id";
+    private static final String FIND_All_AIRPLANES = """
+            SELECT airplanes.id, model, business_seat, economy_seat, maximum_takeoff_weight, flight_range, 
+            cruising_speed, maximum_flight_height, manufacturers.manufacturer_name AS manufacturer_name 
+            FROM airline.airplanes 
+            JOIN airline.manufacturers ON airline.airplanes.manufacturers_id = airline.manufacturers.id
+            """;
 
     @Override
     public void create(Airplane entity) throws DAOException {

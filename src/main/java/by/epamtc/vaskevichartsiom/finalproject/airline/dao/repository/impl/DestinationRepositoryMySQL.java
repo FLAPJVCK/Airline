@@ -13,11 +13,26 @@ import java.util.List;
 import java.util.Optional;
 
 public class DestinationRepositoryMySQL implements DestinationRepository {
-    private final static String INSERT_DESTINATION = "INSERT into airline.destinations(airport) values (?)";
-    private final static String UPDATE_DESTINATION = "UPDATE airline.destinations SET airport = ? WHERE id = ?";
-    private final static String DELETE_DESTINATION = "DELETE FROM airline.destinations WHERE id = ?";
-    private static final String FIND_DESTINATION_BY_NAME = "SELECT * FROM airline.destinations WHERE airport = ?";
-    private static final String FIND_All_DESTINATIONS = "SELECT * FROM airline.destinations";
+    private final static String INSERT_DESTINATION = """
+            INSERT into airline.destinations 
+            (airport) values (?)
+            """;
+    private final static String UPDATE_DESTINATION = """
+            UPDATE airline.destinations 
+            SET airport = ? 
+            WHERE id = ?
+            """;
+    private final static String DELETE_DESTINATION = """
+            DELETE FROM airline.destinations 
+            WHERE id = ?
+            """;
+    private static final String FIND_DESTINATION_BY_NAME = """
+            SELECT * FROM airline.destinations 
+            WHERE airport = ?
+            """;
+    private static final String FIND_All_DESTINATIONS = """
+            SELECT * FROM airline.destinations
+            """;
 
     @Override
     public void create(Destination entity) throws DAOException {

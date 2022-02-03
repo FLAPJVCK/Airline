@@ -103,6 +103,16 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
+    public List<Flight> findAllFlightsForUser(Long id) throws ServiceException {
+        try {
+            return flightRepository.findAllFlightsForUser(id);
+        } catch (DAOException e) {
+            LOGGER.error("findAllFlightsForUser error", e);
+            throw new ServiceException("findAllFlightsForUser error", e);
+        }
+    }
+
+    @Override
     public void createBrigade(Long flightId, Long userId) throws ServiceException {
         try {
             flightRepository.createBrigade(flightId, userId);

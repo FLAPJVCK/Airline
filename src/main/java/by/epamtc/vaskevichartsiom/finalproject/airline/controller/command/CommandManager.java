@@ -22,6 +22,7 @@ public class CommandManager {
         commands.put("logInPage", new LogInPageCommand());
         commands.put("logIn", new LogInCommand());
         commands.put("logOut", new LogOutCommand());
+        commands.put("profilePage", new ProfilePageCommand());
         commands.put("employeePage", new EmployeePageCommand());
         commands.put("employee", new EmployeeCommand());
         commands.put("editUserPage", new UserEditPageCommand());

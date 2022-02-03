@@ -25,6 +25,8 @@ public interface FlightService {
 
     List<Flight> findAllCurrentFlights() throws ServiceException;
 
+    List<Flight> findAllFlightsForUser(Long id) throws ServiceException;
+
     void createBrigade(Long flightId, Long userId) throws ServiceException;
 
     List<User> findBrigade(Long id) throws ServiceException;

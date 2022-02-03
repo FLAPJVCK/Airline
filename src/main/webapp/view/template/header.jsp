@@ -6,6 +6,7 @@
 <fmt:setBundle basename="localization" />
 
 <fmt:message key="header.language" var="language"/>
+<fmt:message key="header.my.profile" var="myProfile"/>
 <fmt:message key="header.flights" var="flights"/>
 <fmt:message key="header.employees" var="employees"/>
 <fmt:message key="header.logIn" var="logIn"/>
@@ -35,11 +36,9 @@
         </a>
 
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="#" class="nav-link px-2 link-secondary">1</a></li>
-            <li><a href="#" class="nav-link px-2 link-dark">2</a></li>
-            <li><a href="#" class="nav-link px-2 link-dark">3</a></li>
-            <li><a href="${pageContext.request.contextPath}/Controller?command=flightPage" class="nav-link px-2 link-dark">${flights}</a></li>
-            <li><a href="${pageContext.request.contextPath}/Controller?command=employeePage" class="nav-link px-2 link-dark">${employees}</a></li>
+            <li><a href="${pageContext.request.contextPath}/Controller?command=profilePage" class="nav-link px-3 link-dark">${myProfile}</a></li>
+            <li><a href="${pageContext.request.contextPath}/Controller?command=flightPage" class="nav-link px-3 link-dark">${flights}</a></li>
+            <li><a href="${pageContext.request.contextPath}/Controller?command=employeePage" class="nav-link px-3 link-dark">${employees}</a></li>
         </ul>
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">

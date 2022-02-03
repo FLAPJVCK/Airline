@@ -16,8 +16,14 @@ public class StatusRepositoryMySQL implements StatusRepository {
     private final static String INSERT_STATUS = "INSERT into airline.statuses(status_name) values (?)";
     private final static String UPDATE_STATUS = "UPDATE airline.statuses SET status_name = ? WHERE id = ?";
     private final static String DELETE_STATUS = "DELETE FROM airline.statuses WHERE id = ?";
-    private static final String FIND_STATUS_BY_NAME = "SELECT * FROM airline.statuses WHERE status_name = ?";
-    private static final String FIND_ALL_STATUSES = "SELECT status_name FROM airline.statuses";
+    private static final String FIND_STATUS_BY_NAME = """
+            SELECT * FROM airline.statuses 
+            WHERE status_name = ?
+            """;
+    private static final String FIND_ALL_STATUSES = """
+            SELECT status_name 
+            FROM airline.statuses
+            """;
 
 
     @Override

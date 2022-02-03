@@ -11,10 +11,24 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 public class ManufactureRepositoryMySQL implements ManufactureRepository {
-    private final static String INSERT_MANUFACTURER = "INSERT into airline.manufacturers(manufacturer_name) values (?)";
-    private final static String UPDATE_MANUFACTURER = "UPDATE airline.manufacturers SET manufacturer_name = ? WHERE id = ?";
-    private final static String DELETE_MANUFACTURER = "DELETE FROM airline.manufacturers WHERE id = ?";
-    private static final String FIND_MANUFACTURER_BY_NAME = "SELECT * FROM airline.manufacturers WHERE manufacturer_name = ?";
+    private final static String INSERT_MANUFACTURER = """
+            INSERT into airline.manufacturers 
+            (manufacturer_name) 
+            values (?)
+            """;
+    private final static String UPDATE_MANUFACTURER = """
+            UPDATE airline.manufacturers 
+            SET manufacturer_name = ? 
+            WHERE id = ?
+            """;
+    private final static String DELETE_MANUFACTURER = """
+            DELETE FROM airline.manufacturers 
+            WHERE id = ?
+            """;
+    private static final String FIND_MANUFACTURER_BY_NAME = """
+            SELECT * FROM airline.manufacturers 
+            WHERE manufacturer_name = ?
+            """;
 
     @Override
     public void create(Manufacture entity) throws DAOException {

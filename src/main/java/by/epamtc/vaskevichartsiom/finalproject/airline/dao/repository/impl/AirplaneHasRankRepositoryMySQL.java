@@ -14,10 +14,13 @@ import java.util.List;
 
 public class AirplaneHasRankRepositoryMySQL implements AirplaneHasRankRepository {
 
-    private static final String FIND_All_AIRPLANE_HAS_RANKS_BY_AIRPLANE_ID = "SELECT rank_count, ranks.rank_name AS " +
-            "rank_name FROM airline.airplanes_has_ranks JOIN airline.airplanes ON " +
-            "airline.airplanes_has_ranks.airplanes_id = airline.airplanes.id JOIN airline.ranks ON " +
-            "airline.airplanes_has_ranks.ranks_id = airline.ranks.id WHERE airplanes.id = ?";
+    private static final String FIND_All_AIRPLANE_HAS_RANKS_BY_AIRPLANE_ID = """
+            SELECT rank_count, ranks.rank_name AS rank_name 
+            FROM airline.airplanes_has_ranks 
+            JOIN airline.airplanes ON airline.airplanes_has_ranks.airplanes_id = airline.airplanes.id 
+            JOIN airline.ranks ON airline.airplanes_has_ranks.ranks_id = airline.ranks.id 
+            WHERE airplanes.id = ?
+            """;
 
     @Override
     public List<AirplaneHasRank> findAllAirplaneHasRanksByAirplaneId(Long id) throws DAOException {
