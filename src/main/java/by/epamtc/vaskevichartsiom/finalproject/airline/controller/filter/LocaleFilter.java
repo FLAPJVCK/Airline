@@ -1,4 +1,4 @@
-package by.epamtc.vaskevichartsiom.finalproject.airline.filter;
+package by.epamtc.vaskevichartsiom.finalproject.airline.controller.filter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.*;
@@ -12,7 +12,7 @@ public class LocaleFilter implements Filter {
     public static final String LOCALE = "locale";
     private static final String DEFAULT = "ru";
 
-    public void init(FilterConfig config) throws ServletException {
+    public void init(FilterConfig config) {
     }
 
     public void destroy() {

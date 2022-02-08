@@ -22,7 +22,6 @@
     <tr>
         <th scope="col">${name}</th>
         <th scope="col">${surname}</th>
-        <th scope="col">${username}</th>
         <th scope="col">${email}</th>
         <th scope="col">${rank}</th>
         <th scope="col">${role}</th>
@@ -35,7 +34,6 @@
             <tr>
                 <td>${employee.name}</td>
                 <td>${employee.surname}</td>
-                <td>${employee.username}</td>
                 <td>${employee.email}</td>
                 <td>${employee.userRank}</td>
                 <td>${employee.userRole}</td>

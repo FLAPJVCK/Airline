@@ -1,4 +1,4 @@
-package by.epamtc.vaskevichartsiom.finalproject.airline.listener;
+package by.epamtc.vaskevichartsiom.finalproject.airline.controller.listener;
 
 import by.epamtc.vaskevichartsiom.finalproject.airline.dao.connection.ConnectionPool;
 

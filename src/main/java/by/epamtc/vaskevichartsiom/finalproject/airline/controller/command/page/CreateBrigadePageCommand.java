@@ -2,6 +2,7 @@ package by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.page;
 
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.Command;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.CommandResponse;
+import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.PagePath;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.AirplaneHasRank;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.User;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.FactoryService;
@@ -14,11 +15,10 @@ import java.util.List;
 public class CreateBrigadePageCommand implements Command {
 
     private static final String CURRENT_PAGE = "current_page";
-    private static final String CREATE_FLIGHT_PAGE = "/view/createBrigade.jsp";
 
     @Override
     public CommandResponse execute(HttpServletRequest request) throws ServiceException {
-        request.getSession().setAttribute(CURRENT_PAGE, CREATE_FLIGHT_PAGE);
+        request.getSession().setAttribute(CURRENT_PAGE, PagePath.CREATE_BRIGADE_PAGE);
         Long modelId = Long.valueOf(request.getParameter("modelId"));
         Long flightId = Long.valueOf(request.getParameter("flightId"));
         Date flightDate = Date.valueOf(request.getParameter("flightDate"));
@@ -36,6 +36,6 @@ public class CreateBrigadePageCommand implements Command {
         List<User> stewardesses = FactoryService.getInstance().getUserServiceImpl().findAllUsersByRank((long) airplaneHasRanks.get(3).getUserRank().getId(),flightDate);
         request.getSession().setAttribute("stewardessesList", stewardesses);
         request.getSession().setAttribute("stewardessesCount", airplaneHasRanks.get(3).getRankCount());
-        return new CommandResponse(CREATE_FLIGHT_PAGE, CommandResponse.CommandResponseType.FORWARD);
+        return new CommandResponse(PagePath.CREATE_BRIGADE_PAGE, CommandResponse.CommandResponseType.FORWARD);
     }
 }

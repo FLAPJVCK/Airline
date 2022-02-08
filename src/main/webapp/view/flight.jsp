@@ -19,6 +19,7 @@
 <fmt:message key="flight.page.create" var="createFlight"/>
 <fmt:message key="flight.page.edit" var="edit"/>
 <fmt:message key="flight.page.delete" var="delete"/>
+<c:set var="userRole" value="${sessionScope.userRole}"/>
 
 
 <jsp:include page="template/header.jsp"/>
@@ -52,16 +53,20 @@
             <c:choose>
                 <c:when test="${flight.flightStatus == 'NOT_READY'}">
                     <td><a href="${pageContext.request.contextPath}/Controller?command=createBrigadePage&flightId=${flight.id}&flightDate=${flight.departureDate}&modelId=${flight.airplane.id}"><button type="button" class="btn btn-info">${createBrigade}</button></a></td>
+                    <td><a href="${pageContext.request.contextPath}/Controller?command=editFlightPage&id=${flight.id}"><button type="button" class="btn btn-warning">${edit}</button></a></td>
+                    <c:if test="${userRole == 'ADMIN'}">
+                        <td><a href="${pageContext.request.contextPath}/Controller?command=deleteFlight&id=${flight.id}"><button type="button" class="btn btn-danger">${delete}</button></a></td>
+                    </c:if>
                 </c:when>
                 <c:when test="${flight.flightStatus == 'READY'}">
                     <td><a href="${pageContext.request.contextPath}/Controller?command=updateFlightStatus&flightId=${flight.id}"><button type="button" class="btn btn-success">${сompleteFlight}</button></a></td>
+                    <td><a href="${pageContext.request.contextPath}/Controller?command=editFlightPage&id=${flight.id}"><button type="button" class="btn btn-warning">${edit}</button></a></td>
+                    <td><a href="${pageContext.request.contextPath}/Controller?command=BrigadePage&flightId=${flight.id}"><button type="button" class="btn btn-secondary">${seeBrigade}</button></a></td>
                 </c:when>
                 <c:otherwise>
                     <td><a href="${pageContext.request.contextPath}/Controller?command=BrigadePage&flightId=${flight.id}"><button type="button" class="btn btn-secondary">${seeBrigade}</button></a></td>
                 </c:otherwise>
             </c:choose>
-            <td><a href="${pageContext.request.contextPath}/Controller?command=editFlightPage&id=${flight.id}"><button type="button" class="btn btn-warning">${edit}</button></a></td>
-            <td><a href="${pageContext.request.contextPath}/Controller?command=deleteFlight&id=${flight.id}"><button type="button" class="btn btn-danger">${delete}</button></a></td>
         </tr>
     </c:forEach>
     </tbody>

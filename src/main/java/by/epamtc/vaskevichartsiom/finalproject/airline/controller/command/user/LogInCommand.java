@@ -13,7 +13,8 @@ import java.util.Optional;
 public class LogInCommand implements Command {
 
     private static final String MAIN_PAGE = "/index.jsp";
-    public static final String AUTHORIZATION = "authorization";
+    private static final String LOGIN_PAGE = "/view/access/authentication.jsp";
+    public static final String WRONG_DATA = "wrongData";
 
     @Override
     public CommandResponse execute(HttpServletRequest request) throws ServiceException {
@@ -24,9 +25,10 @@ public class LogInCommand implements Command {
         HttpSession session = request.getSession();
         if (optionalUser.isPresent()){
             session.setAttribute("userId", optionalUser.get().getId());
-            session.setAttribute(AUTHORIZATION, true);
+            session.setAttribute("userRole", optionalUser.get().getUserRole());
         } else {
-            session.setAttribute(AUTHORIZATION, false);
+            request.setAttribute(WRONG_DATA, true);
+            return new CommandResponse(LOGIN_PAGE, CommandResponse.CommandResponseType.FORWARD);
         }
         return new CommandResponse(MAIN_PAGE, CommandResponse.CommandResponseType.REDIRECT);
     }

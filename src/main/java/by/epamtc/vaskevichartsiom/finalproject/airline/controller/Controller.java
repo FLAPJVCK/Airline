@@ -40,14 +40,15 @@ public class Controller extends HttpServlet {
         CommandResponse page = null;
         try {
             page = command.execute(request);
+            if (page.getResponseContextType().equals(CommandResponse.CommandResponseType.FORWARD)) {
+                request.getRequestDispatcher(page.getPagePath()).forward(request, response);
+            } else {
+                response.sendRedirect(request.getContextPath() + page.getPagePath());
+            }
         } catch (ServiceException e) {
-            e.printStackTrace();
+            response.sendRedirect(request.getContextPath() + "/view/error/error_page.jsp");
         }
-        if (page.getResponseContextType().equals(CommandResponse.CommandResponseType.FORWARD)) {
-            request.getRequestDispatcher(page.getPagePath()).forward(request, response);
-        } else {
-            response.sendRedirect(request.getContextPath() + page.getPagePath());
-        }
+
 
     }
 }

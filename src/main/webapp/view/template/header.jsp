@@ -12,6 +12,7 @@
 <fmt:message key="header.logIn" var="logIn"/>
 <fmt:message key="header.signUp" var="signUp"/>
 <fmt:message key="header.logOut" var="logOut"/>
+<c:set var="userRole" value="${sessionScope.userRole}"/>
 
 <html>
 <head>
@@ -34,11 +35,19 @@
            class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
             <h1 class="main_text">Airline</h1>
         </a>
-
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="${pageContext.request.contextPath}/Controller?command=profilePage" class="nav-link px-3 link-dark">${myProfile}</a></li>
-            <li><a href="${pageContext.request.contextPath}/Controller?command=flightPage" class="nav-link px-3 link-dark">${flights}</a></li>
-            <li><a href="${pageContext.request.contextPath}/Controller?command=employeePage" class="nav-link px-3 link-dark">${employees}</a></li>
+            <c:if test="${userRole == 'WORKER'}">
+                <li><a href="${pageContext.request.contextPath}/Controller?command=profilePage" class="nav-link px-3 link-dark">${myProfile}</a></li>
+            </c:if>
+            <c:if test="${userRole == 'MANAGER'}">
+                <li><a href="${pageContext.request.contextPath}/Controller?command=profilePage" class="nav-link px-3 link-dark">${myProfile}</a></li>
+                <li><a href="${pageContext.request.contextPath}/Controller?command=flightPage" class="nav-link px-3 link-dark">${flights}</a></li>
+            </c:if>
+            <c:if test="${userRole == 'ADMIN'}">
+                <li><a href="${pageContext.request.contextPath}/Controller?command=profilePage" class="nav-link px-3 link-dark">${myProfile}</a></li>
+                <li><a href="${pageContext.request.contextPath}/Controller?command=flightPage" class="nav-link px-3 link-dark">${flights}</a></li>
+                <li><a href="${pageContext.request.contextPath}/Controller?command=employeePage" class="nav-link px-3 link-dark">${employees}</a></li>
+            </c:if>
         </ul>
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -51,7 +60,7 @@
         </div>
         <div class="col-md-3 text-end">
             <c:choose>
-                <c:when test="${sessionScope.authorization}">
+                <c:when test="${userRole == 'WORKER' || userRole == 'MANAGER' || userRole == 'ADMIN'}">
                     <a href="${pageContext.request.contextPath}/Controller?command=logOut"><button type="button" class="btn btn-outline-primary me-2">${logOut}</button></a>
                 </c:when>
                 <c:otherwise>

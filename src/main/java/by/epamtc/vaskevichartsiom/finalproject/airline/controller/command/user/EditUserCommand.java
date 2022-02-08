@@ -2,6 +2,7 @@ package by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.user;
 
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.Command;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.CommandResponse;
+import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.PagePath;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.UserRank;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.UserRole;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.User;
@@ -11,13 +12,12 @@ import by.epamtc.vaskevichartsiom.finalproject.airline.service.exception.Service
 import javax.servlet.http.HttpServletRequest;
 
 public class EditUserCommand implements Command {
-    private static final String CURRENT_PAGE = "current_page";
-    private static final String EMPLOYEE_PAGE = "/Controller?command=employeePage";
 
+    private static final String CURRENT_PAGE = "current_page";
 
     @Override
     public CommandResponse execute(HttpServletRequest request) throws ServiceException {
-        request.getSession().setAttribute(CURRENT_PAGE, EMPLOYEE_PAGE);
+        request.getSession().setAttribute(CURRENT_PAGE, PagePath.EMPLOYEE_COMMAND);
         Long id = Long.valueOf(request.getParameter("id"));
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
@@ -38,6 +38,6 @@ public class EditUserCommand implements Command {
         currentUser.setUserRole(UserRole.valueOf(roleName));
 
         FactoryService.getInstance().getUserServiceImpl().updateUser(currentUser);
-        return new CommandResponse(EMPLOYEE_PAGE, CommandResponse.CommandResponseType.REDIRECT);
+        return new CommandResponse(PagePath.EMPLOYEE_COMMAND, CommandResponse.CommandResponseType.REDIRECT);
     }
 }

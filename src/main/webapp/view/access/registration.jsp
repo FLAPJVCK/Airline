@@ -11,6 +11,7 @@
 <fmt:message key="signUp.page.email" var="email"/>
 <fmt:message key="signUp.page.password" var="password"/>
 <fmt:message key="signUp.page.button" var="button"/>
+
 <html>
 <head>
     <title>Registration</title>
@@ -30,23 +31,23 @@
         <h1 class="h3 mb-3 fw-normal">${pageName}</h1>
 
         <div class="form-floating">
-            <input type="text" name="name" class="form-control" id="floatingName" placeholder="name@example.com">
+            <input type="text" name="name" class="form-control" id="floatingName" placeholder="name" required pattern="(?=^.{3,20}$)^([А-Яа-яA-Za-z]+)">
             <label for="floatingName">${name}</label>
         </div>
         <div class="form-floating">
-            <input type="text" name="surname" class="form-control" id="floatingSurname" placeholder="Password">
+            <input type="text" name="surname" class="form-control" id="floatingSurname" placeholder="surname" required pattern="(?=^.{3,20}$)^([А-Яа-яA-Za-z]+)">
             <label for="floatingSurname">${surname}</label>
         </div>
         <div class="form-floating">
-            <input type="text" name="username" class="form-control" id="floatingUsername" placeholder="Password">
+            <input type="text" name="username" class="form-control" id="floatingUsername" placeholder="username" required pattern="(?=^.{5,20}$)^([A-Za-z0-9]+)$">
             <label for="floatingUsername">${username}</label>
         </div>
         <div class="form-floating">
-            <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-            <label for="floatingInput">${email}</label>
+            <input type="email" name="email" class="form-control" id="floatingEmail" placeholder="name@example.com" required pattern="(?=^.{3,32}$)^([A-Za-z0-9]+@[A-Za-z0-9]+.[A-Za-z]+)$">
+            <label for="floatingEmail">${email}</label>
         </div>
         <div class="form-floating">
-            <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="password" required minlength="6" maxlength="30">
             <label for="floatingPassword">${password}</label>
         </div>
 

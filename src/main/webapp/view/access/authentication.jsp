@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="localization" />
@@ -8,6 +9,8 @@
 <fmt:message key="logIn.page.email" var="email"/>
 <fmt:message key="logIn.page.password" var="password"/>
 <fmt:message key="logIn.page.button" var="button"/>
+<fmt:message key="logIn.page.wrong" var="wrong"/>
+<c:set var="wrong_data" value="${requestScope.wrongData}"/>
 
 <html>
 <head>
@@ -28,15 +31,18 @@
         <h1 class="h3 mb-3 fw-normal">${pageName}</h1>
 
         <div class="form-floating">
-            <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com" required pattern="(?=^.{3,32}$)^([A-Za-z0-9]+@[A-Za-z0-9]+.[A-Za-z]+)$">
             <label for="floatingInput">${email}</label>
         </div>
         <div class="form-floating">
-            <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" required minlength="6" maxlength="30">
             <label for="floatingPassword">${password}</label>
         </div>
 
         <button class="w-100 btn btn-lg btn-primary" type="submit">${button}</button>
+        <c:if test="${wrong_data == true}">
+            <h3>${wrong}</h3>
+        </c:if>
         <p class="mt-5 mb-3 text-muted">&copy; FLAPJVCK</p>
     </form>
 </main>

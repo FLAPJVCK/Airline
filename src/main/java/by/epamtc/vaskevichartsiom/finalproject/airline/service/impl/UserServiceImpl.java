@@ -13,6 +13,8 @@ import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.User;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.UserService;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.exception.ServiceException;
 import by.epamtc.vaskevichartsiom.finalproject.airline.util.cryptography.PasswordEncryptorBCrypt;
+import by.epamtc.vaskevichartsiom.finalproject.airline.util.validator.UserValidator;
+import by.epamtc.vaskevichartsiom.finalproject.airline.util.validator.impl.UserValidatorImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,13 +28,17 @@ public class UserServiceImpl implements UserService {
     private static final RankRepository rankRepository = new RankRepositoryMySQL();
     private static final RoleRepository roleRepository = new RoleRepositoryMySQL();
     private static final Logger LOGGER = LogManager.getLogger(UserServiceImpl.class);
+    private final UserValidator validator = new UserValidatorImpl();
 
     @Override
     public Optional<User> logIn(String email, String password) throws ServiceException {
+        if (!validator.isEmailValid(email) || !validator.isPasswordValid(password)) {
+            throw new ServiceException("Incorrect log in data!");
+        }
         Optional<User> user;
         try {
             user = userRepository.findUserByEmail(email);
-            if (user.isPresent()){
+            if (user.isPresent()) {
                 String passwordFromRepository = user.get().getPassword();
                 if (PasswordEncryptorBCrypt.getInstance().checkPassword(password, passwordFromRepository)) {
                     return user;
@@ -47,6 +53,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> register(User user) throws ServiceException {
+        if (!validator.isNameValid(user.getName()) || !validator.isNameValid(user.getSurname())
+                || !validator.isUsernameValid(user.getUsername()) || !validator.isEmailValid(user.getEmail())
+                || !validator.isPasswordValid(user.getPassword())) {
+            throw new ServiceException("Incorrect register data!");
+        }
         try {
             Optional<User> alreadyExists = userRepository.findUserByEmail(user.getEmail());
             if (alreadyExists.isPresent()) {
@@ -64,8 +75,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(User user) throws ServiceException {
+        if (!validator.isNameValid(user.getName()) || !validator.isNameValid(user.getSurname())
+                || !validator.isUsernameValid(user.getUsername()) || !validator.isEmailValid(user.getEmail())) {
+            throw new ServiceException("Incorrect register data!");
+        }
         try {
-            if (!user.getPassword().equals("")){
+            if (!user.getPassword().equals("")) {
+                if (!validator.isPasswordValid(user.getPassword())){
+                    throw new ServiceException("Incorrect password in register data!");
+                }
                 user.setPassword(PasswordEncryptorBCrypt.getInstance().encryptPassword(user.getPassword()));
             }
             userRepository.update(user);
@@ -88,8 +106,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findById(Long id) throws ServiceException {
         try {
-            Optional<User> user = userRepository.findUserById(id);
-            return user;
+            return userRepository.findUserById(id);
         } catch (DAOException e) {
             LOGGER.error("Find user by id error", e);
             throw new ServiceException("Find user by id error", e);
@@ -99,8 +116,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAllUsers() throws ServiceException {
         try {
-            final List<User> users = userRepository.findAllUsers();
-            return users;
+            return userRepository.findAllUsers();
         } catch (DAOException e) {
             LOGGER.error("findAllUsers error", e);
             throw new ServiceException("findAllUsers error", e);
