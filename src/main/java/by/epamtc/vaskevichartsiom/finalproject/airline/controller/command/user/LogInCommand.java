@@ -21,9 +21,9 @@ public class LogInCommand implements Command {
         String password = request.getParameter("password");
         String email = request.getParameter("email");
 
-        Optional<User> optionalUser = FactoryService.getInstance().getUserServiceImpl().logIn(email,password);
+        Optional<User> optionalUser = FactoryService.getInstance().getUserServiceImpl().logIn(email, password);
         HttpSession session = request.getSession();
-        if (optionalUser.isPresent()){
+        if (optionalUser.isPresent()) {
             session.setAttribute("userId", optionalUser.get().getId());
             session.setAttribute("userRole", optionalUser.get().getUserRole());
         } else {

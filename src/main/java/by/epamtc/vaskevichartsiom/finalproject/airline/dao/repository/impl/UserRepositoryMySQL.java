@@ -108,7 +108,7 @@ public class UserRepositoryMySQL implements UserRepository {
         PreparedStatement preparedStatement = null;
         try {
             connection = getConnection();
-            if (!user.getPassword().equals("")){
+            if (!user.getPassword().equals("")) {
                 preparedStatement = connection.prepareStatement(UPDATE_USER);
             } else {
                 preparedStatement = connection.prepareStatement(UPDATE_USER_WITHOUT_PASSWORD);
@@ -129,7 +129,7 @@ public class UserRepositoryMySQL implements UserRepository {
             } else {
                 preparedStatement.setLong(6, 5);
             }
-            if (!user.getPassword().equals("")){
+            if (!user.getPassword().equals("")) {
                 preparedStatement.setString(7, user.getPassword());
                 preparedStatement.setLong(8, user.getId());
             } else {
@@ -167,7 +167,7 @@ public class UserRepositoryMySQL implements UserRepository {
     public Optional<User> findUserById(Long id) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        try  {
+        try {
             connection = getConnection();
             preparedStatement = connection.prepareStatement(FIND_USER_BY_ID);
             preparedStatement.setLong(1, id);
@@ -189,7 +189,7 @@ public class UserRepositoryMySQL implements UserRepository {
     public Optional<User> findUserByEmail(String email) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        try  {
+        try {
             connection = getConnection();
             preparedStatement = connection.prepareStatement(FIND_USER_BY_EMAIL);
             preparedStatement.setString(1, email);

@@ -39,63 +39,12 @@ public class RoleRepositoryMySQL implements RoleRepository {
     public void delete(Long id) throws DAOException {
 
     }
-//    @Override
-//    public void create(UserRole entity) throws DAOException {
-//        Connection connection = null;
-//        PreparedStatement preparedStatement = null;
-//        try {
-//            connection = getConnection();
-//            preparedStatement = connection.prepareStatement(INSERT_ROLE);
-//            preparedStatement.setString(1, entity.getRoleName());
-//            preparedStatement.executeUpdate();
-//        } catch (SQLException e) {
-//            LOGGER.error("Create role error", e);
-//            throw new DAOException("Create role error", e);
-//        } finally {
-//            closeResources(connection, preparedStatement);
-//        }
-//    }
-//
-//    @Override
-//    public void update(UserRole entity) throws DAOException {
-//        Connection connection = null;
-//        PreparedStatement preparedStatement = null;
-//        try {
-//            connection = getConnection();
-//            preparedStatement = connection.prepareStatement(UPDATE_ROLE);
-//            preparedStatement.setString(1, entity.getRoleName());
-//            preparedStatement.setLong(2, entity.getId());
-//            preparedStatement.executeUpdate();
-//        } catch (SQLException e) {
-//            LOGGER.error("Update role error", e);
-//            throw new DAOException("Update role error", e);
-//        } finally {
-//            closeResources(connection, preparedStatement);
-//        }
-//    }
-//
-//    @Override
-//    public void delete(Long id) throws DAOException {
-//        Connection connection = null;
-//        PreparedStatement preparedStatement = null;
-//        try {
-//            connection = getConnection();
-//            preparedStatement = connection.prepareStatement(DELETE_ROLE);
-//            preparedStatement.setLong(1, id);
-//            preparedStatement.executeUpdate();
-//        } catch (SQLException e) {
-//            LOGGER.error("Delete role error", e);
-//            throw new DAOException("Delete role error", e);
-//        } finally {
-//            closeResources(connection, preparedStatement);
-//        }
-//    }
 
     @Override
     public Optional<UserRole> findRoleByName(String name) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        try  {
+        try {
             connection = getConnection();
             preparedStatement = connection.prepareStatement(FIND_ROLE_BY_NAME);
             preparedStatement.setString(1, name);

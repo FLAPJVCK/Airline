@@ -16,6 +16,7 @@ import java.util.Optional;
 public class ProfilePageCommand implements Command {
 
     private static final String CURRENT_PAGE = "current_page";
+    private static final String EMPTY_FLIGHT_LIST = "empty";
 
     @Override
     public CommandResponse execute(HttpServletRequest request) throws ServiceException {
@@ -25,7 +26,11 @@ public class ProfilePageCommand implements Command {
         Optional<User> userProfile = FactoryService.getInstance().getUserServiceImpl().findById(userId);
         request.getSession().setAttribute("userProfile", userProfile.get());
         List<Flight> currentUserFlightList = FactoryService.getInstance().getFlightServiceImpl().findAllFlightsForUser(userId);
-        request.getSession().setAttribute("currentUserFlightList", currentUserFlightList);
+        if (currentUserFlightList.size() != 0){
+            request.getSession().setAttribute("currentUserFlightList", currentUserFlightList);
+        } else {
+            request.getSession().setAttribute("currentUserFlightList", EMPTY_FLIGHT_LIST);
+        }
         return new CommandResponse(PagePath.PROFILE_PAGE, CommandResponse.CommandResponseType.FORWARD);
     }
 }

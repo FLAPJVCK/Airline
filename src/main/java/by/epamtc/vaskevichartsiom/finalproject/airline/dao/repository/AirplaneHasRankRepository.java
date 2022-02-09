@@ -5,6 +5,6 @@ import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.AirplaneHasR
 
 import java.util.List;
 
-public interface AirplaneHasRankRepository extends GenericDAO<AirplaneHasRank>{
+public interface AirplaneHasRankRepository extends GenericDAO<AirplaneHasRank> {
     List<AirplaneHasRank> findAllAirplaneHasRanksByAirplaneId(Long id) throws DAOException;
 }

@@ -6,7 +6,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.Objects;
 
-public class Flight extends BaseEntity<Long>{
+public class Flight extends BaseEntity<Long> {
     private String flightNumber;
     private Date departureDate;
     private Time departureTime;

@@ -2,7 +2,7 @@ package by.epamtc.vaskevichartsiom.finalproject.airline.domain.model;
 
 import java.io.Serializable;
 
-public abstract class BaseEntity <ID extends Serializable> {
+public abstract class BaseEntity<ID extends Serializable> {
     private ID id;
 
     public BaseEntity() {

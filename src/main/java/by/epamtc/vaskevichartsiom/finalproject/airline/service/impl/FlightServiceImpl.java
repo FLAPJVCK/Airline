@@ -1,17 +1,9 @@
 package by.epamtc.vaskevichartsiom.finalproject.airline.service.impl;
 
 import by.epamtc.vaskevichartsiom.finalproject.airline.dao.exception.DAOException;
-import by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.AirplaneRepository;
-import by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.DestinationRepository;
 import by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.FlightRepository;
-import by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.StatusRepository;
-import by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.impl.AirplaneRepositoryMySQL;
-import by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.impl.DestinationRepositoryMySQL;
 import by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.impl.FlightRepositoryMySQL;
-import by.epamtc.vaskevichartsiom.finalproject.airline.dao.repository.impl.StatusRepositoryMySQL;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.FlightStatus;
-import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Airplane;
-import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Destination;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Flight;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.User;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.FlightService;
@@ -25,9 +17,6 @@ import java.util.Optional;
 public class FlightServiceImpl implements FlightService {
 
     private static final FlightRepository flightRepository = new FlightRepositoryMySQL();
-    private static final DestinationRepository destinationRepository = new DestinationRepositoryMySQL();
-    private static final StatusRepository statusRepository = new StatusRepositoryMySQL();
-    private static final AirplaneRepository airplaneRepository = new AirplaneRepositoryMySQL();
     private static final Logger LOGGER = LogManager.getLogger(UserServiceImpl.class);
 
     @Override
@@ -74,8 +63,7 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public Optional<Flight> findById(Long id) throws ServiceException {
         try {
-            Optional<Flight> flight = flightRepository.findFlightById(id);
-            return flight;
+            return flightRepository.findFlightById(id);
         } catch (DAOException e) {
             LOGGER.error("Find flight by id error", e);
             throw new ServiceException("Find flight by id error", e);
@@ -130,25 +118,5 @@ public class FlightServiceImpl implements FlightService {
             LOGGER.error("findBrigade by flight id error", e);
             throw new ServiceException("findBrigade by flight id error", e);
         }
-    }
-
-    @Override
-    public List<Destination> findAllDestinations() throws ServiceException {
-        return null;
-    }
-
-    @Override
-    public List<FlightStatus> findAllFlightStatuses() throws ServiceException {
-        try {
-            return statusRepository.findAllFlightStatuses();
-        } catch (DAOException e) {
-            LOGGER.error("findAllFlightStatuses error", e);
-            throw new ServiceException("findAllFlightStatuses error", e);
-        }
-    }
-
-    @Override
-    public List<Airplane> findAirplanes() throws ServiceException {
-        return null;
     }
 }

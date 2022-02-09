@@ -5,7 +5,7 @@ import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.UserRole;
 
 import java.util.Objects;
 
-public class User extends BaseEntity<Long>{
+public class User extends BaseEntity<Long> {
     private String name;
     private String surname;
     private String username;

@@ -54,7 +54,7 @@ public class ConnectionPool {
                     LOGGER.error("Can not create connection", e);
                 }
             }
-        }  catch (ClassNotFoundException e){
+        } catch (ClassNotFoundException e) {
             LOGGER.error("Can not find and load database driver", e);
         }
     }
@@ -90,9 +90,9 @@ public class ConnectionPool {
         freeConnections.add(connection);
     }
 
-    public void destroyConnectionPool(){
+    public void destroyConnectionPool() {
         int countOfBusyConnections = busyConnections.size();
-        for(int i = 0; i < countOfBusyConnections; i++){
+        for (int i = 0; i < countOfBusyConnections; i++) {
             try {
                 Connection connection = busyConnections.take();
                 freeConnections.put(connection);

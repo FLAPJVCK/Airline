@@ -15,7 +15,7 @@
 <fmt:message key="flight.page.airplane.model" var="airplaneModel"/>
 <fmt:message key="flight.page.create.brigade" var="createBrigade"/>
 <fmt:message key="flight.page.see.brigade" var="seeBrigade"/>
-<fmt:message key="flight.page.сomplete.flight" var="сompleteFlight"/>
+<fmt:message key="flight.page.complete.flight" var="сompleteFlight"/>
 <fmt:message key="flight.page.create" var="createFlight"/>
 <fmt:message key="flight.page.edit" var="edit"/>
 <fmt:message key="flight.page.delete" var="delete"/>

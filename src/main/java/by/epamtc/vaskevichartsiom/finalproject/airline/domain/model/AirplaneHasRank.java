@@ -4,7 +4,7 @@ import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.UserRank;
 
 import java.util.Objects;
 
-public class AirplaneHasRank extends BaseEntity<Long>{
+public class AirplaneHasRank extends BaseEntity<Long> {
     private Integer rankCount;
     private Airplane airplane;
     private UserRank userRank;

@@ -10,10 +10,16 @@ import java.util.Optional;
 
 public interface FlightRepository extends GenericDAO<Flight> {
     void updateStatus(Long id, FlightStatus status) throws DAOException;
+
     Optional<Flight> findFlightById(Long id) throws DAOException;
+
     List<Flight> findAllFlights() throws DAOException;
+
     List<Flight> findAllCurrentFlights() throws DAOException;
+
     List<Flight> findAllFlightsForUser(Long id) throws DAOException;
+
     void createBrigade(Long flightId, Long userId) throws DAOException;
+
     List<User> findBrigade(Long id) throws DAOException;
 }

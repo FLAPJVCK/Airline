@@ -5,7 +5,6 @@ import javax.servlet.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-//@WebFilter(filterName = "LocaleFilter")
 @WebFilter(urlPatterns = {"/*"})
 public class LocaleFilter implements Filter {
 

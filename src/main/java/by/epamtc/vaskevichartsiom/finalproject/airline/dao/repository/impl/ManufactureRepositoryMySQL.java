@@ -86,7 +86,7 @@ public class ManufactureRepositoryMySQL implements ManufactureRepository {
     public Optional<Manufacture> findManufactureByName(String name) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        try  {
+        try {
             connection = getConnection();
             preparedStatement = connection.prepareStatement(FIND_MANUFACTURER_BY_NAME);
             preparedStatement.setString(1, name);

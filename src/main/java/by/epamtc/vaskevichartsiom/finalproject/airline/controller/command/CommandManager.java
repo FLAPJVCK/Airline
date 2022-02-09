@@ -5,6 +5,7 @@ import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.user.*
 
 import java.util.HashMap;
 import java.util.Map;
+
 import static by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.CommandType.*;
 
 public class CommandManager {

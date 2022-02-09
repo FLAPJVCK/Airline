@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class FlightRepositoryMySQL implements FlightRepository{
+public class FlightRepositoryMySQL implements FlightRepository {
     private final static String INSERT_FLIGHT = """
             INSERT into airline.flights 
             (flight_number,departure_date,departure_time,destinations_id,statuses_id, airplanes_id) 
@@ -155,7 +155,7 @@ public class FlightRepositoryMySQL implements FlightRepository{
 
             if (status == FlightStatus.NOT_READY) {
                 preparedStatement.setLong(1, FlightStatus.READY.getId());
-            } else if (status == FlightStatus.READY){
+            } else if (status == FlightStatus.READY) {
                 preparedStatement.setLong(1, FlightStatus.COMPLETED.getId());
             }
             preparedStatement.setLong(2, id);
@@ -189,7 +189,7 @@ public class FlightRepositoryMySQL implements FlightRepository{
     public Optional<Flight> findFlightById(Long id) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        try  {
+        try {
             connection = getConnection();
             preparedStatement = connection.prepareStatement(FIND_FLIGHT_BY_ID);
             preparedStatement.setLong(1, id);

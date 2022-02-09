@@ -13,7 +13,6 @@ public class CreateBrigadeCommand implements Command {
 
     private static final String CURRENT_PAGE = "current_page";
 
-
     @Override
     public CommandResponse execute(HttpServletRequest request) throws ServiceException {
         request.getSession().setAttribute(CURRENT_PAGE, PagePath.FLIGHT_COMMAND);

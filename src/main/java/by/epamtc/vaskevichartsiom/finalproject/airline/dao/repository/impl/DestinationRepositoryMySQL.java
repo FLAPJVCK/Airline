@@ -90,7 +90,7 @@ public class DestinationRepositoryMySQL implements DestinationRepository {
     public Optional<Destination> findDestinationByName(String name) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        try  {
+        try {
             connection = getConnection();
             preparedStatement = connection.prepareStatement(FIND_DESTINATION_BY_NAME);
             preparedStatement.setString(1, name);

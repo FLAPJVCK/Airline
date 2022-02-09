@@ -1,8 +1,6 @@
 package by.epamtc.vaskevichartsiom.finalproject.airline.service;
 
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.enums.FlightStatus;
-import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Airplane;
-import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Destination;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.Flight;
 import by.epamtc.vaskevichartsiom.finalproject.airline.domain.model.User;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.exception.ServiceException;
@@ -30,10 +28,4 @@ public interface FlightService {
     void createBrigade(Long flightId, Long userId) throws ServiceException;
 
     List<User> findBrigade(Long id) throws ServiceException;
-
-    List<Destination> findAllDestinations() throws ServiceException;
-
-    List<FlightStatus> findAllFlightStatuses() throws ServiceException;
-
-    List<Airplane> findAirplanes() throws ServiceException;
 }

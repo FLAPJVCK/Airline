@@ -16,11 +16,6 @@ public class Controller extends HttpServlet {
     private static final String COMMAND_QUERY_PARAMETER = "command";
     private static final String APPLICATION_ENCODING = "utf-8";
 
-//    @Override
-//    public void init() throws ServletException {
-//
-//    }
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doAction(request, response);
@@ -31,13 +26,13 @@ public class Controller extends HttpServlet {
         doAction(request, response);
     }
 
-    private void doAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    private void doAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding(APPLICATION_ENCODING);
         response.setCharacterEncoding(APPLICATION_ENCODING);
 
         String commandName = request.getParameter(COMMAND_QUERY_PARAMETER);
         Command command = CommandManager.getInstance().getCommand(commandName);
-        CommandResponse page = null;
+        CommandResponse page;
         try {
             page = command.execute(request);
             if (page.getResponseContextType().equals(CommandResponse.CommandResponseType.FORWARD)) {
@@ -48,7 +43,5 @@ public class Controller extends HttpServlet {
         } catch (ServiceException e) {
             response.sendRedirect(request.getContextPath() + "/view/error/error_page.jsp");
         }
-
-
     }
 }

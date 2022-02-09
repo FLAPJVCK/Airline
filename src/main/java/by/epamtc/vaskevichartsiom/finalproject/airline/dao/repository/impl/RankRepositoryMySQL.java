@@ -40,63 +40,11 @@ public class RankRepositoryMySQL implements RankRepository {
 
     }
 
-//    @Override
-//    public void create(UserRank entity) throws DAOException {
-//        Connection connection = null;
-//        PreparedStatement preparedStatement = null;
-//        try {
-//            connection = getConnection();
-//            preparedStatement = connection.prepareStatement(INSERT_RANK);
-//            preparedStatement.setString(1, entity.getRankName());
-//            preparedStatement.executeUpdate();
-//        } catch (SQLException e) {
-//            LOGGER.error("Create rank error", e);
-//            throw new DAOException("Create rank error", e);
-//        } finally {
-//            closeResources(connection, preparedStatement);
-//        }
-//    }
-//
-//    @Override
-//    public void update(UserRank entity) throws DAOException {
-//        Connection connection = null;
-//        PreparedStatement preparedStatement = null;
-//        try {
-//            connection = getConnection();
-//            preparedStatement = connection.prepareStatement(UPDATE_RANK);
-//            preparedStatement.setString(1, entity.getRankName());
-//            preparedStatement.setLong(2, entity.getId());
-//            preparedStatement.executeUpdate();
-//        } catch (SQLException e) {
-//            LOGGER.error("Update rank error", e);
-//            throw new DAOException("Update rank error", e);
-//        } finally {
-//            closeResources(connection, preparedStatement);
-//        }
-//    }
-//
-//    @Override
-//    public void delete(Long id) throws DAOException {
-//        Connection connection = null;
-//        PreparedStatement preparedStatement = null;
-//        try {
-//            connection = getConnection();
-//            preparedStatement = connection.prepareStatement(DELETE_RANK);
-//            preparedStatement.setLong(1, id);
-//            preparedStatement.executeUpdate();
-//        } catch (SQLException e) {
-//            LOGGER.error("Delete rank error", e);
-//            throw new DAOException("Delete rank error", e);
-//        } finally {
-//            closeResources(connection, preparedStatement);
-//        }
-//    }
-
     @Override
     public Optional<UserRank> findRankByName(String name) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        try  {
+        try {
             connection = getConnection();
             preparedStatement = connection.prepareStatement(FIND_RANK_BY_NAME);
             preparedStatement.setString(1, name);

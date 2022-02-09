@@ -2,7 +2,7 @@ package by.epamtc.vaskevichartsiom.finalproject.airline.domain.model;
 
 import java.util.Objects;
 
-public class Manufacture extends BaseEntity<Long>{
+public class Manufacture extends BaseEntity<Long> {
     private String manufacturerName;
 
     public Manufacture() {

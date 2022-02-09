@@ -2,7 +2,7 @@ package by.epamtc.vaskevichartsiom.finalproject.airline.domain.model;
 
 import java.util.Objects;
 
-public class Destination extends BaseEntity<Long>{
+public class Destination extends BaseEntity<Long> {
     private String airport;
 
     public Destination() {

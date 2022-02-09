@@ -25,7 +25,6 @@ public class EditFlightCommand implements Command {
         Time departureTime = Time.valueOf(request.getParameter("departureTime"));
         Long destination = Long.valueOf(request.getParameter("destination"));
 
-
         Flight currentFlight = new Flight();
         Destination currentDestination = new Destination();
         currentFlight.setId(id);

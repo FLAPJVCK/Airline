@@ -27,7 +27,6 @@ public class CreateFlightCommand implements Command {
         Long destination = Long.valueOf(request.getParameter("destination"));
         Long airplaneModel = Long.valueOf(request.getParameter("airplaneModel"));
 
-
         Flight currentFlight = new Flight();
         Destination currentDestination = new Destination();
         Airplane currentAirplane = new Airplane();

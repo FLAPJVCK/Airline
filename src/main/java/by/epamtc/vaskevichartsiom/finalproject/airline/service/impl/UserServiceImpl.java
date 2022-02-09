@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
         }
         try {
             if (!user.getPassword().equals("")) {
-                if (!validator.isPasswordValid(user.getPassword())){
+                if (!validator.isPasswordValid(user.getPassword())) {
                     throw new ServiceException("Incorrect password in register data!");
                 }
                 user.setPassword(PasswordEncryptorBCrypt.getInstance().encryptPassword(user.getPassword()));
@@ -146,8 +146,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserRole> findAllRoles() throws ServiceException {
         try {
-            final List<UserRole> roles = roleRepository.findAllRoles();
-            return roles;
+            return roleRepository.findAllRoles();
         } catch (DAOException e) {
             LOGGER.error("findAllRoles error", e);
             throw new ServiceException("findAllRoles error", e);
