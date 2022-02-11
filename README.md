@@ -1,6 +1,6 @@
-#Airline
+# Airline
 
-##Project description
+## Project description
 
 **Airline** is a web application for internal use by airport employees. Any visitor can get acquainted with the 
 current flights on the main page. After registering an employee of the company, the administrator assigns him a 
@@ -34,4 +34,4 @@ flight brigade for the flight. An employee can check their flights on personal p
 - Delete employee
 
 ## Database scheme:
-[scheme.png](https://github.com/FLAPJVCK/JavaWebDevelopment-FinalTask/blob/master/database/scheme.png)
+![scheme.png](https://github.com/FLAPJVCK/JavaWebDevelopment-FinalTask/blob/master/database/scheme.png)
