@@ -5,17 +5,17 @@
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="localization" />
 
-<c:set var="flightId" value='${sessionScope["flightId"]}' />
+<c:set var="flightId" value='${requestScope["flightId"]}' />
 
-<c:set var="pilotsList" value='${sessionScope["pilotsList"]}' />
-<c:set var="navigatorsList" value='${sessionScope["navigatorsList"]}' />
-<c:set var="radioOperatorsList" value='${sessionScope["radioOperatorsList"]}' />
-<c:set var="stewardessesList" value='${sessionScope["stewardessesList"]}' />
+<c:set var="pilotsList" value='${requestScope["pilotsList"]}' />
+<c:set var="navigatorsList" value='${requestScope["navigatorsList"]}' />
+<c:set var="radioOperatorsList" value='${requestScope["radioOperatorsList"]}' />
+<c:set var="stewardessesList" value='${requestScope["stewardessesList"]}' />
 
-<c:set var="pilotsCount" value='${sessionScope["pilotsCount"]}' />
-<c:set var="navigatorsCount" value='${sessionScope["navigatorsCount"]}' />
-<c:set var="radioOperatorsCount" value='${sessionScope["radioOperatorsCount"]}' />
-<c:set var="stewardessesCount" value='${sessionScope["stewardessesCount"]}' />
+<c:set var="pilotsCount" value='${requestScope["pilotsCount"]}' />
+<c:set var="navigatorsCount" value='${requestScope["navigatorsCount"]}' />
+<c:set var="radioOperatorsCount" value='${requestScope["radioOperatorsCount"]}' />
+<c:set var="stewardessesCount" value='${requestScope["stewardessesCount"]}' />
 
 <fmt:message key="brigade.page.create.name" var="pageName"/>
 <fmt:message key="brigade.page.pilot" var="pilot"/>

@@ -1,5 +1,6 @@
 package by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.user;
 
+import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.AttributeName;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.Command;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.CommandResponse;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.PagePath;
@@ -13,11 +14,11 @@ public class RegisterCommand implements Command {
 
     @Override
     public CommandResponse execute(HttpServletRequest request) throws ServiceException {
-        String name = request.getParameter("name");
-        String surname = request.getParameter("surname");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String email = request.getParameter("email");
+        String name = request.getParameter(AttributeName.NAME);
+        String surname = request.getParameter(AttributeName.SURNAME);
+        String username = request.getParameter(AttributeName.SURNAME);
+        String password = request.getParameter(AttributeName.PASSWORD);
+        String email = request.getParameter(AttributeName.EMAIL);
 
         User currentUser = new User();
         currentUser.setName(name);

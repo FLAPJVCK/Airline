@@ -1,5 +1,6 @@
 package by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.page;
 
+import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.AttributeName;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.Command;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.CommandResponse;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.PagePath;
@@ -12,14 +13,12 @@ import java.util.List;
 
 public class BrigadePageCommand implements Command {
 
-    private static final String CURRENT_PAGE = "current_page";
-
     @Override
     public CommandResponse execute(HttpServletRequest request) throws ServiceException {
-        request.getSession().setAttribute(CURRENT_PAGE, PagePath.BRIGADE_PAGE);
-        Long flightId = Long.valueOf(request.getParameter("flightId"));
+        request.getSession().setAttribute(AttributeName.CURRENT_PAGE, PagePath.BRIGADE_PAGE);
+        Long flightId = Long.valueOf(request.getParameter(AttributeName.FLIGHT_ID));
         List<User> brigade = FactoryService.getInstance().getFlightServiceImpl().findBrigade(flightId);
-        request.getSession().setAttribute("brigade", brigade);
+        request.setAttribute(AttributeName.BRIGADE, brigade);
         return new CommandResponse(PagePath.BRIGADE_PAGE, CommandResponse.CommandResponseType.FORWARD);
     }
 }

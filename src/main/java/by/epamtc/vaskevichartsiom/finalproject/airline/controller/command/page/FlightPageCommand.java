@@ -1,5 +1,6 @@
 package by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.page;
 
+import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.AttributeName;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.Command;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.CommandResponse;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.PagePath;
@@ -12,13 +13,11 @@ import java.util.List;
 
 public class FlightPageCommand implements Command {
 
-    private static final String CURRENT_PAGE = "current_page";
-
     @Override
     public CommandResponse execute(HttpServletRequest request) throws ServiceException {
-        request.getSession().setAttribute(CURRENT_PAGE, PagePath.FLIGHT_PAGE);
+        request.getSession().setAttribute(AttributeName.CURRENT_PAGE, PagePath.FLIGHT_PAGE);
         List<Flight> flights = FactoryService.getInstance().getFlightServiceImpl().findAllFlights();
-        request.getSession().setAttribute("flightList", flights);
+        request.setAttribute(AttributeName.FLIGHT_LIST, flights);
         return new CommandResponse(PagePath.FLIGHT_PAGE, CommandResponse.CommandResponseType.FORWARD);
     }
 }

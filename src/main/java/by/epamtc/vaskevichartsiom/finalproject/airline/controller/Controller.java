@@ -3,6 +3,7 @@ package by.epamtc.vaskevichartsiom.finalproject.airline.controller;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.Command;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.CommandManager;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.CommandResponse;
+import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.PagePath;
 import by.epamtc.vaskevichartsiom.finalproject.airline.service.exception.ServiceException;
 
 import javax.servlet.*;
@@ -41,7 +42,7 @@ public class Controller extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + page.getPagePath());
             }
         } catch (ServiceException e) {
-            response.sendRedirect(request.getContextPath() + "/view/error/error_page.jsp");
+            response.sendRedirect(request.getContextPath() + PagePath.ERROR_PAGE);
         }
     }
 }

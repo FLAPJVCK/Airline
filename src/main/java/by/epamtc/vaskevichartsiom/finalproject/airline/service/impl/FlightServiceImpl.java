@@ -20,10 +20,9 @@ public class FlightServiceImpl implements FlightService {
     private static final Logger LOGGER = LogManager.getLogger(UserServiceImpl.class);
 
     @Override
-    public Optional<Flight> createFlight(Flight flight) throws ServiceException {
+    public void createFlight(Flight flight) throws ServiceException {
         try {
             flightRepository.create(flight);
-            return Optional.of(flight);
         } catch (DAOException e) {
             LOGGER.error("createFlight error", e);
             throw new ServiceException("createFlight error", e);

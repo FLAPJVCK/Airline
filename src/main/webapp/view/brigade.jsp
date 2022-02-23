@@ -5,7 +5,7 @@
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="localization" />
 
-<c:set var="brigade" value='${sessionScope["brigade"]}' />
+<c:set var="brigade" value='${requestScope["brigade"]}' />
 
 <fmt:message key="employee.page.name" var="name"/>
 <fmt:message key="employee.page.surname" var="surname"/>

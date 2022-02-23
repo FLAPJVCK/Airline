@@ -1,5 +1,6 @@
 package by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.page;
 
+import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.AttributeName;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.Command;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.CommandResponse;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.PagePath;
@@ -15,18 +16,16 @@ import java.util.Optional;
 
 public class UserEditPageCommand implements Command {
 
-    private static final String CURRENT_PAGE = "current_page";
-
     @Override
     public CommandResponse execute(HttpServletRequest request) throws ServiceException {
-        request.getSession().setAttribute(CURRENT_PAGE, PagePath.EDIT_EMPLOYEE_PAGE);
-        Long id = Long.valueOf(request.getParameter("id"));
+        request.getSession().setAttribute(AttributeName.CURRENT_PAGE, PagePath.EDIT_EMPLOYEE_PAGE);
+        Long id = Long.valueOf(request.getParameter(AttributeName.USER_ID));
         Optional<User> user = FactoryService.getInstance().getUserServiceImpl().findById(id);
-        request.getSession().setAttribute("employee", user.get());
+        user.ifPresent(value -> request.setAttribute(AttributeName.EMPLOYEE, value));
         List<UserRank> allRanks = FactoryService.getInstance().getUserServiceImpl().findAllRanks();
         List<UserRole> allRoles = FactoryService.getInstance().getUserServiceImpl().findAllRoles();
-        request.getSession().setAttribute("allRanks", allRanks);
-        request.getSession().setAttribute("allRoles", allRoles);
+        request.setAttribute(AttributeName.ALL_RANKS, allRanks);
+        request.setAttribute(AttributeName.ALL_ROLES, allRoles);
         return new CommandResponse(PagePath.EDIT_EMPLOYEE_PAGE, CommandResponse.CommandResponseType.FORWARD);
     }
 }

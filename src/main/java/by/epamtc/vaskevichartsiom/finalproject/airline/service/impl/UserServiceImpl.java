@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> register(User user) throws ServiceException {
+    public void register(User user) throws ServiceException {
         if (!validator.isNameValid(user.getName()) || !validator.isNameValid(user.getSurname())
                 || !validator.isUsernameValid(user.getUsername()) || !validator.isEmailValid(user.getEmail())
                 || !validator.isPasswordValid(user.getPassword())) {
@@ -61,11 +61,10 @@ public class UserServiceImpl implements UserService {
         try {
             Optional<User> alreadyExists = userRepository.findUserByEmail(user.getEmail());
             if (alreadyExists.isPresent()) {
-                return Optional.empty();
+                throw new ServiceException("This email already exists!");
             } else {
                 user.setPassword(PasswordEncryptorBCrypt.getInstance().encryptPassword(user.getPassword()));
                 userRepository.create(user);
-                return Optional.of(user);
             }
         } catch (DAOException e) {
             LOGGER.error("register user error", e);

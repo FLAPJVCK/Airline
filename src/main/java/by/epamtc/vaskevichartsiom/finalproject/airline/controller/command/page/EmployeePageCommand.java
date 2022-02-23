@@ -1,5 +1,6 @@
 package by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.page;
 
+import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.AttributeName;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.Command;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.CommandResponse;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.PagePath;
@@ -12,14 +13,11 @@ import java.util.List;
 
 public class EmployeePageCommand implements Command {
 
-    private static final String CURRENT_PAGE = "current_page";
-
     @Override
     public CommandResponse execute(HttpServletRequest request) throws ServiceException {
-        request.getSession().setAttribute(CURRENT_PAGE, PagePath.EMPLOYEE_PAGE);
-        request.getSession().getAttribute("userRole");
+        request.getSession().setAttribute(AttributeName.CURRENT_PAGE, PagePath.EMPLOYEE_PAGE);
         List<User> users = FactoryService.getInstance().getUserServiceImpl().findAllUsers();
-        request.getSession().setAttribute("employeeList", users);
+        request.setAttribute(AttributeName.EMPLOYEE_LIST, users);
         return new CommandResponse(PagePath.EMPLOYEE_PAGE, CommandResponse.CommandResponseType.FORWARD);
     }
 }

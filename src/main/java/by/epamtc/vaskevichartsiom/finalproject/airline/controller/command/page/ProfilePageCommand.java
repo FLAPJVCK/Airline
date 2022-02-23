@@ -1,5 +1,6 @@
 package by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.page;
 
+import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.AttributeName;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.Command;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.CommandResponse;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.PagePath;
@@ -15,21 +16,18 @@ import java.util.Optional;
 
 public class ProfilePageCommand implements Command {
 
-    private static final String CURRENT_PAGE = "current_page";
-    private static final String EMPTY_FLIGHT_LIST = "empty";
-
     @Override
     public CommandResponse execute(HttpServletRequest request) throws ServiceException {
-        request.getSession().setAttribute(CURRENT_PAGE, PagePath.PROFILE_PAGE);
+        request.getSession().setAttribute(AttributeName.CURRENT_PAGE, PagePath.PROFILE_PAGE);
         HttpSession session = request.getSession();
-        Long userId = (Long) session.getAttribute("userId");
+        Long userId = (Long) session.getAttribute(AttributeName.USER_ID);
         Optional<User> userProfile = FactoryService.getInstance().getUserServiceImpl().findById(userId);
-        request.getSession().setAttribute("userProfile", userProfile.get());
+        userProfile.ifPresent(user -> request.setAttribute(AttributeName.USER_PROFILE, user));
         List<Flight> currentUserFlightList = FactoryService.getInstance().getFlightServiceImpl().findAllFlightsForUser(userId);
         if (currentUserFlightList.size() != 0){
-            request.getSession().setAttribute("currentUserFlightList", currentUserFlightList);
+            request.setAttribute(AttributeName.CURRENT_USER_FLIGHT_LIST, currentUserFlightList);
         } else {
-            request.getSession().setAttribute("currentUserFlightList", EMPTY_FLIGHT_LIST);
+            request.setAttribute(AttributeName.CURRENT_USER_FLIGHT_LIST, AttributeName.EMPTY_FLIGHT_LIST);
         }
         return new CommandResponse(PagePath.PROFILE_PAGE, CommandResponse.CommandResponseType.FORWARD);
     }

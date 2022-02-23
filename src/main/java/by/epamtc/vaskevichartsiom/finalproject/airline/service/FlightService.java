@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FlightService {
-    Optional<Flight> createFlight(Flight flight) throws ServiceException;
+    void createFlight(Flight flight) throws ServiceException;
 
     void updateFlight(Flight flight) throws ServiceException;
 

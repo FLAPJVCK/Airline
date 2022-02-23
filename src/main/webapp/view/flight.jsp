@@ -5,7 +5,7 @@
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="localization" />
 
-<c:set var="flightList" value='${sessionScope["flightList"]}' />
+<c:set var="flightList" value='${requestScope["flightList"]}' />
 
 <fmt:message key="flight.page.flight.number" var="number"/>
 <fmt:message key="flight.page.departure.date" var="departureDate"/>
@@ -53,14 +53,14 @@
             <c:choose>
                 <c:when test="${flight.flightStatus == 'NOT_READY'}">
                     <td><a href="${pageContext.request.contextPath}/Controller?command=createBrigadePage&flightId=${flight.id}&flightDate=${flight.departureDate}&modelId=${flight.airplane.id}"><button type="button" class="btn btn-info">${createBrigade}</button></a></td>
-                    <td><a href="${pageContext.request.contextPath}/Controller?command=editFlightPage&id=${flight.id}"><button type="button" class="btn btn-warning">${edit}</button></a></td>
+                    <td><a href="${pageContext.request.contextPath}/Controller?command=editFlightPage&flightId=${flight.id}"><button type="button" class="btn btn-warning">${edit}</button></a></td>
                     <c:if test="${userRole == 'ADMIN'}">
-                        <td><a href="${pageContext.request.contextPath}/Controller?command=deleteFlight&id=${flight.id}"><button type="button" class="btn btn-danger">${delete}</button></a></td>
+                        <td><a href="${pageContext.request.contextPath}/Controller?command=deleteFlight&flightId=${flight.id}"><button type="button" class="btn btn-danger">${delete}</button></a></td>
                     </c:if>
                 </c:when>
                 <c:when test="${flight.flightStatus == 'READY'}">
                     <td><a href="${pageContext.request.contextPath}/Controller?command=updateFlightStatus&flightId=${flight.id}"><button type="button" class="btn btn-success">${сompleteFlight}</button></a></td>
-                    <td><a href="${pageContext.request.contextPath}/Controller?command=editFlightPage&id=${flight.id}"><button type="button" class="btn btn-warning">${edit}</button></a></td>
+                    <td><a href="${pageContext.request.contextPath}/Controller?command=editFlightPage&flightId=${flight.id}"><button type="button" class="btn btn-warning">${edit}</button></a></td>
                     <td><a href="${pageContext.request.contextPath}/Controller?command=BrigadePage&flightId=${flight.id}"><button type="button" class="btn btn-secondary">${seeBrigade}</button></a></td>
                 </c:when>
                 <c:otherwise>

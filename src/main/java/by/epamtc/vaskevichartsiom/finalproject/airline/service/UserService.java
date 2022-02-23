@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface UserService {
     Optional<User> logIn(String email, String password) throws ServiceException;
 
-    Optional<User> register(User user) throws ServiceException;
+    void register(User user) throws ServiceException;
 
     void updateUser(User user) throws ServiceException;
 

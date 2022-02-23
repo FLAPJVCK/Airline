@@ -1,5 +1,6 @@
 package by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.user;
 
+import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.AttributeName;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.Command;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.CommandResponse;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.PagePath;
@@ -13,19 +14,17 @@ import javax.servlet.http.HttpServletRequest;
 
 public class EditUserCommand implements Command {
 
-    private static final String CURRENT_PAGE = "current_page";
-
     @Override
     public CommandResponse execute(HttpServletRequest request) throws ServiceException {
-        request.getSession().setAttribute(CURRENT_PAGE, PagePath.EMPLOYEE_COMMAND);
-        Long id = Long.valueOf(request.getParameter("id"));
-        String name = request.getParameter("name");
-        String surname = request.getParameter("surname");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String email = request.getParameter("email");
-        String rankName = request.getParameter("rankName").toUpperCase();
-        String roleName = request.getParameter("roleName").toUpperCase();
+        request.getSession().setAttribute(AttributeName.CURRENT_PAGE, PagePath.EMPLOYEE_COMMAND);
+        Long id = Long.valueOf(request.getParameter(AttributeName.USER_ID));
+        String name = request.getParameter(AttributeName.NAME);
+        String surname = request.getParameter(AttributeName.SURNAME);
+        String username = request.getParameter(AttributeName.USERNAME);
+        String password = request.getParameter(AttributeName.PASSWORD);
+        String email = request.getParameter(AttributeName.EMAIL);
+        String rankName = request.getParameter(AttributeName.RANK_NAME).toUpperCase();
+        String roleName = request.getParameter(AttributeName.ROLE_NAME).toUpperCase();
 
         User currentUser = new User();
         currentUser.setId(id);

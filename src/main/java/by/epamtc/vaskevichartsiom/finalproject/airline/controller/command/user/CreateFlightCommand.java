@@ -1,5 +1,6 @@
 package by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.user;
 
+import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.AttributeName;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.Command;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.CommandResponse;
 import by.epamtc.vaskevichartsiom.finalproject.airline.controller.command.PagePath;
@@ -15,17 +16,15 @@ import java.sql.Time;
 
 public class CreateFlightCommand implements Command {
 
-    private static final String CURRENT_PAGE = "current_page";
-
     @Override
     public CommandResponse execute(HttpServletRequest request) throws ServiceException {
-        request.getSession().setAttribute(CURRENT_PAGE, PagePath.FLIGHT_COMMAND);
+        request.getSession().setAttribute(AttributeName.CURRENT_PAGE, PagePath.FLIGHT_COMMAND);
 
-        String number = request.getParameter("number");
-        Date departureDate = Date.valueOf(request.getParameter("departureDate"));
-        Time departureTime = Time.valueOf(request.getParameter("departureTime"));
-        Long destination = Long.valueOf(request.getParameter("destination"));
-        Long airplaneModel = Long.valueOf(request.getParameter("airplaneModel"));
+        String number = request.getParameter(AttributeName.NUMBER);
+        Date departureDate = Date.valueOf(request.getParameter(AttributeName.DEPARTURE_DATE));
+        Time departureTime = Time.valueOf(request.getParameter(AttributeName.DEPARTURE_TIME));
+        Long destination = Long.valueOf(request.getParameter(AttributeName.DESTINATION));
+        Long airplaneModel = Long.valueOf(request.getParameter(AttributeName.AIRPLANE_MODEL));
 
         Flight currentFlight = new Flight();
         Destination currentDestination = new Destination();

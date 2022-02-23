@@ -5,7 +5,7 @@
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="localization" />
 
-<c:set var="employeeList" value='${sessionScope["employeeList"]}' />
+<c:set var="employeeList" value='${requestScope["employeeList"]}' />
 
 <fmt:message key="employee.page.name" var="name"/>
 <fmt:message key="employee.page.surname" var="surname"/>
@@ -37,8 +37,8 @@
                 <td>${employee.email}</td>
                 <td>${employee.userRank}</td>
                 <td>${employee.userRole}</td>
-                <td><a href="${pageContext.request.contextPath}/Controller?command=editUserPage&id=${employee.id}"><button type="button" class="btn btn-warning">${edit}</button></a></td>
-                <td><a href="${pageContext.request.contextPath}/Controller?command=deleteUser&id=${employee.id}"><button type="button" class="btn btn-danger">${delete}</button></a></td>
+                <td><a href="${pageContext.request.contextPath}/Controller?command=editUserPage&userId=${employee.id}"><button type="button" class="btn btn-warning">${edit}</button></a></td>
+                <td><a href="${pageContext.request.contextPath}/Controller?command=deleteUser&userId=${employee.id}"><button type="button" class="btn btn-danger">${delete}</button></a></td>
             </tr>
         </c:forEach>
     </tbody>

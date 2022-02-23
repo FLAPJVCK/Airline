@@ -5,8 +5,8 @@
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="localization" />
 
-<c:set var="destinationList" value='${sessionScope["destinationList"]}' />
-<c:set var="airplaneList" value='${sessionScope["airplaneList"]}' />
+<c:set var="destinationList" value='${requestScope["destinationList"]}' />
+<c:set var="airplaneList" value='${requestScope["airplaneList"]}' />
 
 <fmt:message key="flight.page.create.name" var="pageName"/>
 <fmt:message key="flight.page.flight.number" var="number"/>

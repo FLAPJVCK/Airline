@@ -12,6 +12,7 @@ public final class PagePath {
     public static final String EDIT_FLIGHT_PAGE = "/view/editFlight.jsp";
     public static final String EMPLOYEE_PAGE = "/view/employee.jsp";
     public static final String PROFILE_PAGE = "/view/profile.jsp";
+    public static final String ERROR_PAGE = "/view/error/error_page.jsp";
     public static final String EDIT_EMPLOYEE_PAGE = "/view/editEmployee.jsp";
     public static final String FLIGHT_COMMAND = "/Controller?command=flightPage";
     public static final String EMPLOYEE_COMMAND = "/Controller?command=employeePage";

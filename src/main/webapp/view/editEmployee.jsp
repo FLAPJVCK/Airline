@@ -5,9 +5,9 @@
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="localization" />
 
-<c:set var="employee" value='${sessionScope["employee"]}' />
-<c:set var="allRanks" value='${sessionScope["allRanks"]}' />
-<c:set var="allRoles" value='${sessionScope["allRoles"]}' />
+<c:set var="employee" value='${requestScope["employee"]}' />
+<c:set var="allRanks" value='${requestScope["allRanks"]}' />
+<c:set var="allRoles" value='${requestScope["allRoles"]}' />
 
 <fmt:message key="employee.page.name" var="name"/>
 <fmt:message key="employee.page.surname" var="surname"/>
