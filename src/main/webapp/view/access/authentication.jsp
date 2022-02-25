@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="crt" uri="customtags"%>
 
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="localization" />
@@ -43,7 +44,7 @@
         <c:if test="${wrong_data == true}">
             <h3>${wrong}</h3>
         </c:if>
-        <p class="mt-5 mb-3 text-muted">&copy; FLAPJVCK</p>
+        <p class="mt-5 mb-3 text-muted"><crt:copyright/></p>
     </form>
 </main>
 </body>

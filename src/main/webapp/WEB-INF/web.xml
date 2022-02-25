@@ -3,4 +3,43 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <error-page>
+        <location>/view/error/error_page.jsp</location>
+    </error-page>
+
+    <servlet>
+        <servlet-name>Controller</servlet-name>
+        <servlet-class>by.epamtc.vaskevichartsiom.finalproject.airline.controller.Controller</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Controller</servlet-name>
+        <url-pattern>/Controller</url-pattern>
+    </servlet-mapping>
+
+    <jsp-config>
+        <taglib>
+            <taglib-uri>customtags</taglib-uri>
+            <taglib-location>/WEB-INF/tld/copyright.tld</taglib-location>
+        </taglib>
+    </jsp-config>
+
+    <filter>
+        <filter-name>LocaleFilter</filter-name>
+        <filter-class>by.epamtc.vaskevichartsiom.finalproject.airline.controller.filter.LocaleFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LocaleFilter</filter-name>
+        <servlet-name>Controller</servlet-name>
+    </filter-mapping>
+
+    <listener>
+        <listener-class>by.epamtc.vaskevichartsiom.finalproject.airline.controller.listener.ServletContextListenerImpl</listener-class>
+    </listener>
+
 </web-app>
+

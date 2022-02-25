@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="crt" uri="customtags"%>
 
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="localization" />
@@ -52,7 +53,7 @@
         </div>
 
         <button class="w-100 btn btn-lg btn-primary" type="submit">${button}</button>
-        <p class="mt-5 mb-3 text-muted">&copy; FLAPJVCK</p>
+        <p class="mt-5 mb-3 text-muted"><crt:copyright/></p>
     </form>
 </main>
 </body>
